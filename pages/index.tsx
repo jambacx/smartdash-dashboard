@@ -1,12 +1,12 @@
 import type { ReactElement } from "react";
 import { Grid, Box } from "@mui/material";
-import PageContainer from "../src/components/container/PageContainer";
+import PageContainer from "@components/container/PageContainer";
 
 // components
-import SalesOverview from "../src/components/dashboard/SalesOverview";
-import YearlyBreakup from "../src/components/dashboard/YearlyBreakup";
-import FullLayout from "../src/layouts/full/FullLayout";
-import ApexDonutChart from "../src/components/dashboard/ApexDonutChart";
+import SalesOverview from "@components/dashboard/SalesOverview";
+import YearlyBreakup from "@components/dashboard/YearlyBreakup";
+import FullLayout from "@src/layouts/full/FullLayout";
+import ApexDonutChart from "@components/dashboard/ApexDonutChart";
 
 export default function Home() {
   const statusBar = [

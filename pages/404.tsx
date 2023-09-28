@@ -1,7 +1,7 @@
-import type { ReactElement } from 'react';
+import type { ReactElement } from "react";
 import { Box, Container, Typography, Button } from "@mui/material";
 import Link from "next/link";
-import BlankLayout from '../src/layouts/blank/BlankLayout';
+import BlankLayout from "@src/layouts/blank/BlankLayout";
 
 const Error = () => (
   <Box
