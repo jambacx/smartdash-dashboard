@@ -1,17 +1,20 @@
-import { useAuth } from "./authContext";
+// components/withAuth.tsx
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { useAuth } from "./authContext";
 
-const withAuth = <P,>(WrappedComponent: any) => {
-  return (props: P) => {
-    const { user } = useAuth();
-    const router = useRouter();
+const withAuth = (WrappedComponent: React.FC) => {
+  return (props: any) => {
+    const Router = useRouter();
+    const { token } = useAuth();
 
     useEffect(() => {
-      if (!user) router.replace("/login"); // Redirect to login if user is not authenticated
-    }, [user]);
+      if (!token) {
+        Router.replace("/login");
+      }
+    }, [token]);
 
-    return user ? <WrappedComponent {...props} /> : null;
+    return <WrappedComponent {...props} />;
   };
 };
 

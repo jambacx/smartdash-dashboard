@@ -8,8 +8,9 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import createEmotionCache from "../src/createEmotionCache";
 import { baselightTheme } from "../src/theme/DefaultColors";
+import { AuthProvider } from "@src/context/authContext";
+import { routeAuth } from "@lib/routeAuth";
 
-// Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
 type NextPageWithLayout = NextPage & {
@@ -34,12 +35,17 @@ const MyApp = (props: MyAppProps) => {
         <title>Smartdash</title>
       </Head>
       <ThemeProvider theme={theme}>
-        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+        {/* <AuthProvider> */}
         <CssBaseline />
         {getLayout(<Component {...pageProps} />)}
+        {/* </AuthProvider> */}
       </ThemeProvider>
     </CacheProvider>
   );
+};
+
+MyApp.getServerSideProps = async (context: any) => {
+  return await routeAuth(context);
 };
 
 export default MyApp;

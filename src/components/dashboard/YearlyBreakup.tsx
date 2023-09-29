@@ -3,18 +3,24 @@ import dynamic from "next/dynamic";
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 import { useTheme } from "@mui/material/styles";
 import { Grid, Stack, Typography, Avatar } from "@mui/material";
-import { IconArrowUpLeft } from "@tabler/icons-react";
+import {
+  IconArrowUpLeft,
+  IconMailFast,
+  IconMessage2,
+  IconFileLike,
+  IconShare,
+} from "@tabler/icons-react";
 
 import DashboardCard from "@components/shared/DashboardCard";
 
-const YearlyBreakup = () => {
+const YearlyBreakup = ({ item, index }: { item: any; index: number }) => {
   // chart color
   const theme = useTheme();
   const primary = theme.palette.primary.main;
   const primarylight = "#ecf2ff";
-  const successlight = theme.palette.success.light;
 
-  // chart
+  const chartItem = item;
+
   const optionscolumnchart: any = {
     chart: {
       type: "donut",
@@ -63,15 +69,24 @@ const YearlyBreakup = () => {
   const seriescolumnchart: any = [38, 40, 25];
 
   return (
-    <DashboardCard title={"Нийтлэл"}>
+    <DashboardCard title={chartItem?.title}>
       <Grid container spacing={3}>
         <Grid item xs={7} sm={7}>
           <Stack direction="row" spacing={1} mt={1} alignItems="center">
-            <Avatar sx={{ bgcolor: successlight, width: 27, height: 27 }}>
-              <IconArrowUpLeft width={20} color="#39B69A" />
+            <Avatar sx={{ bgcolor: chartItem.bgColor, width: 27, height: 27 }}>
+              {index == 0 && (
+                <IconMailFast width={20} color={chartItem.color} />
+              )}
+              {index == 1 && (
+                <IconMessage2 width={20} color={chartItem.color} />
+              )}
+              {index == 2 && (
+                <IconFileLike width={20} color={chartItem.color} />
+              )}
+              {index == 3 && <IconShare width={20} color={chartItem.color} />}
             </Avatar>
             <Typography variant="h3" fontWeight="700">
-              1242
+              {chartItem?.count}
             </Typography>
           </Stack>
         </Grid>

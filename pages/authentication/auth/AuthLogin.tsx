@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Box,
   Typography,
@@ -9,9 +8,10 @@ import {
   Checkbox,
 } from "@mui/material";
 import Link from "next/link";
+
 import { useForm } from "react-hook-form";
 import CircularProgress from "@mui/material/CircularProgress";
-import withAuth from "@src/context/withAuth";
+import { useRouter } from "next/router";
 
 import CustomTextField from "@components/forms/theme-elements/CustomTextField";
 import useLogin from "@src/lib/hooks/useLogin";
@@ -28,15 +28,23 @@ interface FormInput {
 }
 
 const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
-  const { register, handleSubmit, setError, formState } = useForm<FormInput>();
+  const { register, handleSubmit, setError, clearErrors, formState } =
+    useForm<FormInput>();
   const { errors } = formState;
   const { login, loading, error } = useLogin();
+  const router = useRouter();
 
   const onSubmit = async (data: { email: string; password: string }) => {
     try {
-      await login(data);
+      const loginResponse: any = await login(data);
+
+      if (loginResponse.data && loginResponse.data.token) {
+        localStorage.setItem("authToken", loginResponse?.data?.token);
+        router.push("/");
+      }
     } catch (err) {
-      setError("email", { type: "manual", message: "Login failed." });
+      setError("email", { type: "manual", message: "Нэвтрэх нэр буруу." });
+      setError("password", { type: "manual", message: "Нууц үг буруу." });
     }
   };
   return (
@@ -84,7 +92,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
             type="password"
             variant="outlined"
             fullWidth
-            error={true}
+            error={!!errors.password}
             helperText={errors.password?.message}
           />
         </Box>
