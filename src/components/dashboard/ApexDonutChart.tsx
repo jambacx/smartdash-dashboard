@@ -4,12 +4,8 @@ import { useTheme } from "@mui/material/styles";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 
-// ** Third Party Imports
 import { ApexOptions } from "apexcharts";
-
-// ** Component Import
 import ReactApexcharts from "../charts/react-apexcharts";
-import { useDashboard } from "@src/lib/hooks/usePost";
 
 const donutColors = {
   series1: "#4F78F8",
