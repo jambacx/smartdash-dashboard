@@ -1,4 +1,4 @@
-import type { ReactElement, ReactNode } from "react";
+import { useEffect, type ReactElement, type ReactNode, useState } from "react";
 
 import type { NextPage } from "next";
 import Head from "next/head";
@@ -8,8 +8,9 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import createEmotionCache from "../src/createEmotionCache";
 import { baselightTheme } from "../src/theme/DefaultColors";
-import { AuthProvider } from "@src/context/authContext";
-import { routeAuth } from "@lib/routeAuth";
+import CircularProgress from "@mui/material/CircularProgress";
+
+import { useRouter } from "next/router";
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -27,6 +28,26 @@ const MyApp = (props: MyAppProps) => {
   const theme = baselightTheme;
 
   const getLayout = Component.getLayout ?? ((page) => page);
+  const router = useRouter();
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const checkAuth = () => {
+      const isAuth = router.pathname?.startsWith("/auth");
+      const hasToken = localStorage.getItem("authToken");
+
+      if (!isAuth && !hasToken) {
+        router.push("/authentication/login").finally(() => {
+          setLoading(false);
+        });
+      } else {
+        setLoading(false);
+      }
+    };
+
+    checkAuth();
+  }, [router.pathname]);
 
   return (
     <CacheProvider value={emotionCache}>
@@ -35,17 +56,24 @@ const MyApp = (props: MyAppProps) => {
         <title>Smartdash</title>
       </Head>
       <ThemeProvider theme={theme}>
-        {/* <AuthProvider> */}
         <CssBaseline />
-        {getLayout(<Component {...pageProps} />)}
-        {/* </AuthProvider> */}
+        {loading ? (
+          <div
+            style={{
+              display: "flex",
+              height: "100vh",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <CircularProgress size={24} color="inherit" />
+          </div>
+        ) : (
+          getLayout(<Component {...pageProps} />)
+        )}
       </ThemeProvider>
     </CacheProvider>
   );
-};
-
-MyApp.getServerSideProps = async (context: any) => {
-  return await routeAuth(context);
 };
 
 export default MyApp;

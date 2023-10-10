@@ -1,6 +1,5 @@
-import Link from "next/link";
 import type { ReactElement } from "react";
-import { Grid, Box, Card, Stack, Typography } from "@mui/material";
+import { Grid, Box, Card } from "@mui/material";
 import BlankLayout from "@src/layouts/blank/BlankLayout";
 
 // components
@@ -43,7 +42,7 @@ const Login2 = () => {
             alignItems="center"
           >
             <Card
-              elevation={9}
+              // elevation={9}
               sx={{ p: 4, zIndex: 1, width: "100%", maxWidth: "500px" }}
             >
               <Box display="flex" alignItems="center" justifyContent="center">

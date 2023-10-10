@@ -16,6 +16,8 @@ import { useRouter } from "next/router";
 import CustomTextField from "@components/forms/theme-elements/CustomTextField";
 import useLogin from "@src/lib/hooks/useLogin";
 
+// import { useAuth } from "@src/context/authContext";
+
 interface loginType {
   title?: string;
   subtitle?: JSX.Element | JSX.Element[];
@@ -54,9 +56,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
           {title}
         </Typography>
       ) : null}
-
       {subtext}
-
       <Stack>
         <Box>
           <Typography
@@ -132,7 +132,11 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
         >
           {loading ? (
             <>
-              <CircularProgress size={24} color="inherit" />
+              <CircularProgress
+                size={24}
+                color="inherit"
+                style={{ marginRight: 10 }}
+              />
               Нэвтрэх
             </>
           ) : (

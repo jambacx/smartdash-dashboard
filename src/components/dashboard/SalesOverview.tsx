@@ -5,7 +5,9 @@ import DashboardCard from "@components/shared/DashboardCard";
 import dynamic from "next/dynamic";
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
-const SalesOverview = () => {
+// import {optionscolumnchart} from '../charts'
+
+const SalesOverview = (chartData: any) => {
   // select
   const [month, setMonth] = React.useState("1");
 
@@ -13,7 +15,6 @@ const SalesOverview = () => {
     setMonth(event.target.value);
   };
 
-  // chart color
   const theme = useTheme();
   const primary = theme.palette.primary.main;
   const secondary = theme.palette.secondary.main;
@@ -85,6 +86,7 @@ const SalesOverview = () => {
       fillSeriesColor: false,
     },
   };
+
   const seriescolumnchart: any = [
     {
       name: "Eanings this month",
@@ -98,7 +100,7 @@ const SalesOverview = () => {
 
   return (
     <DashboardCard
-      title="Sales Overview"
+      title="Дэлгэрэнгүй"
       action={
         <Select
           labelId="month-dd"

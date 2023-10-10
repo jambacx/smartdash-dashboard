@@ -12,14 +12,23 @@ import {
 } from "@mui/material";
 
 import { IconListCheck, IconMail, IconUser } from "@tabler/icons-react";
+import { useRouter } from "next/router";
 
 const Profile = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
   const handleClick2 = (event: any) => {
     setAnchorEl2(event.currentTarget);
   };
+
+  const router = useRouter();
+
   const handleClose2 = () => {
     setAnchorEl2(null);
+  };
+
+  const logout = () => {
+    localStorage.removeItem("authToken");
+    router.push("/authentication/login");
   };
 
   return (
@@ -38,7 +47,7 @@ const Profile = () => {
         onClick={handleClick2}
       >
         <Avatar
-          src="/images/profile/user-1.jpg"
+          src="/images/profile/user-1.png"
           alt="image"
           sx={{
             width: 35,
@@ -69,15 +78,8 @@ const Profile = () => {
           </ListItemIcon>
           <ListItemText>Миний мэдээлэл</ListItemText>
         </MenuItem>
-
         <Box mt={1} py={1} px={2}>
-          <Button
-            href="/authentication/login"
-            variant="outlined"
-            color="primary"
-            component={Link}
-            fullWidth
-          >
+          <Button variant="outlined" color="primary" fullWidth onClick={logout}>
             Гарах
           </Button>
         </Box>

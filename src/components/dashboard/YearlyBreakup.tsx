@@ -13,80 +13,44 @@ import {
 
 import DashboardCard from "@components/shared/DashboardCard";
 
-const YearlyBreakup = ({ item, index }: { item: any; index: number }) => {
-  // chart color
+const ICONS = [IconMailFast, IconMessage2, IconFileLike, IconShare];
+
+const YearlyBreakup = ({
+  item,
+  index,
+  data,
+}: {
+  item: any;
+  index: number;
+  data: any;
+}) => {
+  // Error handling: if data is null or not provided
+  if (!data) {
+    console.error("Data is null or not provided to YearlyBreakup.");
+    return null;
+  }
+
   const theme = useTheme();
-  const primary = theme.palette.primary.main;
-  const primarylight = "#ecf2ff";
 
-  const chartItem = item;
+  const counts = [
+    data?.total_post,
+    data?.total_comment,
+    data?.total_reaction,
+    data?.total_share,
+  ];
 
-  const optionscolumnchart: any = {
-    chart: {
-      type: "donut",
-      fontFamily: "'Plus Jakarta Sans', sans-serif;",
-      foreColor: "#adb0bb",
-      toolbar: {
-        show: false,
-      },
-      height: 370,
-    },
-    colors: [primary, primarylight, "#F9F9FD"],
-    plotOptions: {
-      pie: {
-        startAngle: 0,
-        endAngle: 360,
-        donut: {
-          size: "75%",
-          background: "transparent",
-        },
-      },
-    },
-    tooltip: {
-      theme: theme.palette.mode === "dark" ? "dark" : "light",
-      fillSeriesColor: false,
-    },
-    stroke: {
-      show: false,
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    legend: {
-      show: false,
-    },
-    responsive: [
-      {
-        breakpoint: 991,
-        options: {
-          chart: {
-            width: 120,
-          },
-        },
-      },
-    ],
-  };
-  const seriescolumnchart: any = [38, 40, 25];
+  const IconComponent = ICONS[index];
 
   return (
-    <DashboardCard title={chartItem?.title}>
+    <DashboardCard title={item?.title}>
       <Grid container spacing={3}>
         <Grid item xs={7} sm={7}>
           <Stack direction="row" spacing={1} mt={1} alignItems="center">
-            <Avatar sx={{ bgcolor: chartItem.bgColor, width: 27, height: 27 }}>
-              {index == 0 && (
-                <IconMailFast width={20} color={chartItem.color} />
-              )}
-              {index == 1 && (
-                <IconMessage2 width={20} color={chartItem.color} />
-              )}
-              {index == 2 && (
-                <IconFileLike width={20} color={chartItem.color} />
-              )}
-              {index == 3 && <IconShare width={20} color={chartItem.color} />}
+            <Avatar sx={{ bgcolor: item.bgColor, width: 27, height: 27 }}>
+              <IconComponent width={20} color={item.color} />
             </Avatar>
             <Typography variant="h3" fontWeight="700">
-              {chartItem?.count}
+              {counts[index]}
             </Typography>
           </Stack>
         </Grid>

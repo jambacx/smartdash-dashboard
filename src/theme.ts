@@ -25,6 +25,17 @@ const theme = createTheme({
   typography: {
     fontFamily: nunito.style.fontFamily,
   },
+
+  components: {
+    MuiTableCell: {
+      styleOverrides: {
+        root: {
+          borderBottom: '1px solid black',
+          borderTop: '1px solid black',
+        }
+      }
+    },
+  }
 });
 
 export default theme;

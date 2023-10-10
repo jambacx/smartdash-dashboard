@@ -9,11 +9,12 @@ import { ApexOptions } from "apexcharts";
 
 // ** Component Import
 import ReactApexcharts from "../charts/react-apexcharts";
+import { useDashboard } from "@src/lib/hooks/usePost";
 
 const donutColors = {
-  series1: "#fdd835",
-  series2: "#00d4bd",
-  series3: "#826bf8",
+  series1: "#4F78F8",
+  series3: "#15D9B1",
+  series2: "#DA6E54",
 };
 
 const ApexDonutChart = () => {
@@ -30,7 +31,7 @@ const ApexDonutChart = () => {
       // donutColors.series2,
     ],
     chart: {
-      fontFamily: "Nunito, sans-serif", // Global font setting
+      fontFamily: "Nunito, sans-serif",
     },
     dataLabels: {
       enabled: true,

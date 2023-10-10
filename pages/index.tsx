@@ -1,5 +1,5 @@
 import type { ReactElement } from "react";
-import { Grid, Box } from "@mui/material";
+import { Grid, Box, CircularProgress } from "@mui/material";
 import PageContainer from "@components/container/PageContainer";
 
 // components
@@ -7,8 +7,9 @@ import SalesOverview from "@components/dashboard/SalesOverview";
 import YearlyBreakup from "@components/dashboard/YearlyBreakup";
 import FullLayout from "@src/layouts/full/FullLayout";
 import ApexDonutChart from "@components/dashboard/ApexDonutChart";
+import { useGraph, useDashboard } from "@src/lib/hooks/useDashboard";
 
-import withAuth from "@src/context/withAuth";
+// import withAuth from "@src/context/withAuth";
 function Home() {
   const statusBar = [
     {
@@ -37,18 +38,44 @@ function Home() {
     },
   ];
 
+  const body: any = {
+    type: "custom",
+    page_id: "105701022801307",
+    date_range: ["2023-05-01", "2023-05-31"],
+  };
+
+  const { response, listLoading, listError, listStatus } = useDashboard(body);
+  const { graphResponse, graphLoading, graphError, graphStatus } =
+    useGraph(body);
+
+  const data = response?.data || {};
+  const chartData = graphResponse?.data || {};
+
+  if (listLoading || graphLoading) {
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh"
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   return (
     <PageContainer title="Smartdash" description="this is Dashboard">
       <Box>
         <Grid container spacing={3}>
           {statusBar.map((item, index) => (
             <Grid key={index} item xs={3}>
-              <YearlyBreakup item={item} index={index} />
+              <YearlyBreakup data={data} item={item} index={index} />
             </Grid>
           ))}
 
           <Grid item xs={12} lg={6}>
-            <SalesOverview />
+            <SalesOverview chartData={chartData} />
           </Grid>
           <Grid item xs={12} lg={6}>
             <ApexDonutChart />

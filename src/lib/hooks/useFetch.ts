@@ -1,43 +1,52 @@
 import { useState, useEffect } from "react";
 import HTTP from "../http";
 
-type FetchStatus = "idle" | "loading" | "success" | "error";
+interface FetchOptions {
+    method: "get" | "post" | "put" | "delete";
+    bodyData?: Record<string, any>;
+}
 
-export const useFetch = <T>(url: string, options?: HTTP.RequestConfig, method: "get" | "post" | "put" = "get") => {
-    const [data, setData] = useState<T | null>(null);
-    const [status, setStatus] = useState<FetchStatus>("idle");
-    const [error, setError] = useState<any>(null);
+export const useFetch = (endpoint: string, options: FetchOptions) => {
+    const [response, setResponse] = useState<any>(null);
+    const [status, setStatus] = useState('idle');
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        (async () => {
-            setStatus("loading");
-            setError(null);
+        setIsLoading(true);
+        setStatus('pending');
 
+        const fetchData = async () => {
             try {
-                let response: T;
-                if (method === "get") {
-                    response = await HTTP.get<T>(url, options);
-                } else if (method === "post") {
-                    response = await HTTP.post<T>(url, options);
-                } else if (method === "put") {
-                    response = await HTTP.put<T>(url, options);
-                } else {
-                    throw new Error(`Unsupported method: ${method}`);
+                let response;
+
+                switch (options.method) {
+                    case 'post':
+                        response = await HTTP.post(endpoint, { body: options.bodyData });
+                        break;
+                    case 'get':
+                        response = await HTTP.get(endpoint);
+                        break;
+                    // Add more cases for 'put' and 'delete' as needed
                 }
 
-                setData(response);
-                setStatus("success");
-            } catch (err) {
+                setResponse(response);
+                setStatus('completed');
+                setIsLoading(false);
+            } catch (err: any) {
                 setError(err);
-                setStatus("error");
+                setStatus('error');
+                setIsLoading(false);
             }
-        })();
-    }, [url, JSON.stringify(options), method]);
+        };
+
+        fetchData();
+    }, [endpoint, options.method]);
 
     return {
-        data,
+        response,
         status,
-        isLoading: status === "loading",
-        error,
+        isLoading,
+        error
     };
 };
