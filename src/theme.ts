@@ -13,7 +13,7 @@ export const nunito = Nunito({  // Use Nunito configuration
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#556cd6',
+      main: '#0055FE',
     },
     secondary: {
       main: '#19857b',
@@ -21,6 +21,9 @@ const theme = createTheme({
     error: {
       main: red[700],
     },
+    background: {
+      default: '#d3d3d3'
+    }
   },
   typography: {
     fontFamily: nunito.style.fontFamily,

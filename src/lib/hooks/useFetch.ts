@@ -27,7 +27,6 @@ export const useFetch = (endpoint: string, options: FetchOptions) => {
                     case 'get':
                         response = await HTTP.get(endpoint);
                         break;
-                    // Add more cases for 'put' and 'delete' as needed
                 }
 
                 setResponse(response);
@@ -41,7 +40,7 @@ export const useFetch = (endpoint: string, options: FetchOptions) => {
         };
 
         fetchData();
-    }, [endpoint, options.method]);
+    }, [endpoint, options.method, JSON.stringify(options.bodyData)]);
 
     return {
         response,

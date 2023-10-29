@@ -11,6 +11,9 @@ import { baselightTheme } from "../src/theme/DefaultColors";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import { useRouter } from "next/router";
+import { Router } from "next/router";
+
+import NProgress from "nprogress";
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -48,6 +51,16 @@ const MyApp = (props: MyAppProps) => {
 
     checkAuth();
   }, [router.pathname]);
+
+  Router.events.on("routeChangeStart", () => {
+    NProgress.start();
+  });
+  Router.events.on("routeChangeError", () => {
+    NProgress.done();
+  });
+  Router.events.on("routeChangeComplete", () => {
+    NProgress.done();
+  });
 
   return (
     <CacheProvider value={emotionCache}>

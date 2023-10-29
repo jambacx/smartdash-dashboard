@@ -15,8 +15,7 @@ import { useRouter } from "next/router";
 
 import CustomTextField from "@components/forms/theme-elements/CustomTextField";
 import useLogin from "@src/lib/hooks/useLogin";
-
-// import { useAuth } from "@src/context/authContext";
+import jwt_decode from "jwt-decode";
 
 interface loginType {
   title?: string;
@@ -41,14 +40,17 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
       const loginResponse: any = await login(data);
 
       if (loginResponse.data && loginResponse.data.token) {
-        localStorage.setItem("authToken", loginResponse?.data?.token);
+        const token = loginResponse.data.token;
+        localStorage.setItem("authToken", token);
         router.push("/");
       }
+
     } catch (err) {
       setError("email", { type: "manual", message: "Нэвтрэх нэр буруу." });
       setError("password", { type: "manual", message: "Нууц үг буруу." });
     }
   };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       {title ? (
@@ -61,7 +63,6 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
         <Box>
           <Typography
             variant="subtitle1"
-            // color={loginError ? "error" : "inherit"}
             fontWeight={600}
             component="label"
             htmlFor="username"
@@ -71,6 +72,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
           </Typography>
           <CustomTextField
             {...register("email", { required: "Email is required" })}
+            placeholder="Мэйл хаяг"
             variant="outlined"
             fullWidth
             error={!!errors.email}
@@ -89,6 +91,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
           </Typography>
           <CustomTextField
             {...register("password", { required: "Password is required" })}
+            placeholder="Нууц үг"
             type="password"
             variant="outlined"
             fullWidth

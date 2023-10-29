@@ -4,9 +4,11 @@ import {
   IconArticle,
   IconClipboardData,
   IconSmartHome,
+  IconSettings,
 } from "@tabler/icons-react";
 
 import { uniqueId } from "lodash";
+import { settings } from 'nprogress'
 
 const Menuitems = [
   {
@@ -18,10 +20,6 @@ const Menuitems = [
     title: "Нүүр хуудас",
     icon: IconSmartHome,
     href: "/",
-  },
-  {
-    navlabel: true,
-    subheader: "Дэлгэрэнгүй",
   },
   {
     id: uniqueId(),
@@ -37,10 +35,16 @@ const Menuitems = [
   },
   {
     id: uniqueId(),
-    title: "Тайлан",
-    icon: IconClipboardData,
-    href: "/report",
+    title: "Тохиргоо",
+    icon: IconSettings,
+    href: "/config",
   },
+  // {
+  //   id: uniqueId(),
+  //   title: "Тайлан",
+  //   icon: IconClipboardData,
+  //   href: "/report",
+  // },
 ];
 
 export default Menuitems;

@@ -13,18 +13,26 @@ const donutColors = {
   series2: "#DA6E54",
 };
 
-const ApexDonutChart = () => {
-  // ** Hook
+const ApexDonutChart = ({ chartData }: { chartData: any }) => {
   const theme = useTheme();
+
+  let percentages = []; // Assigning a default value
+
+  if (chartData[0] && chartData[0]?.items && chartData[0]?.items[0] != null) {
+    percentages = chartData[0].percentages;
+
+    if (percentages?.length > 0) {
+      percentages.pop();
+    }
+  }
 
   const options: ApexOptions = {
     stroke: { width: 0 },
-    labels: ["Эерэг", "Сөрөг", "Ерөнхий"],
+    labels: ["Эерэг", "Ерөнхий", "Сөрөг"],
     colors: [
+      donutColors.series3,
       donutColors.series1,
       donutColors.series2,
-      donutColors.series3,
-      // donutColors.series2,
     ],
     chart: {
       fontFamily: "Nunito, sans-serif",
@@ -110,8 +118,8 @@ const ApexDonutChart = () => {
   return (
     <Card>
       <CardHeader
-        title="Expense Ratio"
-        subheader="Spending on various categories"
+        title="Сэтгэгдлийн харьцаа"
+        subheader="Сэтгэгдлийн харьцуулалт"
         subheaderTypographyProps={{
           sx: { color: (theme) => `${theme.palette.text.disabled} !important` },
         }}
@@ -121,7 +129,7 @@ const ApexDonutChart = () => {
           type="donut"
           height={400}
           options={options}
-          series={[85, 16, 50]}
+          series={percentages}
         />
       </CardContent>
     </Card>

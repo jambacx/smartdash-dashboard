@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import Link from "next/link";
+import { useState } from "react";
 import {
   Avatar,
   Box,
@@ -11,7 +10,7 @@ import {
   ListItemText,
 } from "@mui/material";
 
-import { IconListCheck, IconMail, IconUser } from "@tabler/icons-react";
+import { IconSwitch, IconUser } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 
 const Profile = () => {
@@ -55,9 +54,6 @@ const Profile = () => {
           }}
         />
       </IconButton>
-      {/* ------------------------------------------- */}
-      {/* Message Dropdown */}
-      {/* ------------------------------------------- */}
       <Menu
         id="msgs-menu"
         anchorEl={anchorEl2}
@@ -74,9 +70,9 @@ const Profile = () => {
       >
         <MenuItem>
           <ListItemIcon>
-            <IconUser width={20} />
+            <IconSwitch width={20} />
           </ListItemIcon>
-          <ListItemText>Миний мэдээлэл</ListItemText>
+          <ListItemText>Хуудас солих</ListItemText>
         </MenuItem>
         <Box mt={1} py={1} px={2}>
           <Button variant="outlined" color="primary" fullWidth onClick={logout}>

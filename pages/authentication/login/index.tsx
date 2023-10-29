@@ -1,61 +1,99 @@
 import type { ReactElement } from "react";
-import { Grid, Box, Card } from "@mui/material";
-import BlankLayout from "@src/layouts/blank/BlankLayout";
+import { Grid, Box, Card, Typography } from "@mui/material";
+import Image from "next/image";
 
-// components
 import PageContainer from "@components/container/PageContainer";
 import Logo from "@src/layouts/full/shared/logo/Logo";
 import AuthLogin from "../auth/AuthLogin";
+import BlankLayout from "@src/layouts/blank/BlankLayout";
+import {
+  backgroundStyles,
+  gridContainerStyles,
+  cardStyles,
+  gridItemStyles,
+} from "./styles";
 
 const Login2 = () => {
   return (
     <PageContainer title="Login" description="this is Login page">
-      <Box
-        sx={{
-          position: "relative",
-          "&:before": {
-            content: '""',
-            background: "radial-gradient(#d2f1df, #d3d7fa, #bad8f4)",
-            backgroundSize: "400% 400%",
-            animation: "gradient 15s ease infinite",
-            position: "absolute",
-            height: "100%",
-            width: "100%",
-            opacity: "0.3",
-          },
-        }}
-      >
+      <Box sx={backgroundStyles}>
         <Grid
           container
           spacing={0}
           justifyContent="center"
-          sx={{ height: "100vh" }}
+          alignItems="center"
+          sx={gridContainerStyles}
         >
-          <Grid
-            item
-            xs={12}
-            sm={12}
-            lg={4}
-            xl={3}
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <Card
-              // elevation={9}
-              sx={{ p: 4, zIndex: 1, width: "100%", maxWidth: "500px" }}
+          <Card sx={{ ...cardStyles, bgcolor: "white" }}>
+            <Grid
+              item
+              xs={12}
+              sm={5}
+              lg={5}
+              xl={5}
+              display="flex"
+              justifyContent="center"
             >
-              <Box display="flex" alignItems="center" justifyContent="center">
-                <Logo />
+              <Box sx={{ p: 4, width: "100%" }}>
+                <Box display="flex">
+                  <Logo />
+                </Box>
+                <Typography variant="h6" gutterBottom sx={{ mt: 3 }}>
+                  Тавтай морил!
+                </Typography>
+                <Typography
+                  variant="h6"
+                  gutterBottom
+                  sx={{ mt: 2, fontWeight: 500, color: "#8a90a2", mb: 3 }}
+                >
+                  Админ самбарт нэвтрэхийн тулд имэйл хаяг, нууц үгээ оруулна
+                  уу.
+                </Typography>
+                <AuthLogin />
               </Box>
-              <AuthLogin />
-            </Card>
-          </Grid>
+            </Grid>
+            <Grid item xs={12} sm={7} lg={7} xl={7} sx={gridItemStyles}>
+              <Box
+                sx={{ width: "70%", marginTop: 15 }}
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Image
+                  src="/images/products/dashboard.png"
+                  alt="logo"
+                  height={200}
+                  width={400}
+                />
+                <Typography
+                  variant="h5"
+                  gutterBottom
+                  sx={{ textAlign: "center" }}
+                >
+                  Хэрэглэгчийн удирдах самбар
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    mt: 2,
+                    fontWeight: 500,
+                    color: "#8a90a2",
+                    mb: 3,
+                    textAlign: "center",
+                  }}
+                >
+                  Хэрэглэгчдийн сэтгэл ханамжинд бодитоор дүгнэлт хийж, таны
+                  маркетингад үр дүн авчран хэрэглэгчдэд нөлөөлөх
+                </Typography>
+              </Box>
+            </Grid>
+          </Card>
         </Grid>
       </Box>
     </PageContainer>
   );
 };
+
 export default Login2;
 
 Login2.getLayout = function getLayout(page: ReactElement) {

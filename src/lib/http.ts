@@ -70,8 +70,6 @@ namespace HTTP {
         options?: RequestConfig
     ): Promise<T> => {
 
-        console.log("options: ", options?.params);
-
         return await request<T>({
             method: "GET",
             url,
