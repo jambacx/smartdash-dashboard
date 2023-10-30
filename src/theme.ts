@@ -21,9 +21,6 @@ const theme = createTheme({
     error: {
       main: red[700],
     },
-    background: {
-      default: '#d3d3d3'
-    }
   },
   typography: {
     fontFamily: nunito.style.fontFamily,

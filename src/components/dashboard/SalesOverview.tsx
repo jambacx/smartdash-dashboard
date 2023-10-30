@@ -97,21 +97,6 @@ const SalesOverview = ({ chartData }: { chartData: any }) => {
   return (
     <DashboardCard
       title="Дэлгэрэнгүй"
-      action={
-        <Select
-          labelId="month-dd"
-          id="month-dd"
-          value={month}
-          size="small"
-          onChange={handleChange}
-        >
-          {getLastThreeMonths().map((monthObj) => (
-            <MenuItem key={monthObj.value} value={monthObj.value}>
-              {monthObj.label}
-            </MenuItem>
-          ))}
-        </Select>
-      }
     >
       <Chart
         options={optionscolumnchart}

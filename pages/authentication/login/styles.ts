@@ -10,7 +10,7 @@ export const backgroundStyles = (theme: Theme) => ({
         height: "100%",
         width: "100%",
         opacity: "0.3",
-        backgroundColor: theme.palette.background.default,
+        // backgroundColor: theme.palette.background.default,
     },
 });
 

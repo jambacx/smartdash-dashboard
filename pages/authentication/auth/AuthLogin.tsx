@@ -15,7 +15,6 @@ import { useRouter } from "next/router";
 
 import CustomTextField from "@components/forms/theme-elements/CustomTextField";
 import useLogin from "@src/lib/hooks/useLogin";
-import jwt_decode from "jwt-decode";
 
 interface loginType {
   title?: string;
