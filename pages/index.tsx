@@ -1,5 +1,5 @@
-import {useState, type ReactElement, useMemo} from "react";
-import {Grid, Box} from "@mui/material";
+import { useState, type ReactElement, useMemo } from "react";
+import { Grid, Box } from "@mui/material";
 import {
   PageContainer,
   SalesOverview,
@@ -8,8 +8,8 @@ import {
   ApexDonutChart,
 } from "@src/components";
 import FullLayout from "@src/layouts/full/FullLayout";
-import {useGraph, useDashboard} from "@src/lib/hooks/useDashboard";
-import {statusBar} from "./utilities/dummy/dummy";
+import { useGraph, useDashboard } from "@src/lib/hooks/useDashboard";
+import { statusBar } from "./utilities/dummy/dummy";
 import ReactionsOverview from "@src/components/dashboard/ReactionsOverview";
 import Filter from "@src/components/forms/theme-elements/Filter";
 function Home() {
@@ -33,8 +33,8 @@ function Home() {
     [selectedDate, filterType, endDate, selectedCategory],
   );
 
-  const {response, listLoading, listError, listStatus} = useDashboard(body);
-  const {graphResponse, graphLoading, graphError, graphStatus} = useGraph(body);
+  const { response, listLoading } = useDashboard(body);
+  const { graphResponse, graphLoading } = useGraph(body);
 
   const data = response?.data || {};
   const chartData = graphResponse?.data || [];
@@ -53,9 +53,11 @@ function Home() {
           setType={setType}
         />
 
-        {listLoading || graphLoading ? (
+        {listLoading || graphLoading
+          ? (
           <FallbackSpinner />
-        ) : (
+            )
+          : (
           <Grid container spacing={3}>
             {statusBar.map((item, index) => (
               <Grid key={index} item xs={3}>
@@ -72,7 +74,7 @@ function Home() {
               <ReactionsOverview chartData={data} />
             </Grid>
           </Grid>
-        )}
+            )}
       </Box>
     </PageContainer>
   );

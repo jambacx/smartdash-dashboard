@@ -23,7 +23,7 @@ import CustomModal from "@components/modal";
 
 function Posts() {
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(15);
+  const [rowsPerPage] = useState(15);
   const [selectedPost, setSelectedPost] = useState<any | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | null>(
     new Date(new Date().setMonth(new Date().getMonth() - 1)),
@@ -45,7 +45,7 @@ function Posts() {
     [page, rowsPerPage, selectedDate, endDate, selectedCategory],
   );
 
-  const {response, listLoading, listError, listStatus} = usePost(body);
+  const {response, listLoading} = usePost(body);
   const posts = response?.posts || [];
   const pagination = response?.pagination || {};
 
@@ -92,9 +92,11 @@ function Posts() {
             setSelectedCategory={setSelectedCategory}
           />
 
-          {listLoading ? (
+          {listLoading
+            ? (
             <FallbackSpinner />
-          ) : (
+              )
+            : (
             <>
               <CustomTable headers={rowsTitles}>
                 <TableBody>
@@ -200,7 +202,7 @@ function Posts() {
                 </TableBody>
               </CustomTable>
             </>
-          )}
+              )}
           <CustomModal
             open={open}
             handleClose={handleClose}

@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import {styled, Container, Box} from "@mui/material";
+import { useState } from "react";
+import { styled, Container, Box } from "@mui/material";
 
 import Header from "./header/Header";
 import Sidebar from "./sidebar/Sidebar";
@@ -23,8 +23,8 @@ interface Props {
   children: React.ReactNode;
 }
 
-const FullLayout: React.FC<Props> = ({children}) => {
-  const [isSidebarOpen, setSidebarOpen] = useState(true);
+const FullLayout: React.FC<Props> = ({ children }: any) => {
+  const [isSidebarOpen] = useState(true);
   const [isMobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   return (
@@ -49,7 +49,7 @@ const FullLayout: React.FC<Props> = ({children}) => {
             paddingTop: "20px",
             maxWidth: "1200px",
           }}>
-          <Box sx={{minHeight: "calc(100vh - 170px)"}}>{children}</Box>
+          <Box sx={{ minHeight: "calc(100vh - 170px)" }}>{children}</Box>
         </Container>
       </PageWrapper>
     </MainWrapper>

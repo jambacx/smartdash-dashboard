@@ -26,8 +26,7 @@ function Component({
     page_id: process.env.NEXT_PUBLIC_PAGE_ID,
   };
 
-  const {response, listLoading, listError, listStatus} = usePost(body);
-  const posts = response?.posts || [];
+  const { listLoading} = usePost(body);
 
   const style = {
     position: "absolute",

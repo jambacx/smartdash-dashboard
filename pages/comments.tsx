@@ -22,7 +22,7 @@ import {
 
 function Comments() {
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(15);
+  const [rowsPerPage] = useState(15);
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(
     new Date(new Date().setMonth(new Date().getMonth() - 1)),
@@ -45,7 +45,7 @@ function Comments() {
     [page, rowsPerPage, selectedDate, selectedCategory, endDate],
   );
 
-  const {response, listLoading, listError, listStatus} = useComment(body);
+  const {response, listLoading} = useComment(body);
   const rowsTitles = [
     "#",
     "Comment",
@@ -105,9 +105,11 @@ function Comments() {
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
           />
-          {listLoading ? (
+          {listLoading
+            ? (
             <FallbackSpinner />
-          ) : (
+              )
+            : (
             <CustomTable headers={rowsTitles}>
               <TableBody>
                 {comments.map((comment: any, index: number) => (
@@ -180,7 +182,7 @@ function Comments() {
                       </Typography>
                     </TableCell>
                     <TableCell>
-                      {comment?.reply == "No Reply Need" && comment?.reply}
+                      {comment?.reply === "No Reply Need" && comment?.reply}
                     </TableCell>
                     <TableCell>
                       <IconExternalLink
@@ -199,7 +201,7 @@ function Comments() {
                 ))}
               </TableBody>
             </CustomTable>
-          )}
+              )}
           <Pagination
             count={pagination?.page_count || 1}
             page={page + 1}

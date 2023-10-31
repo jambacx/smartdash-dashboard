@@ -3,7 +3,6 @@ import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
 import {Box, MenuItem, Select} from "@mui/material";
 import {useConfig} from "@src/lib/hooks/useConfig";
-import {useState} from "react";
 
 function ControlledDatePicker({
   selectedDate,
@@ -13,7 +12,7 @@ function ControlledDatePicker({
   selectedCategory,
   setSelectedCategory,
 }: any) {
-  const {response: confResponse, listLoading: confLoading} = useConfig();
+  const {response: confResponse} = useConfig();
   const categories = confResponse?.categories || [];
 
   return (

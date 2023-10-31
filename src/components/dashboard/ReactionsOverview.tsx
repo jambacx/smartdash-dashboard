@@ -1,4 +1,3 @@
-import React from "react";
 import dynamic from "next/dynamic";
 import { Card, CardContent, CardHeader } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
@@ -10,7 +9,7 @@ interface SalesOverviewProps {
   chartData: Record<string, number>;
 }
 
-const ReactionsOverview: React.FC<SalesOverviewProps> = ({ chartData }) => {
+const ReactionsOverview: React.FC<SalesOverviewProps> = ({ chartData }: any) => {
   const theme = useTheme();
 
   const reactionEmojiMap: Record<string, string> = {
@@ -33,7 +32,7 @@ const ReactionsOverview: React.FC<SalesOverviewProps> = ({ chartData }) => {
     WOW: "#9400D3",
   };
 
-  const seriescolumnchart = chartData?.reactions
+  const seriescolumnchart: any = chartData?.reactions
     ? Object.entries(chartData.reactions).map(([reaction, count]) => ({
       name: reactionEmojiMap[reaction],
       data: [count],

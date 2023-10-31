@@ -7,6 +7,7 @@
     "plugin:react/recommended",
     "standard-with-typescript",
     "plugin:import/typescript",
+    "plugin:react/jsx-runtime"
   ],
   "parser": "@typescript-eslint/parser",
   "overrides": [],
@@ -18,6 +19,16 @@
   "plugins": ["react", "prettier"],
   "rules": {
     "@typescript-eslint/triple-slash-reference": "off",
-    "@typescript-eslint/explicit-function-return-type": "off"
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/quotes": "off",
+    "@typescript-eslint/semi": "off",
+    "@typescript-eslint/object-curly-spacing": "off",
+    "@typescript-eslint/comma-dangle": "off",
+    "typescript-eslint/object-curly-spacing": "off",
+    "@typescript-eslint/member-delimiter-style": "off",
+    "@typescript-eslint/no-misused-promises": "off",
+    "@typescript-eslint/strict-boolean-expressions": "off",
+    "@typescript-eslint/space-before-function-paren": "off",
+    "@typescript-eslint/no-floating-promises": "off"
   }
 }

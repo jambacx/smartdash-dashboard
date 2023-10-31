@@ -1,16 +1,16 @@
-import {useEffect, type ReactElement, type ReactNode, useState} from "react";
+import { useEffect, type ReactElement, type ReactNode, useState } from "react";
 
-import type {NextPage} from "next";
+import type { NextPage } from "next";
 import Head from "next/head";
-import {type AppProps} from "next/app";
-import {ThemeProvider} from "@mui/material/styles";
+import { type AppProps } from "next/app";
+import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import {CacheProvider, type EmotionCache} from "@emotion/react";
+import { CacheProvider, type EmotionCache } from "@emotion/react";
 import createEmotionCache from "../src/createEmotionCache";
-import {baselightTheme} from "../src/theme/DefaultColors";
+import { baselightTheme } from "../src/theme/DefaultColors";
 import CircularProgress from "@mui/material/CircularProgress";
 
-import {useRouter, Router} from "next/router";
+import { useRouter, Router } from "next/router";
 
 import NProgress from "nprogress";
 
@@ -26,7 +26,7 @@ interface MyAppProps extends AppProps {
 }
 
 const MyApp = (props: MyAppProps) => {
-  const {Component, emotionCache = clientSideEmotionCache, pageProps} = props;
+  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   const theme = baselightTheme;
 
   const getLayout = Component.getLayout ?? (page => page);
@@ -69,7 +69,8 @@ const MyApp = (props: MyAppProps) => {
       </Head>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        {loading ? (
+        {loading
+          ? (
           <div
             style={{
               display: "flex",
@@ -79,9 +80,10 @@ const MyApp = (props: MyAppProps) => {
             }}>
             <CircularProgress size={24} color="inherit" />
           </div>
-        ) : (
-          getLayout(<Component {...pageProps} />)
-        )}
+            )
+          : (
+              getLayout(<Component {...pageProps} />)
+            )}
       </ThemeProvider>
     </CacheProvider>
   );

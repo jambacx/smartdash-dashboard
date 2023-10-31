@@ -36,7 +36,7 @@ namespace HTTP {
       return response.data;
     },
     error => {
-      if (error.response?.data?.code && error.response.data.code != 102) {
+      if (error.response?.data?.code && error.response.data.code !== 102) {
         return error.response.data;
       }
       return Promise.reject(error);

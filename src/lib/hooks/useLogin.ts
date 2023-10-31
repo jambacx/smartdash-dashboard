@@ -6,7 +6,7 @@ const useLogin = () => {
   const [response, setResponse] = useState<any>(null);
   const [error, setError] = useState<any>(null);
 
-  const login = async (credentials: {email: string; password: string}) => {
+  const login = async (credentials: { email: string; password: string }) => {
     setLoading(true);
     try {
       const data = await HTTP.post("/customer/auth/login", {

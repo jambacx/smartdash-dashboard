@@ -1,10 +1,10 @@
 // ** MUI Imports
 import Card from "@mui/material/Card";
-import {useTheme} from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 
-import {type ApexOptions} from "apexcharts";
+import { type ApexOptions } from "apexcharts";
 import ReactApexcharts from "../charts/react-apexcharts";
 
 const donutColors = {
@@ -13,7 +13,7 @@ const donutColors = {
   series2: "#DA6E54",
 };
 
-const ApexDonutChart = ({chartData}: {chartData: any}) => {
+const ApexDonutChart = ({ chartData }: { chartData: any }) => {
   const theme = useTheme();
 
   let percentages = []; // Assigning a default value
@@ -27,7 +27,7 @@ const ApexDonutChart = ({chartData}: {chartData: any}) => {
   }
 
   const options: ApexOptions = {
-    stroke: {width: 0},
+    stroke: { width: 0 },
     labels: ["Эерэг", "Ерөнхий", "Сөрөг"],
     colors: [donutColors.series3, donutColors.series1, donutColors.series2],
     chart: {
@@ -39,8 +39,8 @@ const ApexDonutChart = ({chartData}: {chartData: any}) => {
     },
     legend: {
       position: "bottom",
-      markers: {offsetX: -3},
-      labels: {colors: theme.palette.text.secondary},
+      markers: { offsetX: -3 },
+      labels: { colors: theme.palette.text.secondary },
       itemMargin: {
         vertical: 3,
         horizontal: 10,
@@ -117,7 +117,7 @@ const ApexDonutChart = ({chartData}: {chartData: any}) => {
         title="Сэтгэгдлийн харьцаа"
         subheader="Сэтгэгдлийн харьцуулалт"
         subheaderTypographyProps={{
-          sx: {color: theme => `${theme.palette.text.disabled} !important`},
+          sx: { color: theme => `${theme.palette.text.disabled} !important` },
         }}
       />
       <CardContent>

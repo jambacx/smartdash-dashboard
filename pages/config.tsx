@@ -1,4 +1,4 @@
-import {type ReactElement, useState} from "react";
+import { type ReactElement } from "react";
 import {
   Typography,
   Box,
@@ -6,17 +6,16 @@ import {
   TableCell,
   TableRow,
   CircularProgress,
-  Button,
 } from "@mui/material";
 import DashboardCard from "@components/shared/DashboardCard";
-import {useConfig} from "@src/lib/hooks/useConfig";
+import { useConfig } from "@src/lib/hooks/useConfig";
 import PageContainer from "@src/components/container/PageContainer";
 import FullLayout from "@src/layouts/full/FullLayout";
-import {IconTrash} from "@tabler/icons-react";
-import {CustomTable} from "@src/components/table/CustomTable";
+import { IconTrash } from "@tabler/icons-react";
+import { CustomTable } from "@src/components/table/CustomTable";
 
 function Config() {
-  const {response, listLoading} = useConfig();
+  const { response, listLoading } = useConfig();
   const categories = response?.categories || [];
 
   const rowsTitles = ["#", "Ангилал", "Үйлдэл"];
@@ -41,7 +40,7 @@ function Config() {
             display: "flex",
             flexDirection: "column",
             overflow: "auto",
-            width: {xs: "280px", sm: "auto"},
+            width: { xs: "280px", sm: "auto" },
           }}>
           <CustomTable headers={rowsTitles}>
             <TableBody>
@@ -52,7 +51,7 @@ function Config() {
                     borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
                   }}>
                   <TableCell>
-                    <Typography sx={{fontSize: "14px", fontWeight: 300}}>
+                    <Typography sx={{ fontSize: "14px", fontWeight: 300 }}>
                       {index + 1}
                     </Typography>
                   </TableCell>

@@ -1,11 +1,11 @@
 // ** React Import
-import {forwardRef} from "react";
+import { forwardRef } from "react";
 
 // ** MUI Imports
-import {styled} from "@mui/material/styles";
-import TextField, {type TextFieldProps} from "@mui/material/TextField";
+import { styled } from "@mui/material/styles";
+import TextField, { type TextFieldProps } from "@mui/material/TextField";
 
-const TextFieldStyled = styled(TextField)<TextFieldProps>(({theme}) => ({
+const TextFieldStyled = styled(TextField)<TextFieldProps>(({ theme }) => ({
   alignItems: "flex-start",
   "& .MuiInputLabel-root": {
     transform: "none",
@@ -37,9 +37,9 @@ const TextFieldStyled = styled(TextField)<TextFieldProps>(({theme}) => ({
     "&.Mui-focused": {
       boxShadow: theme.shadows[2],
       "& .MuiInputBase-input:not(.MuiInputBase-readOnly):not([readonly])::placeholder":
-        {
-          transform: "translateX(4px)",
-        },
+      {
+        transform: "translateX(4px)",
+      },
       "&.MuiInputBase-colorPrimary": {
         borderColor: theme.palette.primary.main,
       },
@@ -158,9 +158,9 @@ const TextFieldStyled = styled(TextField)<TextFieldProps>(({theme}) => ({
   },
 }));
 
+// eslint-disable-next-line react/display-name
 const CustomTextField = forwardRef((props: TextFieldProps, ref) => {
-  // ** Props
-  const {size = "small", InputLabelProps, ...rest} = props;
+  const { size = "small", InputLabelProps, ...rest } = props;
 
   return (
     <TextFieldStyled
@@ -168,7 +168,7 @@ const CustomTextField = forwardRef((props: TextFieldProps, ref) => {
       inputRef={ref}
       {...rest}
       variant="filled"
-      InputLabelProps={{...InputLabelProps, shrink: true}}
+      InputLabelProps={{ ...InputLabelProps, shrink: true }}
     />
   );
 });

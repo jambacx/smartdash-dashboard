@@ -9,9 +9,9 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 
-import {useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
 import CircularProgress from "@mui/material/CircularProgress";
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 
 import CustomTextField from "@components/forms/theme-elements/CustomTextField";
 import useLogin from "@src/lib/hooks/useLogin";
@@ -27,35 +27,37 @@ interface FormInput {
   password: string;
 }
 
-const AuthLogin = ({title, subtitle, subtext}: loginType) => {
-  const {register, handleSubmit, setError, clearErrors, formState} =
+const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
+  const { register, handleSubmit, setError, formState } =
     useForm<FormInput>();
-  const {errors} = formState;
-  const {login, loading, error} = useLogin();
+  const { errors } = formState;
+  const { login, loading } = useLogin();
   const router = useRouter();
 
-  const onSubmit = async (data: {email: string; password: string}) => {
+  const onSubmit = async (data: { email: string; password: string }) => {
     try {
       const loginResponse: any = await login(data);
 
-      if (loginResponse.data?.token) {
+      if (loginResponse.data?.token !== null) {
         const token = loginResponse.data.token;
         localStorage.setItem("authToken", token);
-        router.push("/");
+        await router.push("/");
       }
     } catch (err) {
-      setError("email", {type: "manual", message: "Нэвтрэх нэр буруу."});
-      setError("password", {type: "manual", message: "Нууц үг буруу."});
+      setError("email", { type: "manual", message: "Нэвтрэх нэр буруу." });
+      setError("password", { type: "manual", message: "Нууц үг буруу." });
     }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {title ? (
+      {title !== null
+        ? (
         <Typography fontWeight="700" variant="h2" mb={1}>
           {title}
         </Typography>
-      ) : null}
+          )
+        : null}
       {subtext}
       <Stack>
         <Box>
@@ -68,7 +70,7 @@ const AuthLogin = ({title, subtitle, subtext}: loginType) => {
             Нэвтрэх нэр
           </Typography>
           <CustomTextField
-            {...register("email", {required: "Email is required"})}
+            {...register("email", { required: "Email is required" })}
             placeholder="Мэйл хаяг"
             variant="outlined"
             fullWidth
@@ -86,7 +88,7 @@ const AuthLogin = ({title, subtitle, subtext}: loginType) => {
             Нууц үг
           </Typography>
           <CustomTextField
-            {...register("password", {required: "Password is required"})}
+            {...register("password", { required: "Password is required" })}
             placeholder="Нууц үг"
             type="password"
             variant="outlined"
@@ -126,18 +128,20 @@ const AuthLogin = ({title, subtitle, subtext}: loginType) => {
           fullWidth
           type="submit"
           disabled={loading}>
-          {loading ? (
+          {loading
+            ? (
             <>
               <CircularProgress
                 size={24}
                 color="inherit"
-                style={{marginRight: 10}}
+                style={{ marginRight: 10 }}
               />
               Нэвтрэх
             </>
-          ) : (
-            "Нэвтрэх"
-          )}
+              )
+            : (
+                "Нэвтрэх"
+              )}
         </Button>
       </Box>
     </form>

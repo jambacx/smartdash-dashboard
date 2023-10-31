@@ -6,12 +6,4 @@ export {default as CustomTextField} from "./forms/theme-elements/CustomTextField
 export {default as BlankCard} from "./shared/BlankCard";
 export {default as DashboardCard} from "./shared/DashboardCard";
 export {CustomTable} from "./table/CustomTable";
-export {
-  ApexDonutChart,
-  Blog,
-  MonthlyEarnings,
-  ProductPerformance,
-  RecentTransactions,
-  SalesOverview,
-  YearlyBreakup,
-} from "./dashboard";
+export {ApexDonutChart, YearlyBreakup, SalesOverview} from "./dashboard";

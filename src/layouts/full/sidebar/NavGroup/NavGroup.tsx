@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import {ListSubheader, styled, type Theme} from "@mui/material";
+import { ListSubheader, styled, type Theme } from "@mui/material";
 
 interface NavGroup {
   navlabel?: boolean;
@@ -10,10 +10,11 @@ interface ItemType {
   item: NavGroup;
 }
 
-const NavGroup = ({item}: ItemType) => {
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+const NavGroup = ({ item }: ItemType) => {
   const ListSubheaderStyle = styled((props: Theme | any) => (
     <ListSubheader disableSticky {...props} />
-  ))(({theme}) => ({
+  ))(({ theme }) => ({
     ...theme.typography.overline,
     fontWeight: "700",
     marginTop: theme.spacing(3),

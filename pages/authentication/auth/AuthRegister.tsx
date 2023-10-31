@@ -1,8 +1,8 @@
-import {Box, Typography, Button} from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import Link from "next/link";
 
 import CustomTextField from "@components/forms/theme-elements/CustomTextField";
-import {Stack} from "@mui/system";
+import { Stack } from "@mui/system";
 
 interface registerType {
   title?: string;
@@ -10,13 +10,15 @@ interface registerType {
   subtext?: JSX.Element | JSX.Element[];
 }
 
-const AuthRegister = ({title, subtitle, subtext}: registerType) => (
+const AuthRegister = ({ title, subtitle, subtext }: registerType) => (
   <>
-    {title ? (
+    {title !== null
+      ? (
       <Typography fontWeight="700" variant="h2" mb={1}>
         {title}
       </Typography>
-    ) : null}
+        )
+      : null}
 
     {subtext}
 

@@ -1,9 +1,8 @@
-import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
-import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
-import {DatePicker} from "@mui/x-date-pickers/DatePicker";
-import {Box, MenuItem, Select, FormControl, InputLabel} from "@mui/material";
-import {useConfig} from "@src/lib/hooks/useConfig";
-import {useState} from "react";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { Box, MenuItem, Select, FormControl } from "@mui/material";
+import { useConfig } from "@src/lib/hooks/useConfig";
 
 function Filter({
   selectedDate,
@@ -15,11 +14,8 @@ function Filter({
   filterType,
   setType,
 }: any) {
-  const {response: confResponse, listLoading: confLoading} = useConfig();
+  const { response: confResponse } = useConfig();
   const categories = confResponse?.categories || [];
-
-  const [selectedOption1, setSelectedOption1] = useState("");
-  const [selectedOption2, setSelectedOption2] = useState("");
 
   return (
     <Box
@@ -30,14 +26,14 @@ function Filter({
         marginTop: 1,
         marginBottom: 4,
       }}>
-      <FormControl sx={{flex: 1, minWidth: 120}}>
+      <FormControl sx={{ flex: 1, minWidth: 120 }}>
         <Select
           size="small"
           labelId="category-label"
           displayEmpty
           value={selectedCategory}
           onChange={e => setSelectedCategory(e.target.value)}>
-          <MenuItem value="" sx={{color: "grey"}}>
+          <MenuItem value="" sx={{ color: "grey" }}>
             Ангилалаа сонгоно уу
           </MenuItem>
           {categories.map((category: any) => (
@@ -83,7 +79,7 @@ function Filter({
           format="yyyy-MM-dd"
         />
         <DatePicker
-          slotProps={{textField: {size: "small", error: false}}}
+          slotProps={{ textField: { size: "small", error: false } }}
           sx={{
             // marginRight: 2,
             flex: 1,

@@ -10,7 +10,7 @@ import {
   ListItemText,
 } from "@mui/material";
 
-import {IconSwitch, IconUser} from "@tabler/icons-react";
+import {IconSwitch } from "@tabler/icons-react";
 import {useRouter} from "next/router";
 
 const Profile = () => {
