@@ -3,7 +3,7 @@ import { forwardRef } from 'react'
 
 // ** MUI Imports
 import { styled } from '@mui/material/styles'
-import TextField, { TextFieldProps } from '@mui/material/TextField'
+import TextField, { type TextFieldProps } from '@mui/material/TextField'
 
 const TextFieldStyled = styled(TextField)<TextFieldProps>(({ theme }) => ({
   alignItems: 'flex-start',

@@ -1,4 +1,4 @@
-import { ReactElement, useMemo, useState } from "react";
+import { type ReactElement, useMemo, useState } from "react";
 import {
   Typography,
   Box,
@@ -47,7 +47,7 @@ function Posts() {
     setSelectedPost(post);
     setOpen(true);
   };
-  const handleClose = () => setOpen(false);
+  const handleClose = () => { setOpen(false); };
 
   const rowsTitles = ["#", "Post", "Category", "Date", "Action"];
 
@@ -154,7 +154,7 @@ function Posts() {
                           type="button"
                         />
                         <IconDotsVertical
-                          onClick={() => handleOpen(post)}
+                          onClick={() => { handleOpen(post); }}
                           size={20}
                           color="#6b6969"
                           style={{ cursor: "pointer", marginRight: '8px', fontSize: '13px' }}

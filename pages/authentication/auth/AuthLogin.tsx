@@ -38,7 +38,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
     try {
       const loginResponse: any = await login(data);
 
-      if (loginResponse.data && loginResponse.data.token) {
+      if (loginResponse.data?.token) {
         const token = loginResponse.data.token;
         localStorage.setItem("authToken", token);
         router.push("/");

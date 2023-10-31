@@ -4,7 +4,7 @@ import { useTheme } from "@mui/material/styles";
 import DashboardCard from "@components/shared/DashboardCard";
 import dynamic from "next/dynamic";
 import { getLastThreeMonths, formatDates } from './lastMonths';
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+const Chart = dynamic(async () => await import("react-apexcharts"), { ssr: false });
 
 const SalesOverview = ({ chartData }: { chartData: any }) => {
   const [month, setMonth] = React.useState("1");

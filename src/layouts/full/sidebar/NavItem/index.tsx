@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 
-type NavGroup = {
+interface NavGroup {
   [x: string]: any;
   id?: string;
   navlabel?: boolean;
@@ -20,7 +20,7 @@ type NavGroup = {
   icon?: any;
   href?: any;
   onClick?: React.MouseEvent<HTMLButtonElement, MouseEvent>;
-};
+}
 
 interface ItemType {
   item: NavGroup;

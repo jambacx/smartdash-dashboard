@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import axios, { type AxiosInstance, type AxiosRequestConfig } from "axios";
 
 namespace HTTP {
     export interface RequestConfig extends AxiosRequestConfig<Record<string, any>> {
@@ -20,12 +20,12 @@ namespace HTTP {
         (config) => {
             const token = localStorage.getItem("authToken");
             if (token) {
-                config.headers["Authorization"] = `Bearer ${token}`;
+                config.headers.Authorization = `Bearer ${token}`;
             }
             return config;
         },
-        (error) => {
-            return Promise.reject(error);
+        async (error) => {
+            return await Promise.reject(error);
         }
     );
 
@@ -35,9 +35,7 @@ namespace HTTP {
         },
         (error) => {
             if (
-                error.response &&
-                error.response.data &&
-                error.response.data.code &&
+                error.response?.data?.code &&
                 error.response.data.code != 102
             ) {
                 return error.response.data;
@@ -56,7 +54,7 @@ namespace HTTP {
                 ...options,
             });
         } catch (error: any) {
-            if (error && error.response && error.response.data) {
+            if (error?.response?.data) {
                 throw error.response.data;
             } else if (error) {
                 throw error;

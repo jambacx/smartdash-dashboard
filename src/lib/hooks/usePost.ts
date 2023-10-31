@@ -12,7 +12,7 @@ export const usePost = (bodyData: DashboardRequestBody) => {
         bodyData
     };
 
-    const { response: response, status: listStatus, isLoading: listLoading, error: listError } = useFetch("/post", fetchOptions);
+    const { response, status: listStatus, isLoading: listLoading, error: listError } = useFetch("/post", fetchOptions);
 
     return {
         response,

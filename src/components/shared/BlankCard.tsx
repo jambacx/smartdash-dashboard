@@ -1,9 +1,9 @@
 import { Card } from "@mui/material";
 
-type Props = {
+interface Props {
   className?: string;
   children: JSX.Element | JSX.Element[];
-};
+}
 
 const BlankCard = ({ children, className }: Props) => {
   return (

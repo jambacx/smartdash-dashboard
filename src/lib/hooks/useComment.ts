@@ -12,7 +12,7 @@ export const useComment = (bodyData: DashboardRequestBody) => {
         bodyData
     };
 
-    const { response: response, status: listStatus, isLoading: listLoading, error: listError } = useFetch("/comment", fetchOptions);
+    const { response, status: listStatus, isLoading: listLoading, error: listError } = useFetch("/comment", fetchOptions);
 
     return {
         response,

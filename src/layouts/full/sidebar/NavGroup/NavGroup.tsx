@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
-import { ListSubheader, styled, Theme } from "@mui/material";
+import { ListSubheader, styled, type Theme } from "@mui/material";
 
-type NavGroup = {
+interface NavGroup {
   navlabel?: boolean;
   subheader?: string;
-};
+}
 
 interface ItemType {
   item: NavGroup;

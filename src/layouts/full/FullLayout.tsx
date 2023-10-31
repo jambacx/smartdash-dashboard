@@ -32,11 +32,11 @@ const FullLayout: React.FC<Props> = ({ children }) => {
       <Sidebar
         isSidebarOpen={isSidebarOpen}
         isMobileSidebarOpen={isMobileSidebarOpen}
-        onSidebarClose={() => setMobileSidebarOpen(false)}
+        onSidebarClose={() => { setMobileSidebarOpen(false); }}
       />
 
       <PageWrapper className="page-wrapper">
-        <Header toggleMobileSidebar={() => setMobileSidebarOpen(true)} />
+        <Header toggleMobileSidebar={() => { setMobileSidebarOpen(true); }} />
 
         <Container
           sx={{

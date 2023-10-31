@@ -2,18 +2,16 @@ import React from "react";
 import dynamic from "next/dynamic";
 import { Select, MenuItem, Card, CardContent, CardHeader } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+const Chart = dynamic(async () => await import("react-apexcharts"), { ssr: false });
 
 interface SalesOverviewProps {
-  chartData: {
-    [key: string]: number;
-  };
+  chartData: Record<string, number>;
 }
 
 const ReactionsOverview: React.FC<SalesOverviewProps> = ({ chartData }) => {
   const theme = useTheme();
 
-  const reactionEmojiMap: { [key: string]: string } = {
+  const reactionEmojiMap: Record<string, string> = {
     "CARE": "🤗",
     "HAHA": "😆",
     "LOVE": "❤️",
@@ -23,7 +21,7 @@ const ReactionsOverview: React.FC<SalesOverviewProps> = ({ chartData }) => {
     "WOW": "😮",
   };
 
-  const reactionColorMap: { [key: string]: string } = {
+  const reactionColorMap: Record<string, string> = {
     "CARE": "#FFD700",
     "HAHA": "#FF6347",
     "LOVE": "#E3002D",

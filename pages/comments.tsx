@@ -1,4 +1,4 @@
-import { ReactElement, useMemo, useState } from "react";
+import { type ReactElement, useMemo, useState } from "react";
 import {
   Typography,
   Box,

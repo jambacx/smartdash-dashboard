@@ -1,6 +1,5 @@
 import React from "react";
 import dynamic from "next/dynamic";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 import { useTheme } from "@mui/material/styles";
 import { Grid, Stack, Typography, Avatar } from "@mui/material";
 import {
@@ -12,6 +11,7 @@ import {
 } from "@tabler/icons-react";
 
 import DashboardCard from "@components/shared/DashboardCard";
+const Chart = dynamic(async () => await import("react-apexcharts"), { ssr: false });
 
 const ICONS = [IconMailFast, IconMessage2, IconFileLike, IconShare];
 
