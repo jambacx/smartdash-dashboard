@@ -1,5 +1,5 @@
 import Link from "next/link";
-import {styled} from "@mui/material";
+import { styled } from "@mui/material";
 import Image from "next/image";
 
 const LinkStyled = styled(Link)(() => ({

@@ -16,12 +16,7 @@ import {IconTrash} from "@tabler/icons-react";
 import {CustomTable} from "@src/components/table/CustomTable";
 
 function Config() {
-  const body: any = {
-    page_id: process.env.NEXT_PUBLIC_PAGE_ID,
-    category: "default",
-  };
-
-  const {response, listLoading} = useConfig(body);
+  const {response, listLoading} = useConfig();
   const categories = response?.categories || [];
 
   const rowsTitles = ["#", "Ангилал", "Үйлдэл"];
