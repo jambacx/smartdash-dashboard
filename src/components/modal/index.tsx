@@ -1,7 +1,7 @@
 import {Typography, Box, Modal, Avatar, Grid, Stack} from "@mui/material";
 import {DashboardCard, FallbackSpinner} from "@src/components";
 import {usePost} from "@src/lib/hooks/usePost";
-import {detailBar} from "@src/../pages/utilities/dummy/dummy";
+import {detailBar} from "@src/utilities/dummy/dummy";
 
 import {
   IconMessage2,

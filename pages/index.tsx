@@ -9,7 +9,7 @@ import {
 } from "@src/components";
 import FullLayout from "@src/layouts/full/FullLayout";
 import { useGraph, useDashboard } from "@src/lib/hooks/useDashboard";
-import { statusBar } from "./utilities/dummy/dummy";
+import { statusBar } from "../src/utilities/dummy/dummy";
 import ReactionsOverview from "@src/components/dashboard/ReactionsOverview";
 import Filter from "@src/components/forms/theme-elements/Filter";
 function Home() {

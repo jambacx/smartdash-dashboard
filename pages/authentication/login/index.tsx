@@ -11,7 +11,7 @@ import {
   gridContainerStyles,
   cardStyles,
   gridItemStyles,
-} from "./styles";
+} from "../../../src/styles/login/styles";
 
 const Login2 = () => {
   return (
