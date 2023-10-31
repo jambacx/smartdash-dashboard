@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
+    "prettier": "prettier --write .",
     "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
   },
   "dependencies": {
@@ -30,7 +31,7 @@
     "date-fns": "^2.30.0",
     "dayjs": "^1.11.10",
     "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
     "http-proxy-middleware": "^2.0.6",
     "jwt-decode": "^3.1.2",
     "lodash": "^4.17.21",
@@ -50,7 +51,7 @@
     "@types/node": "latest",
     "@types/react": "latest",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
-    "@typescript-eslint/parser": "^6.7.3",
+    "@typescript-eslint/parser": "^6.9.1",
     "eslint": "^8.0.1",
     "eslint-config-next": "latest",
     "eslint-config-standard-with-typescript": "^39.1.0",

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { styled, Container, Box } from "@mui/material";
+import React, {useState} from "react";
+import {styled, Container, Box} from "@mui/material";
 
 import Header from "./header/Header";
 import Sidebar from "./sidebar/Sidebar";
@@ -23,7 +23,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-const FullLayout: React.FC<Props> = ({ children }) => {
+const FullLayout: React.FC<Props> = ({children}) => {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [isMobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
@@ -32,19 +32,24 @@ const FullLayout: React.FC<Props> = ({ children }) => {
       <Sidebar
         isSidebarOpen={isSidebarOpen}
         isMobileSidebarOpen={isMobileSidebarOpen}
-        onSidebarClose={() => { setMobileSidebarOpen(false); }}
+        onSidebarClose={() => {
+          setMobileSidebarOpen(false);
+        }}
       />
 
       <PageWrapper className="page-wrapper">
-        <Header toggleMobileSidebar={() => { setMobileSidebarOpen(true); }} />
+        <Header
+          toggleMobileSidebar={() => {
+            setMobileSidebarOpen(true);
+          }}
+        />
 
         <Container
           sx={{
             paddingTop: "20px",
             maxWidth: "1200px",
-          }}
-        >
-          <Box sx={{ minHeight: "calc(100vh - 170px)" }}>{children}</Box>
+          }}>
+          <Box sx={{minHeight: "calc(100vh - 170px)"}}>{children}</Box>
         </Container>
       </PageWrapper>
     </MainWrapper>

@@ -11,8 +11,8 @@ import img1 from "public/images/products/s4.jpg";
 import img2 from "public/images/products/s5.jpg";
 import img3 from "public/images/products/s7.jpg";
 import img4 from "public/images/products/s11.jpg";
-import { Stack } from "@mui/system";
-import { IconBasket } from "@tabler/icons-react";
+import {Stack} from "@mui/system";
+import {IconBasket} from "@tabler/icons-react";
 import BlankCard from "@components/shared/BlankCard";
 import Image from "next/image";
 
@@ -61,33 +61,30 @@ const Blog = () => {
               <Image
                 src={product.photo}
                 alt="img"
-                style={{ width: "100%", height: "250px" }}
+                style={{width: "100%", height: "250px"}}
               />
             </Typography>
             <Tooltip title="Add To Cart">
               <Fab
                 size="small"
                 color="primary"
-                sx={{ bottom: "75px", right: "15px", position: "absolute" }}
-              >
+                sx={{bottom: "75px", right: "15px", position: "absolute"}}>
                 <IconBasket size="16" />
               </Fab>
             </Tooltip>
-            <CardContent sx={{ p: 3, pt: 2 }}>
+            <CardContent sx={{p: 3, pt: 2}}>
               <Typography variant="h6">{product.title}</Typography>
               <Stack
                 direction="row"
                 alignItems="center"
                 justifyContent="space-between"
-                mt={1}
-              >
+                mt={1}>
                 <Stack direction="row" alignItems="center">
                   <Typography variant="h6">${product.price}</Typography>
                   <Typography
                     color="textSecondary"
                     ml={1}
-                    sx={{ textDecoration: "line-through" }}
-                  >
+                    sx={{textDecoration: "line-through"}}>
                     ${product.salesPrice}
                   </Typography>
                 </Stack>

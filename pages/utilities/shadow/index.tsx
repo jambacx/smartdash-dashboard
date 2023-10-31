@@ -1,11 +1,11 @@
-import type { ReactElement } from "react";
-import { Paper, Box, Grid } from "@mui/material";
+import type {ReactElement} from "react";
+import {Paper, Box, Grid} from "@mui/material";
 import PageContainer from "@components/container/PageContainer";
 import DashboardCard from "@components/shared/DashboardCard";
-import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
+import {createTheme, ThemeProvider, styled} from "@mui/material/styles";
 import FullLayout from "@src/layouts/full/FullLayout";
 
-const Item = styled(Paper)(({ theme }) => ({
+const Item = styled(Paper)(({theme}) => ({
   ...theme.typography.body1,
   textAlign: "center",
   color: theme.palette.text.secondary,
@@ -13,8 +13,8 @@ const Item = styled(Paper)(({ theme }) => ({
   lineHeight: "60px",
 }));
 
-const darkTheme = createTheme({ palette: { mode: "dark" } });
-const lightTheme = createTheme({ palette: { mode: "light" } });
+const darkTheme = createTheme({palette: {mode: "dark"}});
+const lightTheme = createTheme({palette: {mode: "light"}});
 
 const Shadow = () => {
   return (
@@ -29,11 +29,10 @@ const Shadow = () => {
                     p: 2,
                     bgcolor: "background.default",
                     display: "grid",
-                    gridTemplateColumns: { md: "1fr 1fr" },
+                    gridTemplateColumns: {md: "1fr 1fr"},
                     gap: 2,
-                  }}
-                >
-                  {[0, 1, 2, 3, 4, 6, 8, 12, 16, 24].map((elevation) => (
+                  }}>
+                  {[0, 1, 2, 3, 4, 6, 8, 12, 16, 24].map(elevation => (
                     <Item key={elevation} elevation={elevation}>
                       {`elevation=${elevation}`}
                     </Item>

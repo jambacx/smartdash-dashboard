@@ -1,7 +1,7 @@
 import React from "react";
 import dynamic from "next/dynamic";
-import { useTheme } from "@mui/material/styles";
-import { Grid, Stack, Typography, Avatar } from "@mui/material";
+import {useTheme} from "@mui/material/styles";
+import {Grid, Stack, Typography, Avatar} from "@mui/material";
 import {
   IconArrowUpLeft,
   IconMailFast,
@@ -11,7 +11,9 @@ import {
 } from "@tabler/icons-react";
 
 import DashboardCard from "@components/shared/DashboardCard";
-const Chart = dynamic(async () => await import("react-apexcharts"), { ssr: false });
+const Chart = dynamic(async () => await import("react-apexcharts"), {
+  ssr: false,
+});
 
 const ICONS = [IconMailFast, IconMessage2, IconFileLike, IconShare];
 
@@ -46,7 +48,7 @@ const YearlyBreakup = ({
       <Grid container spacing={3}>
         <Grid item xs={7} sm={7}>
           <Stack direction="row" spacing={1} mt={1} alignItems="center">
-            <Avatar sx={{ bgcolor: item.bgColor, width: 27, height: 27 }}>
+            <Avatar sx={{bgcolor: item.bgColor, width: 27, height: 27}}>
               <IconComponent width={20} color={item.color} />
             </Avatar>
             <Typography variant="h3" fontWeight="700">

@@ -1,33 +1,39 @@
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { Box, MenuItem, Select } from '@mui/material';
-import { useConfig } from '@src/lib/hooks/useConfig';
-import { useState } from 'react';
+import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
+import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
+import {DatePicker} from "@mui/x-date-pickers/DatePicker";
+import {Box, MenuItem, Select} from "@mui/material";
+import {useConfig} from "@src/lib/hooks/useConfig";
+import {useState} from "react";
 
-function ControlledDatePicker({ selectedDate, endDate, setSelectedDate, setEndDate, selectedCategory, setSelectedCategory }: any) {
-
-  const { response: confResponse, listLoading: confLoading } = useConfig();
+function ControlledDatePicker({
+  selectedDate,
+  endDate,
+  setSelectedDate,
+  setEndDate,
+  selectedCategory,
+  setSelectedCategory,
+}: any) {
+  const {response: confResponse, listLoading: confLoading} = useConfig();
   const categories = confResponse?.categories || [];
 
   return (
     <Box
       sx={{
-        display: 'flex',
-        alignItems: 'center',
+        display: "flex",
+        alignItems: "center",
         marginTop: 1,
         marginBottom: 4,
-      }}
-    >
+      }}>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <DatePicker
           slotProps={{
             textField: {
-              size: 'small', error: false,
-            }
+              size: "small",
+              error: false,
+            },
           }}
           sx={{
-            marginRight: 2
+            marginRight: 2,
           }}
           label="Дуусах хугацаа"
           value={selectedDate}
@@ -35,7 +41,7 @@ function ControlledDatePicker({ selectedDate, endDate, setSelectedDate, setEndDa
           format="yyyy-MM-dd"
         />
         <DatePicker
-          slotProps={{ textField: { size: 'small', error: false } }}
+          slotProps={{textField: {size: "small", error: false}}}
           label="Эхлэх хугацаа"
           value={endDate}
           onChange={(newValue: any) => setEndDate(newValue)}
@@ -43,19 +49,17 @@ function ControlledDatePicker({ selectedDate, endDate, setSelectedDate, setEndDa
         />
       </LocalizationProvider>
       <Select
-        sx={{ marginLeft: 2 }}
+        sx={{marginLeft: 2}}
         size="small"
         labelId="category-label"
         value={selectedCategory}
-        onChange={(e) => setSelectedCategory(e.target.value)}
-      >
+        onChange={e => setSelectedCategory(e.target.value)}>
         {categories.map((category: any) => (
           <MenuItem key={category.id} value={category.category_name}>
             {category.category_name}
           </MenuItem>
         ))}
       </Select>
-
     </Box>
   );
 }

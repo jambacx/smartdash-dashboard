@@ -1,5 +1,5 @@
-import type { ReactElement } from "react";
-import { Box, Container, Typography, Button } from "@mui/material";
+import type {ReactElement} from "react";
+import {Box, Container, Typography, Button} from "@mui/material";
 import Link from "next/link";
 import BlankLayout from "@src/layouts/blank/BlankLayout";
 
@@ -9,13 +9,12 @@ const Error = () => (
     flexDirection="column"
     height="100vh"
     textAlign="center"
-    justifyContent="center"
-  >
+    justifyContent="center">
     <Container maxWidth="md">
       <img
         src={"/images/backgrounds/errorimg.svg"}
         alt="404"
-        style={{ width: "100%", maxWidth: "500px" }}
+        style={{width: "100%", maxWidth: "500px"}}
       />
       <Typography align="center" variant="h1" mb={4}>
         Opps!!!
@@ -28,8 +27,7 @@ const Error = () => (
         variant="contained"
         component={Link}
         href="/"
-        disableElevation
-      >
+        disableElevation>
         Go Back to Home
       </Button>
     </Container>

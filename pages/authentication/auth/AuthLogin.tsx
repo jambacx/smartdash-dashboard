@@ -9,9 +9,9 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 
-import { useForm } from "react-hook-form";
+import {useForm} from "react-hook-form";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useRouter } from "next/router";
+import {useRouter} from "next/router";
 
 import CustomTextField from "@components/forms/theme-elements/CustomTextField";
 import useLogin from "@src/lib/hooks/useLogin";
@@ -27,14 +27,14 @@ interface FormInput {
   password: string;
 }
 
-const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
-  const { register, handleSubmit, setError, clearErrors, formState } =
+const AuthLogin = ({title, subtitle, subtext}: loginType) => {
+  const {register, handleSubmit, setError, clearErrors, formState} =
     useForm<FormInput>();
-  const { errors } = formState;
-  const { login, loading, error } = useLogin();
+  const {errors} = formState;
+  const {login, loading, error} = useLogin();
   const router = useRouter();
 
-  const onSubmit = async (data: { email: string; password: string }) => {
+  const onSubmit = async (data: {email: string; password: string}) => {
     try {
       const loginResponse: any = await login(data);
 
@@ -43,10 +43,9 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
         localStorage.setItem("authToken", token);
         router.push("/");
       }
-
     } catch (err) {
-      setError("email", { type: "manual", message: "Нэвтрэх нэр буруу." });
-      setError("password", { type: "manual", message: "Нууц үг буруу." });
+      setError("email", {type: "manual", message: "Нэвтрэх нэр буруу."});
+      setError("password", {type: "manual", message: "Нууц үг буруу."});
     }
   };
 
@@ -65,12 +64,11 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
             fontWeight={600}
             component="label"
             htmlFor="username"
-            mb="5px"
-          >
+            mb="5px">
             Нэвтрэх нэр
           </Typography>
           <CustomTextField
-            {...register("email", { required: "Email is required" })}
+            {...register("email", {required: "Email is required"})}
             placeholder="Мэйл хаяг"
             variant="outlined"
             fullWidth
@@ -84,12 +82,11 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
             fontWeight={600}
             component="label"
             htmlFor="password"
-            mb="5px"
-          >
+            mb="5px">
             Нууц үг
           </Typography>
           <CustomTextField
-            {...register("password", { required: "Password is required" })}
+            {...register("password", {required: "Password is required"})}
             placeholder="Нууц үг"
             type="password"
             variant="outlined"
@@ -102,8 +99,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
           justifyContent="space-between"
           direction="row"
           alignItems="center"
-          my={2}
-        >
+          my={2}>
           <FormGroup>
             <FormControlLabel
               control={<Checkbox defaultChecked />}
@@ -117,8 +113,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
             sx={{
               textDecoration: "none",
               color: "primary.main",
-            }}
-          >
+            }}>
             Нууц үг мартсан?
           </Typography>
         </Stack>
@@ -130,14 +125,13 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
           size="large"
           fullWidth
           type="submit"
-          disabled={loading}
-        >
+          disabled={loading}>
           {loading ? (
             <>
               <CircularProgress
                 size={24}
                 color="inherit"
-                style={{ marginRight: 10 }}
+                style={{marginRight: 10}}
               />
               Нэвтрэх
             </>

@@ -1,14 +1,11 @@
 import {
-  IconLayoutDashboard,
   IconBrandMessenger,
   IconArticle,
-  IconClipboardData,
   IconSmartHome,
   IconSettings,
 } from "@tabler/icons-react";
 
 import { uniqueId } from "lodash";
-import { settings } from 'nprogress'
 
 const Menuitems = [
   {

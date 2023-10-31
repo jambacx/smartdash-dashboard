@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useState} from "react";
 import {
   Avatar,
   Box,
@@ -10,8 +10,8 @@ import {
   ListItemText,
 } from "@mui/material";
 
-import { IconSwitch, IconUser } from "@tabler/icons-react";
-import { useRouter } from "next/router";
+import {IconSwitch, IconUser} from "@tabler/icons-react";
+import {useRouter} from "next/router";
 
 const Profile = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
@@ -43,8 +43,7 @@ const Profile = () => {
             color: "primary.main",
           }),
         }}
-        onClick={handleClick2}
-      >
+        onClick={handleClick2}>
         <Avatar
           src="/images/profile/user-1.png"
           alt="image"
@@ -60,14 +59,13 @@ const Profile = () => {
         keepMounted
         open={Boolean(anchorEl2)}
         onClose={handleClose2}
-        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-        transformOrigin={{ horizontal: "right", vertical: "top" }}
+        anchorOrigin={{horizontal: "right", vertical: "bottom"}}
+        transformOrigin={{horizontal: "right", vertical: "top"}}
         sx={{
           "& .MuiMenu-paper": {
             width: "200px",
           },
-        }}
-      >
+        }}>
         <MenuItem>
           <ListItemIcon>
             <IconSwitch width={20} />

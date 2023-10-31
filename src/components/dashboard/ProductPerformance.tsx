@@ -53,14 +53,13 @@ const products = [
 const ProductPerformance = () => {
   return (
     <DashboardCard title="Product Performance">
-      <Box sx={{ overflow: "auto", width: { xs: "280px", sm: "auto" } }}>
+      <Box sx={{overflow: "auto", width: {xs: "280px", sm: "auto"}}}>
         <Table
           aria-label="simple table"
           sx={{
             whiteSpace: "nowrap",
             mt: 2,
-          }}
-        >
+          }}>
           <TableHead>
             <TableRow>
               <TableCell>
@@ -91,15 +90,14 @@ const ProductPerformance = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {products.map((product) => (
+            {products.map(product => (
               <TableRow key={product.name}>
                 <TableCell>
                   <Typography
                     sx={{
                       fontSize: "15px",
                       fontWeight: "500",
-                    }}
-                  >
+                    }}>
                     {product.id}
                   </Typography>
                 </TableCell>
@@ -108,8 +106,7 @@ const ProductPerformance = () => {
                     sx={{
                       display: "flex",
                       alignItems: "center",
-                    }}
-                  >
+                    }}>
                     <Box>
                       <Typography variant="subtitle2" fontWeight={600}>
                         {product.name}
@@ -118,8 +115,7 @@ const ProductPerformance = () => {
                         color="textSecondary"
                         sx={{
                           fontSize: "13px",
-                        }}
-                      >
+                        }}>
                         {product.post}
                       </Typography>
                     </Box>
@@ -129,8 +125,7 @@ const ProductPerformance = () => {
                   <Typography
                     color="textSecondary"
                     variant="subtitle2"
-                    fontWeight={400}
-                  >
+                    fontWeight={400}>
                     {product.pname}
                   </Typography>
                 </TableCell>
@@ -142,8 +137,7 @@ const ProductPerformance = () => {
                       color: "#fff",
                     }}
                     size="small"
-                    label={product.priority}
-                  ></Chip>
+                    label={product.priority}></Chip>
                 </TableCell>
                 <TableCell align="right">
                   <Typography variant="h6">${product.budget}k</Typography>

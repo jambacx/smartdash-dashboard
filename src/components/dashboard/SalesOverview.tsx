@@ -1,12 +1,14 @@
 import React from "react";
-import { Select, MenuItem } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
+import {Select, MenuItem} from "@mui/material";
+import {useTheme} from "@mui/material/styles";
 import DashboardCard from "@components/shared/DashboardCard";
 import dynamic from "next/dynamic";
-import { getLastThreeMonths, formatDates } from './lastMonths';
-const Chart = dynamic(async () => await import("react-apexcharts"), { ssr: false });
+import {getLastThreeMonths, formatDates} from "./lastMonths";
+const Chart = dynamic(async () => await import("react-apexcharts"), {
+  ssr: false,
+});
 
-const SalesOverview = ({ chartData }: { chartData: any }) => {
+const SalesOverview = ({chartData}: {chartData: any}) => {
   const [month, setMonth] = React.useState("1");
 
   const handleChange = (event: any) => {
@@ -46,7 +48,7 @@ const SalesOverview = ({ chartData }: { chartData: any }) => {
       },
       height: 370,
     },
-    colors: ['#15D9B1', '#4F78F8', '#DA6E54'],
+    colors: ["#15D9B1", "#4F78F8", "#DA6E54"],
     plotOptions: {
       bar: {
         horizontal: false,
@@ -95,9 +97,7 @@ const SalesOverview = ({ chartData }: { chartData: any }) => {
   };
 
   return (
-    <DashboardCard
-      title="Дэлгэрэнгүй"
-    >
+    <DashboardCard title="Дэлгэрэнгүй">
       <Chart
         options={optionscolumnchart}
         series={seriescolumnchart}

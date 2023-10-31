@@ -1,6 +1,6 @@
-import type { ReactElement } from "react";
+import type {ReactElement} from "react";
 import FullLayout from "@src/layouts/full/FullLayout";
-import { Typography, Grid, CardContent } from "@mui/material";
+import {Typography, Grid, CardContent} from "@mui/material";
 import PageContainer from "@components/container/PageContainer";
 import DashboardCard from "@components/shared/DashboardCard";
 import BlankCard from "@components/shared/BlankCard";
@@ -199,15 +199,13 @@ const TypographyPage = () => {
                   <CardContent>
                     <Typography
                       variant="h5"
-                      sx={{ color: (theme) => theme.palette.info.main }}
-                    >
+                      sx={{color: theme => theme.palette.info.main}}>
                       Text Info
                     </Typography>
 
                     <Typography
                       variant="body1"
-                      sx={{ color: (theme) => theme.palette.info.main }}
-                    >
+                      sx={{color: theme => theme.palette.info.main}}>
                       Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                       Quos blanditiis tenetur
                     </Typography>
@@ -219,15 +217,13 @@ const TypographyPage = () => {
                   <CardContent>
                     <Typography
                       variant="h5"
-                      sx={{ color: (theme) => theme.palette.primary.main }}
-                    >
+                      sx={{color: theme => theme.palette.primary.main}}>
                       Text Primary
                     </Typography>
 
                     <Typography
                       variant="body1"
-                      sx={{ color: (theme) => theme.palette.primary.main }}
-                    >
+                      sx={{color: theme => theme.palette.primary.main}}>
                       Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                       Quos blanditiis tenetur
                     </Typography>
@@ -239,15 +235,13 @@ const TypographyPage = () => {
                   <CardContent>
                     <Typography
                       variant="h5"
-                      sx={{ color: (theme) => theme.palette.warning.main }}
-                    >
+                      sx={{color: theme => theme.palette.warning.main}}>
                       Text Warning
                     </Typography>
 
                     <Typography
                       variant="body1"
-                      sx={{ color: (theme) => theme.palette.warning.main }}
-                    >
+                      sx={{color: theme => theme.palette.warning.main}}>
                       Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                       Quos blanditiis tenetur
                     </Typography>
@@ -259,15 +253,13 @@ const TypographyPage = () => {
                   <CardContent>
                     <Typography
                       variant="h5"
-                      sx={{ color: (theme) => theme.palette.error.main }}
-                    >
+                      sx={{color: theme => theme.palette.error.main}}>
                       Text Error
                     </Typography>
 
                     <Typography
                       variant="body1"
-                      sx={{ color: (theme) => theme.palette.error.main }}
-                    >
+                      sx={{color: theme => theme.palette.error.main}}>
                       Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                       Quos blanditiis tenetur
                     </Typography>
@@ -279,15 +271,13 @@ const TypographyPage = () => {
                   <CardContent>
                     <Typography
                       variant="h5"
-                      sx={{ color: (theme) => theme.palette.success.main }}
-                    >
+                      sx={{color: theme => theme.palette.success.main}}>
                       Text Success
                     </Typography>
 
                     <Typography
                       variant="body1"
-                      sx={{ color: (theme) => theme.palette.success.main }}
-                    >
+                      sx={{color: theme => theme.palette.success.main}}>
                       Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                       Quos blanditiis tenetur
                     </Typography>

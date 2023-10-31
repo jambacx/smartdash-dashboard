@@ -1,20 +1,20 @@
 import React from "react";
-import { Box, AppBar, Toolbar, styled, Stack, IconButton } from "@mui/material";
+import {Box, AppBar, Toolbar, styled, Stack, IconButton} from "@mui/material";
 import PropTypes from "prop-types";
 
 // components
 import Profile from "./Profile";
-import { IconMenu } from "@tabler/icons-react";
+import {IconMenu} from "@tabler/icons-react";
 
 interface ItemType {
   toggleMobileSidebar: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
-const Header = ({ toggleMobileSidebar }: ItemType) => {
+const Header = ({toggleMobileSidebar}: ItemType) => {
   // const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
   // const lgDown = useMediaQuery((theme) => theme.breakpoints.down('lg'));
 
-  const AppBarStyled = styled(AppBar)(({ theme }) => ({
+  const AppBarStyled = styled(AppBar)(({theme}) => ({
     boxShadow: "none",
     background: theme.palette.background.paper,
     justifyContent: "center",
@@ -23,7 +23,7 @@ const Header = ({ toggleMobileSidebar }: ItemType) => {
       minHeight: "70px",
     },
   }));
-  const ToolbarStyled = styled(Toolbar)(({ theme }) => ({
+  const ToolbarStyled = styled(Toolbar)(({theme}) => ({
     width: "100%",
     color: theme.palette.text.secondary,
   }));
@@ -40,8 +40,7 @@ const Header = ({ toggleMobileSidebar }: ItemType) => {
               lg: "none",
               xs: "inline",
             },
-          }}
-        >
+          }}>
           <IconMenu width="20" height="20" />
         </IconButton>
 

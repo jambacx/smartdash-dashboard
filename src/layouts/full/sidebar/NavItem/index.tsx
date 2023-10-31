@@ -30,7 +30,7 @@ interface ItemType {
   pathDirect: string;
 }
 
-const NavItem = ({ item, level, pathDirect, onClick }: ItemType) => {
+const NavItem = ({item, level, pathDirect, onClick}: ItemType) => {
   const Icon = item.icon;
   const theme = useTheme();
   const itemIcon = <Icon stroke={1.5} size="1.3rem" />;
@@ -69,15 +69,13 @@ const NavItem = ({ item, level, pathDirect, onClick }: ItemType) => {
           disabled={item.disabled}
           selected={pathDirect === item.href}
           target={item.external ? "_blank" : ""}
-          onClick={onClick}
-        >
+          onClick={onClick}>
           <ListItemIcon
             sx={{
               minWidth: "36px",
               p: "3px 0",
               color: "inherit",
-            }}
-          >
+            }}>
             {itemIcon}
           </ListItemIcon>
           <ListItemText>

@@ -1,18 +1,17 @@
-import { Card } from "@mui/material";
+import {Card} from "@mui/material";
 
 interface Props {
   className?: string;
   children: JSX.Element | JSX.Element[];
 }
 
-const BlankCard = ({ children, className }: Props) => {
+const BlankCard = ({children, className}: Props) => {
   return (
     <Card
-      sx={{ p: 0, position: "relative" }}
+      sx={{p: 0, position: "relative"}}
       className={className}
       elevation={9}
-      variant={undefined}
-    >
+      variant={undefined}>
       {children}
     </Card>
   );

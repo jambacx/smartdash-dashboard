@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardContent, Typography, Stack, Box } from "@mui/material";
+import {Card, CardContent, Typography, Stack, Box} from "@mui/material";
 
 interface Props {
   title?: string;
@@ -25,7 +25,7 @@ const DashboardCard = ({
   middlecontent,
 }: Props) => {
   return (
-    <Card sx={{ padding: 0 }} elevation={9} variant={undefined}>
+    <Card sx={{padding: 0}} elevation={9} variant={undefined}>
       {cardheading ? (
         <CardContent>
           <Typography variant="h5">{headtitle}</Typography>
@@ -34,15 +34,14 @@ const DashboardCard = ({
           </Typography>
         </CardContent>
       ) : (
-        <CardContent sx={{ p: "30px" }}>
+        <CardContent sx={{p: "30px"}}>
           {title ? (
             <Stack
               direction="row"
               spacing={2}
               justifyContent="space-between"
               alignItems={"center"}
-              mb={3}
-            >
+              mb={3}>
               <Box>
                 {title ? <Typography variant="h5">{title}</Typography> : ""}
                 {subtitle ? (

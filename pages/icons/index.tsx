@@ -1,4 +1,4 @@
-import type { ReactElement } from "react";
+import type {ReactElement} from "react";
 import PageContainer from "@components/container/PageContainer";
 import DashboardCard from "@components/shared/DashboardCard";
 import FullLayout from "@src/layouts/full/FullLayout";
@@ -12,8 +12,7 @@ const Icons = () => {
           title="Inline Frame Example"
           frameBorder={0}
           width="100%"
-          height="650"
-        ></iframe>
+          height="650"></iframe>
       </DashboardCard>
     </PageContainer>
   );

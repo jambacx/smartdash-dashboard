@@ -1,4 +1,4 @@
-import { useMediaQuery, Box, Drawer } from "@mui/material";
+import {useMediaQuery, Box, Drawer} from "@mui/material";
 import Logo from "../shared/logo/Logo";
 import SidebarItems from "./SidebarItems";
 
@@ -23,8 +23,7 @@ const Sidebar = ({
         sx={{
           width: sidebarWidth,
           flexShrink: 0,
-        }}
-      >
+        }}>
         {/* ------------------------------------------- */}
         {/* Sidebar for desktop */}
         {/* ------------------------------------------- */}
@@ -37,13 +36,11 @@ const Sidebar = ({
               width: sidebarWidth,
               boxSizing: "border-box",
             },
-          }}
-        >
+          }}>
           <Box
             sx={{
               height: "100%",
-            }}
-          >
+            }}>
             <Box px={3} mt={2} ml={1}>
               <Logo />
             </Box>
@@ -65,10 +62,9 @@ const Sidebar = ({
       PaperProps={{
         sx: {
           width: sidebarWidth,
-          boxShadow: (theme) => theme.shadows[8],
+          boxShadow: theme => theme.shadows[8],
         },
-      }}
-    >
+      }}>
       <Box px={2}>
         <Logo />
       </Box>

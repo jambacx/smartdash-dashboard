@@ -1,6 +1,5 @@
 // import { Helmet } from 'react-helmet';
-import { Helmet, HelmetProvider } from 'react-helmet-async';
-
+import {Helmet, HelmetProvider} from "react-helmet-async";
 
 interface Props {
   description?: string;
@@ -8,7 +7,7 @@ interface Props {
   title?: string;
 }
 
-const PageContainer = ({ title, description, children }: Props) => (
+const PageContainer = ({title, description, children}: Props) => (
   <HelmetProvider>
     <div>
       <Helmet>

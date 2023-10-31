@@ -1,4 +1,4 @@
-import { type ReactElement, useMemo, useState } from "react";
+import {type ReactElement, useMemo, useState} from "react";
 import {
   Typography,
   Box,
@@ -6,35 +6,46 @@ import {
   TableCell,
   TableRow,
   Chip,
-  Pagination
+  Pagination,
 } from "@mui/material";
-import { DashboardCard, PageContainer, CustomTable, ControlledDatePicker, FallbackSpinner } from "@src/components";
-import { usePost } from "@src/lib/hooks/usePost";
+import {
+  DashboardCard,
+  PageContainer,
+  CustomTable,
+  ControlledDatePicker,
+  FallbackSpinner,
+} from "@src/components";
+import {usePost} from "@src/lib/hooks/usePost";
 import FullLayout from "@src/layouts/full/FullLayout";
 import moment from "moment";
-import { IconDotsVertical, IconExternalLink } from "@tabler/icons-react";
-import CustomModal from '@components/modal'
+import {IconDotsVertical, IconExternalLink} from "@tabler/icons-react";
+import CustomModal from "@components/modal";
 
 function Posts() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(15);
   const [selectedPost, setSelectedPost] = useState<any | null>(null);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date(new Date().setMonth(new Date().getMonth() - 1)));
+  const [selectedDate, setSelectedDate] = useState<Date | null>(
+    new Date(new Date().setMonth(new Date().getMonth() - 1)),
+  );
   const [endDate, setEndDate] = useState<Date | null>(new Date());
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState("");
 
-  const body: any = useMemo(() => ({
-    page: page + 1,
-    page_id: process.env.NEXT_PUBLIC_PAGE_ID,
-    limit: rowsPerPage,
-    category: selectedCategory,
-    date_range: [
-      selectedDate ? selectedDate.toISOString().split("T")[0] : undefined,
-      endDate ? endDate.toISOString().split("T")[0] : undefined,
-    ],
-  }), [page, rowsPerPage, selectedDate, endDate, selectedCategory]);
+  const body: any = useMemo(
+    () => ({
+      page: page + 1,
+      page_id: process.env.NEXT_PUBLIC_PAGE_ID,
+      limit: rowsPerPage,
+      category: selectedCategory,
+      date_range: [
+        selectedDate ? selectedDate.toISOString().split("T")[0] : undefined,
+        endDate ? endDate.toISOString().split("T")[0] : undefined,
+      ],
+    }),
+    [page, rowsPerPage, selectedDate, endDate, selectedCategory],
+  );
 
-  const { response, listLoading, listError, listStatus } = usePost(body);
+  const {response, listLoading, listError, listStatus} = usePost(body);
   const posts = response?.posts || [];
   const pagination = response?.pagination || {};
 
@@ -47,23 +58,43 @@ function Posts() {
     setSelectedPost(post);
     setOpen(true);
   };
-  const handleClose = () => { setOpen(false); };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const rowsTitles = ["#", "Post", "Category", "Date", "Action"];
 
   return (
     <PageContainer title="Smartdash" description="this is Dashboard">
-      <Typography variant="h6" color='textSecondary' gutterBottom component="div" sx={{ fontSize: "13px" }}>
+      <Typography
+        variant="h6"
+        color="textSecondary"
+        gutterBottom
+        component="div"
+        sx={{fontSize: "13px"}}>
         Нийтэлсэн нийтлэлийн жагсаалт
       </Typography>
-      <Typography variant="h4" gutterBottom component="div" sx={{ marginBottom: 4 }}>
+      <Typography
+        variant="h4"
+        gutterBottom
+        component="div"
+        sx={{marginBottom: 4}}>
         Нийтлэл
       </Typography>
       <DashboardCard>
-        <Box sx={{ overflow: "auto", width: { xs: "280px", sm: "auto" } }}>
-          <ControlledDatePicker selectedDate={selectedDate} endDate={endDate} setSelectedDate={setSelectedDate} setEndDate={setEndDate} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
+        <Box sx={{overflow: "auto", width: {xs: "280px", sm: "auto"}}}>
+          <ControlledDatePicker
+            selectedDate={selectedDate}
+            endDate={endDate}
+            setSelectedDate={setSelectedDate}
+            setEndDate={setEndDate}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+          />
 
-          {listLoading ? <FallbackSpinner /> :
+          {listLoading ? (
+            <FallbackSpinner />
+          ) : (
             <>
               <CustomTable headers={rowsTitles}>
                 <TableBody>
@@ -72,20 +103,18 @@ function Posts() {
                       key={post.id}
                       style={{
                         borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
-                      }}
-                    >
+                      }}>
                       <TableCell>
                         <Typography
-                          sx={{ fontSize: "15px", fontWeight: "500" }}
+                          sx={{fontSize: "15px", fontWeight: "500"}}
                           onClick={() => {
                             window.open(
                               "https://facebook.com/" + post.id,
-                              "_blank"
+                              "_blank",
                             );
                           }}
                           color="#5D87FF"
-                          style={{ cursor: "pointer" }}
-                        >
+                          style={{cursor: "pointer"}}>
                           {index + 1}
                         </Typography>
                       </TableCell>
@@ -94,16 +123,14 @@ function Posts() {
                           sx={{
                             display: "flex",
                             alignItems: "center",
-                          }}
-                        >
+                          }}>
                           <Box>
                             <Typography
                               variant="subtitle2"
                               fontWeight={400}
                               sx={{
                                 fontSize: "14px",
-                              }}
-                            >
+                              }}>
                               {post?.message?.length > 80
                                 ? post.message.slice(0, 80) + "..."
                                 : post.message}
@@ -112,8 +139,7 @@ function Posts() {
                               color="textSecondary"
                               sx={{
                                 fontSize: "7px",
-                              }}
-                            >
+                              }}>
                               {post?.post}
                             </Typography>
                           </Box>
@@ -127,16 +153,14 @@ function Posts() {
                             color: "#black",
                           }}
                           size="small"
-                          label={post.category}
-                        ></Chip>
+                          label={post.category}></Chip>
                       </TableCell>
                       <TableCell>
                         <Typography
                           variant="h6"
                           sx={{
                             fontSize: "14px",
-                          }}
-                        >
+                          }}>
                           {moment.unix(post.created_time).format("MM/DD/YYYY")}
                         </Typography>
                       </TableCell>
@@ -145,19 +169,29 @@ function Posts() {
                           onClick={() => {
                             window.open(
                               "https://facebook.com/" + post.id,
-                              "_blank"
+                              "_blank",
                             );
                           }}
                           color="#5D87FF"
                           size={20}
-                          style={{ cursor: "pointer", marginRight: '8px', fontSize: '18px' }}
+                          style={{
+                            cursor: "pointer",
+                            marginRight: "8px",
+                            fontSize: "18px",
+                          }}
                           type="button"
                         />
                         <IconDotsVertical
-                          onClick={() => { handleOpen(post); }}
+                          onClick={() => {
+                            handleOpen(post);
+                          }}
                           size={20}
                           color="#6b6969"
-                          style={{ cursor: "pointer", marginRight: '8px', fontSize: '13px' }}
+                          style={{
+                            cursor: "pointer",
+                            marginRight: "8px",
+                            fontSize: "13px",
+                          }}
                           type="button"
                         />
                       </TableCell>
@@ -166,8 +200,12 @@ function Posts() {
                 </TableBody>
               </CustomTable>
             </>
-          }
-          <CustomModal open={open} handleClose={handleClose} post={selectedPost} />
+          )}
+          <CustomModal
+            open={open}
+            handleClose={handleClose}
+            post={selectedPost}
+          />
           <Pagination
             count={pagination?.page_count || 1}
             page={page + 1}
@@ -175,8 +213,8 @@ function Posts() {
             shape="rounded"
             sx={{
               marginTop: 3,
-              display: 'flex',
-              justifyContent: 'center'
+              display: "flex",
+              justifyContent: "center",
             }}
           />
         </Box>

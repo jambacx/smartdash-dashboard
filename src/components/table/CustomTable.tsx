@@ -7,7 +7,7 @@ import {
   createTheme,
   ThemeProvider,
 } from "@mui/material";
-import { Nunito } from "@next/font/google";
+import {Nunito} from "@next/font/google";
 
 export const nunito = Nunito({
   weight: ["300", "400", "500", "700"],
@@ -45,7 +45,7 @@ export const CustomTable: React.FC<CustomTableProps> = ({
       <Table>
         <TableHead>
           <TableRow>
-            {headers.map((header) => (
+            {headers.map(header => (
               <TableCell key={header}>
                 <Typography variant="subtitle2" fontWeight={600}>
                   {header}

@@ -9,7 +9,7 @@ import {
   TimelineContent,
   timelineOppositeContentClasses,
 } from "@mui/lab";
-import { Link, Typography } from "@mui/material";
+import {Link, Typography} from "@mui/material";
 
 const RecentTransactions = () => {
   return (
@@ -31,8 +31,7 @@ const RecentTransactions = () => {
               flex: 0.5,
               paddingLeft: 0,
             },
-          }}
-        >
+          }}>
           <TimelineItem>
             <TimelineOppositeContent>09:30 am</TimelineOppositeContent>
             <TimelineSeparator>
