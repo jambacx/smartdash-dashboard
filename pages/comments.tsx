@@ -1,4 +1,4 @@
-import {type ReactElement, useMemo, useState} from "react";
+import {type ReactElement, useMemo, useState } from "react";
 import {
   Typography,
   Box,
@@ -19,6 +19,7 @@ import {
   FallbackSpinner,
   ControlledDatePicker,
 } from "@src/components";
+import { useGetPage } from "@src/lib/hooks/useGetPage";
 
 function Comments() {
   const [page, setPage] = useState(0);
@@ -30,11 +31,12 @@ function Comments() {
   const [endDate, setEndDate] = useState<Date | null>(new Date());
 
   const [selectedCategory, setSelectedCategory] = useState("");
+  const { selectedPage } = useGetPage();
 
   const body: any = useMemo(
     () => ({
       page: page + 1,
-      page_id: process.env.NEXT_PUBLIC_PAGE_ID,
+      page_id: selectedPage,
       limit: 15,
       category: selectedCategory,
       date_range: [
@@ -42,7 +44,7 @@ function Comments() {
         endDate ? endDate.toISOString().split("T")[0] : undefined,
       ],
     }),
-    [page, rowsPerPage, selectedDate, selectedCategory, endDate],
+    [page, rowsPerPage, selectedPage, selectedDate, selectedCategory, endDate],
   );
 
   const {response, listLoading} = useComment(body);

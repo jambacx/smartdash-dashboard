@@ -1,4 +1,4 @@
-import {useState} from "react";
+import { useEffect, useState } from "react";
 import {
   Avatar,
   Box,
@@ -6,20 +6,34 @@ import {
   Button,
   IconButton,
   MenuItem,
-  ListItemIcon,
   ListItemText,
 } from "@mui/material";
 
-import {IconSwitch } from "@tabler/icons-react";
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 
 const Profile = () => {
+  const router = useRouter();
+  const [pages, setPages] = useState<any>([]);
   const [anchorEl2, setAnchorEl2] = useState(null);
+  const [currentPage, setCurrentPage] = useState<any>();
+
+  useEffect(() => {
+    if (router.query.page_id) {
+      setCurrentPage(router.query.page_id)
+    }
+  }, [router.query]);
+
+  useEffect(() => {
+    const value = localStorage.getItem('pages');
+
+    if (value) {
+      setPages(JSON.parse(value))
+    }
+  }, []);
+
   const handleClick2 = (event: any) => {
     setAnchorEl2(event.currentTarget);
   };
-
-  const router = useRouter();
 
   const handleClose2 = () => {
     setAnchorEl2(null);
@@ -27,6 +41,8 @@ const Profile = () => {
 
   const logout = () => {
     localStorage.removeItem("authToken");
+    localStorage.removeItem("pages");
+    localStorage.removeItem("currentPage");
     router.push("/authentication/login");
   };
 
@@ -59,19 +75,21 @@ const Profile = () => {
         keepMounted
         open={Boolean(anchorEl2)}
         onClose={handleClose2}
-        anchorOrigin={{horizontal: "right", vertical: "bottom"}}
-        transformOrigin={{horizontal: "right", vertical: "top"}}
+        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+        transformOrigin={{ horizontal: "right", vertical: "top" }}
         sx={{
           "& .MuiMenu-paper": {
             width: "200px",
           },
         }}>
-        <MenuItem>
-          <ListItemIcon>
-            <IconSwitch width={20} />
-          </ListItemIcon>
-          <ListItemText>Хуудас солих</ListItemText>
-        </MenuItem>
+        {pages?.map((page: { page_id: string, label: string }) => (
+          // eslint-disable-next-line @typescript-eslint/promise-function-async
+          <MenuItem selected={currentPage === page.page_id} key={page.page_id} href={`/${page.page_id}`} onClick={() => router.push({
+            query: { page_id: page.page_id }
+          })}>
+            <ListItemText>{page.label}</ListItemText>
+          </MenuItem>
+        ))}
         <Box mt={1} py={1} px={2}>
           <Button variant="outlined" color="primary" fullWidth onClick={logout}>
             Гарах

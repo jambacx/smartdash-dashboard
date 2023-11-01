@@ -12,6 +12,7 @@ import { useGraph, useDashboard } from "@src/lib/hooks/useDashboard";
 import { statusBar } from "../src/utilities/dummy/dummy";
 import ReactionsOverview from "@src/components/dashboard/ReactionsOverview";
 import Filter from "@src/components/forms/theme-elements/Filter";
+import { useGetPage } from "@src/lib/hooks/useGetPage";
 function Home() {
   const [selectedDate, setSelectedDate] = useState<Date | null>(
     new Date(new Date().setDate(new Date().getDate() - 14)),
@@ -19,10 +20,11 @@ function Home() {
   const [endDate, setEndDate] = useState<Date | null>(new Date());
   const [selectedCategory, setSelectedCategory] = useState("");
   const [filterType, setType] = useState("weekly");
+  const { selectedPage } = useGetPage();
 
   const body: any = useMemo(
     () => ({
-      page_id: process.env.NEXT_PUBLIC_PAGE_ID,
+      page_id: selectedPage,
       type: filterType,
       category: selectedCategory,
       date_range: [
@@ -30,7 +32,7 @@ function Home() {
         endDate ? endDate.toISOString().split("T")[0] : undefined,
       ],
     }),
-    [selectedDate, filterType, endDate, selectedCategory],
+    [selectedDate, filterType, endDate, selectedCategory, selectedPage],
   );
 
   const { response, listLoading } = useDashboard(body);
@@ -55,25 +57,25 @@ function Home() {
 
         {listLoading || graphLoading
           ? (
-          <FallbackSpinner />
+            <FallbackSpinner />
             )
           : (
-          <Grid container spacing={3}>
-            {statusBar.map((item, index) => (
-              <Grid key={index} item xs={3}>
-                <YearlyBreakup data={data} item={item} index={index} />
+            <Grid container spacing={3}>
+              {statusBar.map((item, index) => (
+                <Grid key={index} item xs={3}>
+                  <YearlyBreakup data={data} item={item} index={index} />
+                </Grid>
+              ))}
+              <Grid item xs={12} lg={6}>
+                <SalesOverview chartData={chartData} />
               </Grid>
-            ))}
-            <Grid item xs={12} lg={6}>
-              <SalesOverview chartData={chartData} />
+              <Grid item xs={12} lg={6}>
+                <ApexDonutChart chartData={chartData} />
+              </Grid>
+              <Grid item xs={12} lg={6}>
+                <ReactionsOverview chartData={data} />
+              </Grid>
             </Grid>
-            <Grid item xs={12} lg={6}>
-              <ApexDonutChart chartData={chartData} />
-            </Grid>
-            <Grid item xs={12} lg={6}>
-              <ReactionsOverview chartData={data} />
-            </Grid>
-          </Grid>
             )}
       </Box>
     </PageContainer>

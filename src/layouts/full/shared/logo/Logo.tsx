@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { styled } from "@mui/material";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 const LinkStyled = styled(Link)(() => ({
   height: "70px",
@@ -10,8 +11,13 @@ const LinkStyled = styled(Link)(() => ({
 }));
 
 const Logo = () => {
+  const router = useRouter();
+
   return (
-    <LinkStyled href="/">
+    <LinkStyled href={{
+      pathname: '/',
+      query: router.query
+    }}>
       <Image
         src="/images/logos/logo.svg"
         alt="logo"

@@ -41,6 +41,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
       if (loginResponse.data?.token !== null) {
         const token = loginResponse.data.token;
         localStorage.setItem("authToken", token);
+        localStorage.setItem("pages", JSON.stringify(loginResponse?.data?.company?.pages));
         await router.push("/");
       }
     } catch (err) {

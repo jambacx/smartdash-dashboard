@@ -1,4 +1,4 @@
-import {type ReactElement, useMemo, useState} from "react";
+import { type ReactElement, useMemo, useState } from "react";
 import {
   Typography,
   Box,
@@ -15,11 +15,12 @@ import {
   ControlledDatePicker,
   FallbackSpinner,
 } from "@src/components";
-import {usePost} from "@src/lib/hooks/usePost";
+import { usePost } from "@src/lib/hooks/usePost";
 import FullLayout from "@src/layouts/full/FullLayout";
 import moment from "moment";
-import {IconDotsVertical, IconExternalLink} from "@tabler/icons-react";
+import { IconDotsVertical, IconExternalLink } from "@tabler/icons-react";
 import CustomModal from "@components/modal";
+import { useGetPage } from "@src/lib/hooks/useGetPage";
 
 function Posts() {
   const [page, setPage] = useState(0);
@@ -30,11 +31,12 @@ function Posts() {
   );
   const [endDate, setEndDate] = useState<Date | null>(new Date());
   const [selectedCategory, setSelectedCategory] = useState("");
+  const { selectedPage } = useGetPage();
 
   const body: any = useMemo(
     () => ({
       page: page + 1,
-      page_id: process.env.NEXT_PUBLIC_PAGE_ID,
+      page_id: selectedPage,
       limit: rowsPerPage,
       category: selectedCategory,
       date_range: [
@@ -42,10 +44,10 @@ function Posts() {
         endDate ? endDate.toISOString().split("T")[0] : undefined,
       ],
     }),
-    [page, rowsPerPage, selectedDate, endDate, selectedCategory],
+    [page, rowsPerPage, selectedPage, selectedDate, endDate, selectedCategory],
   );
 
-  const {response, listLoading} = usePost(body);
+  const { response, listLoading } = usePost(body);
   const posts = response?.posts || [];
   const pagination = response?.pagination || {};
 
@@ -71,18 +73,18 @@ function Posts() {
         color="textSecondary"
         gutterBottom
         component="div"
-        sx={{fontSize: "13px"}}>
+        sx={{ fontSize: "13px" }}>
         Нийтэлсэн нийтлэлийн жагсаалт
       </Typography>
       <Typography
         variant="h4"
         gutterBottom
         component="div"
-        sx={{marginBottom: 4}}>
+        sx={{ marginBottom: 4 }}>
         Нийтлэл
       </Typography>
       <DashboardCard>
-        <Box sx={{overflow: "auto", width: {xs: "280px", sm: "auto"}}}>
+        <Box sx={{ overflow: "auto", width: { xs: "280px", sm: "auto" } }}>
           <ControlledDatePicker
             selectedDate={selectedDate}
             endDate={endDate}
@@ -94,114 +96,114 @@ function Posts() {
 
           {listLoading
             ? (
-            <FallbackSpinner />
+              <FallbackSpinner />
               )
             : (
-            <>
-              <CustomTable headers={rowsTitles}>
-                <TableBody>
-                  {posts.map((post: any, index: number) => (
-                    <TableRow
-                      key={post.id}
-                      style={{
-                        borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
-                      }}>
-                      <TableCell>
-                        <Typography
-                          sx={{fontSize: "15px", fontWeight: "500"}}
-                          onClick={() => {
-                            window.open(
-                              "https://facebook.com/" + post.id,
-                              "_blank",
-                            );
-                          }}
-                          color="#5D87FF"
-                          style={{cursor: "pointer"}}>
-                          {index + 1}
-                        </Typography>
-                      </TableCell>
-                      <TableCell onClick={handleOpen}>
-                        <Box
-                          sx={{
-                            display: "flex",
-                            alignItems: "center",
-                          }}>
-                          <Box>
-                            <Typography
-                              variant="subtitle2"
-                              fontWeight={400}
-                              sx={{
-                                fontSize: "14px",
-                              }}>
-                              {post?.message?.length > 80
-                                ? post.message.slice(0, 80) + "..."
-                                : post.message}
-                            </Typography>
-                            <Typography
-                              color="textSecondary"
-                              sx={{
-                                fontSize: "7px",
-                              }}>
-                              {post?.post}
-                            </Typography>
+              <>
+                <CustomTable headers={rowsTitles}>
+                  <TableBody>
+                    {posts.map((post: any, index: number) => (
+                      <TableRow
+                        key={post.id}
+                        style={{
+                          borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
+                        }}>
+                        <TableCell>
+                          <Typography
+                            sx={{ fontSize: "15px", fontWeight: "500" }}
+                            onClick={() => {
+                              window.open(
+                                "https://facebook.com/" + post.id,
+                                "_blank",
+                              );
+                            }}
+                            color="#5D87FF"
+                            style={{ cursor: "pointer" }}>
+                            {index + 1}
+                          </Typography>
+                        </TableCell>
+                        <TableCell onClick={handleOpen}>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              alignItems: "center",
+                            }}>
+                            <Box>
+                              <Typography
+                                variant="subtitle2"
+                                fontWeight={400}
+                                sx={{
+                                  fontSize: "14px",
+                                }}>
+                                {post?.message?.length > 80
+                                  ? post.message.slice(0, 80) + "..."
+                                  : post.message}
+                              </Typography>
+                              <Typography
+                                color="textSecondary"
+                                sx={{
+                                  fontSize: "7px",
+                                }}>
+                                {post?.post}
+                              </Typography>
+                            </Box>
                           </Box>
-                        </Box>
-                      </TableCell>
-                      <TableCell>
-                        <Chip
-                          sx={{
-                            px: "4px",
-                            backgroundColor: post.pbg,
-                            color: "#black",
-                          }}
-                          size="small"
-                          label={post.category}></Chip>
-                      </TableCell>
-                      <TableCell>
-                        <Typography
-                          variant="h6"
-                          sx={{
-                            fontSize: "14px",
-                          }}>
-                          {moment.unix(post.created_time).format("MM/DD/YYYY")}
-                        </Typography>
-                      </TableCell>
-                      <TableCell>
-                        <IconExternalLink
-                          onClick={() => {
-                            window.open(
-                              "https://facebook.com/" + post.id,
-                              "_blank",
-                            );
-                          }}
-                          color="#5D87FF"
-                          size={20}
-                          style={{
-                            cursor: "pointer",
-                            marginRight: "8px",
-                            fontSize: "18px",
-                          }}
-                          type="button"
-                        />
-                        <IconDotsVertical
-                          onClick={() => {
-                            handleOpen(post);
-                          }}
-                          size={20}
-                          color="#6b6969"
-                          style={{
-                            cursor: "pointer",
-                            marginRight: "8px",
-                            fontSize: "13px",
-                          }}
-                          type="button"
-                        />
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </CustomTable>
-            </>
+                        </TableCell>
+                        <TableCell>
+                          <Chip
+                            sx={{
+                              px: "4px",
+                              backgroundColor: post.pbg,
+                              color: "#black",
+                            }}
+                            size="small"
+                            label={post.category}></Chip>
+                        </TableCell>
+                        <TableCell>
+                          <Typography
+                            variant="h6"
+                            sx={{
+                              fontSize: "14px",
+                            }}>
+                            {moment.unix(post.created_time).format("MM/DD/YYYY")}
+                          </Typography>
+                        </TableCell>
+                        <TableCell>
+                          <IconExternalLink
+                            onClick={() => {
+                              window.open(
+                                "https://facebook.com/" + post.id,
+                                "_blank",
+                              );
+                            }}
+                            color="#5D87FF"
+                            size={20}
+                            style={{
+                              cursor: "pointer",
+                              marginRight: "8px",
+                              fontSize: "18px",
+                            }}
+                            type="button"
+                          />
+                          <IconDotsVertical
+                            onClick={() => {
+                              handleOpen(post);
+                            }}
+                            size={20}
+                            color="#6b6969"
+                            style={{
+                              cursor: "pointer",
+                              marginRight: "8px",
+                              fontSize: "13px",
+                            }}
+                            type="button"
+                          />
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </CustomTable>
+              </>
               )}
           <CustomModal
             open={open}

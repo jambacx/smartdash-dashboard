@@ -1,7 +1,8 @@
-import {Typography, Box, Modal, Avatar, Grid, Stack} from "@mui/material";
-import {DashboardCard, FallbackSpinner} from "@src/components";
-import {usePost} from "@src/lib/hooks/usePost";
-import {detailBar} from "@src/utilities/dummy/dummy";
+import { Typography, Box, Modal, Avatar, Grid, Stack } from "@mui/material";
+import { DashboardCard, FallbackSpinner } from "@src/components";
+import { useGetPage } from "@src/lib/hooks/useGetPage";
+import { usePost } from "@src/lib/hooks/usePost";
+import { detailBar } from "@src/utilities/dummy/dummy";
 
 import {
   IconMessage2,
@@ -22,11 +23,9 @@ function Component({
   handleClose: any;
   post: any;
 }) {
-  const body: any = {
-    page_id: process.env.NEXT_PUBLIC_PAGE_ID,
-  };
+  const { selectedPage } = useGetPage();
 
-  const { listLoading} = usePost(body);
+  const { listLoading } = usePost({ page_id: selectedPage } as any);
 
   const style = {
     position: "absolute",
@@ -54,24 +53,24 @@ function Component({
               }}
               color="#5D87FF"
               size={20}
-              style={{cursor: "pointer", marginRight: "8px", fontSize: "18px"}}
+              style={{ cursor: "pointer", marginRight: "8px", fontSize: "18px" }}
               type="button"
             />
             <Typography
               variant="h6"
               gutterBottom
-              sx={{fontSize: "13px", fontWeight: 700}}>
+              sx={{ fontSize: "13px", fontWeight: 700 }}>
               Нийтлэл:
             </Typography>
             <Typography
               variant="h6"
               gutterBottom
-              sx={{fontSize: "12px", fontWeight: 400, textAlign: "justify"}}>
+              sx={{ fontSize: "12px", fontWeight: 400, textAlign: "justify" }}>
               {post?.message}
             </Typography>
           </>
         )}
-        <Grid container spacing={3} sx={{marginTop: 1}}>
+        <Grid container spacing={3} sx={{ marginTop: 1 }}>
           {detailBar.map((item: any, index: number) => (
             <Grid key={index} item xs={4}>
               <DashboardCard title={item.title}>
@@ -83,7 +82,7 @@ function Component({
                       mt={1}
                       alignItems="center">
                       <Avatar
-                        sx={{bgcolor: item.bgColor, width: 27, height: 27}}>
+                        sx={{ bgcolor: item.bgColor, width: 27, height: 27 }}>
                         {/* <ICONS[index] width={20} color={item.color} /> */}
                         {React.createElement(ICONS[index % ICONS.length], {
                           width: 20,
