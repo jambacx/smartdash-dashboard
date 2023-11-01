@@ -4,8 +4,6 @@ import {useEffect, useState} from "react";
 export const useGetPage = () => {
   const router = useRouter();
   const [selectedPage, setSelectedPage] = useState<any>();
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  console.log(router.query);
 
   // If there is no page selected from the user menu
   // Get all the pages from localStorage and select the first page_id
