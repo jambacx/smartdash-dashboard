@@ -40,7 +40,12 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
 
       if (loginResponse.data?.token !== null) {
         const token = loginResponse.data.token;
+
+        const expirationTime = new Date();
+        expirationTime.setDate(expirationTime.getDate() + 1);
+
         localStorage.setItem("authToken", token);
+        localStorage.setItem("tokenExpiration", expirationTime.toString());
         localStorage.setItem("pages", JSON.stringify(loginResponse?.data?.company?.pages));
         await router.push("/");
       }
@@ -54,10 +59,10 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       {title !== null
         ? (
-        <Typography fontWeight="700" variant="h2" mb={1}>
-          {title}
-        </Typography>
-          )
+          <Typography fontWeight="700" variant="h2" mb={1}>
+            {title}
+          </Typography>
+        )
         : null}
       {subtext}
       <Stack>
@@ -131,18 +136,18 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
           disabled={loading}>
           {loading
             ? (
-            <>
-              <CircularProgress
-                size={24}
-                color="inherit"
-                style={{ marginRight: 10 }}
-              />
-              Нэвтрэх
-            </>
-              )
+              <>
+                <CircularProgress
+                  size={24}
+                  color="inherit"
+                  style={{ marginRight: 10 }}
+                />
+                Нэвтрэх
+              </>
+            )
             : (
-                "Нэвтрэх"
-              )}
+              "Нэвтрэх"
+            )}
         </Button>
       </Box>
     </form>

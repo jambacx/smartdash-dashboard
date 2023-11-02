@@ -24,6 +24,7 @@ namespace HTTP {
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
+
       return config;
     },
     async error => {

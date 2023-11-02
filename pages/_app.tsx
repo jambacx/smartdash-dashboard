@@ -9,7 +9,6 @@ import { CacheProvider, type EmotionCache } from "@emotion/react";
 import createEmotionCache from "../src/createEmotionCache";
 import { baselightTheme } from "../src/theme/DefaultColors";
 import CircularProgress from "@mui/material/CircularProgress";
-
 import { useRouter, Router } from "next/router";
 
 import NProgress from "nprogress";
@@ -37,9 +36,24 @@ const MyApp = (props: MyAppProps) => {
   useEffect(() => {
     const checkAuth = () => {
       const isAuth = router.pathname?.startsWith("/auth");
-      const hasToken = localStorage.getItem("authToken");
+      const token = localStorage.getItem("authToken");
+      const expiration = localStorage.getItem("tokenExpiration");
 
-      if (!isAuth && !hasToken) {
+      let isTokenExpired = false;
+      if (expiration) {
+        const currentTime = new Date();
+        const expirationTime = new Date(expiration);
+        isTokenExpired = currentTime > expirationTime;
+      }
+
+      if (isTokenExpired) {
+        localStorage.removeItem("authToken");
+        localStorage.removeItem("pages");
+        localStorage.removeItem("currentPage");
+        localStorage.removeItem("tokenExpiration");
+      }
+
+      if (!isAuth && (!token || isTokenExpired)) {
         router.push("/authentication/login").finally(() => {
           setLoading(false);
         });
@@ -50,6 +64,7 @@ const MyApp = (props: MyAppProps) => {
 
     checkAuth();
   }, [router.pathname]);
+
 
   Router.events.on("routeChangeStart", () => {
     NProgress.start();
@@ -71,19 +86,19 @@ const MyApp = (props: MyAppProps) => {
         <CssBaseline />
         {loading
           ? (
-          <div
-            style={{
-              display: "flex",
-              height: "100vh",
-              alignItems: "center",
-              justifyContent: "center",
-            }}>
-            <CircularProgress size={24} color="inherit" />
-          </div>
-            )
+            <div
+              style={{
+                display: "flex",
+                height: "100vh",
+                alignItems: "center",
+                justifyContent: "center",
+              }}>
+              <CircularProgress size={24} color="inherit" />
+            </div>
+          )
           : (
-              getLayout(<Component {...pageProps} />)
-            )}
+            getLayout(<Component {...pageProps} />)
+          )}
       </ThemeProvider>
     </CacheProvider>
   );

@@ -58,7 +58,7 @@ function Home() {
         {listLoading || graphLoading
           ? (
             <FallbackSpinner />
-            )
+          )
           : (
             <Grid container spacing={3}>
               {statusBar.map((item, index) => (
@@ -76,7 +76,7 @@ function Home() {
                 <ReactionsOverview chartData={data} />
               </Grid>
             </Grid>
-            )}
+          )}
       </Box>
     </PageContainer>
   );

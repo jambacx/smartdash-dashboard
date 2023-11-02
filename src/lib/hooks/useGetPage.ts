@@ -1,13 +1,10 @@
-import {useRouter} from "next/router";
-import {useEffect, useState} from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 export const useGetPage = () => {
   const router = useRouter();
   const [selectedPage, setSelectedPage] = useState<any>();
 
-  // If there is no page selected from the user menu
-  // Get all the pages from localStorage and select the first page_id
-  // Otherwise logout current user
   useEffect(() => {
     if (!router.query.page_id) {
       const value = localStorage.getItem("pages");
@@ -41,7 +38,7 @@ export const useGetPage = () => {
   const setPage = (pageId: any) => {
     setSelectedPage(pageId);
     localStorage.setItem("currentPage", pageId);
-    router.push({query: {page_id: pageId}});
+    router.push({ query: { page_id: pageId } });
   };
 
   const logOut = () => {
@@ -51,5 +48,5 @@ export const useGetPage = () => {
     router.push("/authentication/login");
   };
 
-  return {selectedPage};
+  return { selectedPage };
 };
