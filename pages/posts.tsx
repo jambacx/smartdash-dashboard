@@ -21,6 +21,7 @@ import moment from "moment";
 import { IconDotsVertical, IconExternalLink } from "@tabler/icons-react";
 import CustomModal from "@components/modal";
 import { useGetPage } from "@src/lib/hooks/useGetPage";
+import { fetchFromAPI } from "@src/lib/hooks/useFetch";
 
 function Posts() {
   const [page, setPage] = useState(0);
@@ -46,6 +47,20 @@ function Posts() {
     }),
     [page, rowsPerPage, selectedPage, selectedDate, endDate, selectedCategory],
   );
+
+  const updatePostCategory = async (postId: string, newCategory: string) => {
+    const result = await fetchFromAPI(`/post/${postId}`, {
+      method: 'put',
+      body: JSON.stringify({
+        page_id: "105701022801307",
+        postId: postId,
+        category: newCategory
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  };
 
   const { response, listLoading } = usePost(body);
   const posts = response?.posts || [];
@@ -93,11 +108,10 @@ function Posts() {
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
           />
-
           {listLoading
             ? (
               <FallbackSpinner />
-              )
+            )
             : (
               <>
                 <CustomTable headers={rowsTitles}>
@@ -204,7 +218,7 @@ function Posts() {
                   </TableBody>
                 </CustomTable>
               </>
-              )}
+            )}
           <CustomModal
             open={open}
             handleClose={handleClose}

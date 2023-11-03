@@ -19,7 +19,7 @@ function Home() {
   );
   const [endDate, setEndDate] = useState<Date | null>(new Date());
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [filterType, setType] = useState("weekly");
+  const [filterType, setType] = useState("custom");
   const { selectedPage } = useGetPage();
 
   const body: any = useMemo(

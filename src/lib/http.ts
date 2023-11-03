@@ -87,6 +87,18 @@ namespace HTTP {
     });
   };
 
+  export const remove = async <T>(
+    url: string,
+    options?: RequestConfig,
+  ): Promise<T> => {
+    return await request<T>({
+      method: "DELETE",
+      url,
+      ...options,
+      data: options?.body,
+    });
+  };
+
   export const put = async <T>(
     url: string,
     options?: RequestConfig,

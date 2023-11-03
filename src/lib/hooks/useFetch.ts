@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import HTTP from "../http";
 
 interface FetchOptions {
@@ -22,7 +22,10 @@ export const useFetch = (endpoint: string, options: FetchOptions) => {
 
         switch (options.method) {
           case "post":
-            response = await HTTP.post(endpoint, {body: options.bodyData});
+            response = await HTTP.post(endpoint, { body: options.bodyData });
+            break;
+          case "delete":
+            response = await HTTP.remove(endpoint, { body: options.bodyData });
             break;
           case "get":
             response = await HTTP.get(endpoint);
@@ -48,4 +51,28 @@ export const useFetch = (endpoint: string, options: FetchOptions) => {
     isLoading,
     error,
   };
+};
+
+
+
+// Rename `useFetch` to `fetchFromAPI` or any other suitable name
+export const fetchFromAPI = async (endpoint: any, options: any) => {
+  try {
+    let response;
+    switch (options.method) {
+      case 'post':
+        response = await HTTP.post(endpoint, { body: options.bodyData });
+        break;
+      case 'delete':
+        response = await HTTP.remove(endpoint);
+        break;
+      case 'get':
+      default:
+        response = await HTTP.get(endpoint);
+        break;
+    }
+    return { response };
+  } catch (error) {
+    return { error };
+  }
 };

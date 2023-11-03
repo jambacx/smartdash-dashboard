@@ -1,4 +1,4 @@
-import {type ReactElement, useMemo, useState } from "react";
+import { type ReactElement, useMemo, useState } from "react";
 import {
   Typography,
   Box,
@@ -8,17 +8,17 @@ import {
   Chip,
   Pagination,
 } from "@mui/material";
-import {useComment} from "@src/lib/hooks/useComment";
+import { useComment } from "@src/lib/hooks/useComment";
 import FullLayout from "@src/layouts/full/FullLayout";
 import moment from "moment";
-import {IconExternalLink} from "@tabler/icons-react";
+import { IconExternalLink } from "@tabler/icons-react";
 import {
   PageContainer,
   DashboardCard,
   CustomTable,
   FallbackSpinner,
-  ControlledDatePicker,
 } from "@src/components";
+import ControlledDatePicker from "@components/label/DatePicker"
 import { useGetPage } from "@src/lib/hooks/useGetPage";
 
 function Comments() {
@@ -38,7 +38,7 @@ function Comments() {
       page: page + 1,
       page_id: selectedPage,
       limit: 15,
-      category: selectedCategory,
+      label: selectedCategory,
       date_range: [
         selectedDate ? selectedDate.toISOString().split("T")[0] : undefined,
         endDate ? endDate.toISOString().split("T")[0] : undefined,
@@ -47,7 +47,7 @@ function Comments() {
     [page, rowsPerPage, selectedPage, selectedDate, selectedCategory, endDate],
   );
 
-  const {response, listLoading} = useComment(body);
+  const { response, listLoading } = useComment(body);
   const rowsTitles = [
     "#",
     "Comment",
@@ -87,18 +87,18 @@ function Comments() {
         color="textSecondary"
         gutterBottom
         component="div"
-        sx={{fontSize: "13px"}}>
+        sx={{ fontSize: "13px" }}>
         Нийтлэл дээрх сэтгэгдлийн жагсаалт
       </Typography>
       <Typography
         variant="h4"
         gutterBottom
         component="div"
-        sx={{marginBottom: 4}}>
+        sx={{ marginBottom: 4 }}>
         Сэтгэгдэл
       </Typography>
       <DashboardCard>
-        <Box sx={{overflow: "auto", width: {xs: "280px", sm: "auto"}}}>
+        <Box sx={{ overflow: "auto", width: { xs: "280px", sm: "auto" } }}>
           <ControlledDatePicker
             selectedDate={selectedDate}
             endDate={endDate}
@@ -109,101 +109,101 @@ function Comments() {
           />
           {listLoading
             ? (
-            <FallbackSpinner />
-              )
+              <FallbackSpinner />
+            )
             : (
-            <CustomTable headers={rowsTitles}>
-              <TableBody>
-                {comments.map((comment: any, index: number) => (
-                  <TableRow key={comment.id}>
-                    <TableCell>
-                      <Typography
-                        sx={{fontSize: "15px", fontWeight: "500"}}
-                        onClick={() => {
-                          window.open(
-                            "https://facebook.com/" + comment.post_id,
-                            "_blank",
-                          );
-                        }}
-                        color="#5D87FF"
-                        style={{cursor: "pointer"}}>
-                        {index + 1}
-                      </Typography>
-                    </TableCell>
-                    <TableCell>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          alignItems: "center",
-                        }}>
-                        <Box>
-                          <Typography
-                            variant="subtitle2"
-                            fontWeight={400}
-                            sx={{
-                              fontSize: "14px",
-                            }}>
-                            {comment?.comment?.length > 60
-                              ? comment?.comment?.slice(0, 80) + "..."
-                              : comment?.comment}
-                          </Typography>
+              <CustomTable headers={rowsTitles}>
+                <TableBody>
+                  {comments.map((comment: any, index: number) => (
+                    <TableRow key={comment.id}>
+                      <TableCell>
+                        <Typography
+                          sx={{ fontSize: "15px", fontWeight: "500" }}
+                          onClick={() => {
+                            window.open(
+                              "https://facebook.com/" + comment.post_id,
+                              "_blank",
+                            );
+                          }}
+                          color="#5D87FF"
+                          style={{ cursor: "pointer" }}>
+                          {index + 1}
+                        </Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                          }}>
+                          <Box>
+                            <Typography
+                              variant="subtitle2"
+                              fontWeight={400}
+                              sx={{
+                                fontSize: "14px",
+                              }}>
+                              {comment?.comment?.length > 60
+                                ? comment?.comment?.slice(0, 80) + "..."
+                                : comment?.comment}
+                            </Typography>
+                          </Box>
                         </Box>
-                      </Box>
-                    </TableCell>
-                    <TableCell>
-                      <Chip
-                        sx={{
-                          px: "4px",
-                          backgroundColor: comment.pbg,
-                          color: "#black",
-                        }}
-                        size="small"
-                        label={comment.confidence}></Chip>
-                    </TableCell>
-                    <TableCell>
-                      <Chip
-                        sx={{
-                          px: "2px",
-                          color: "white",
-                          width: "80px",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          backgroundColor: getCategoryColor(comment.label),
-                        }}
-                        size="small"
-                        label={comment.label}></Chip>
-                    </TableCell>
-                    <TableCell>
-                      <Typography
-                        variant="h6"
-                        sx={{
-                          fontSize: "14px",
-                        }}>
-                        {moment.unix(comment.created_time).format("MM/DD/YYYY")}
-                      </Typography>
-                    </TableCell>
-                    <TableCell>
-                      {comment?.reply === "No Reply Need" && comment?.reply}
-                    </TableCell>
-                    <TableCell>
-                      <IconExternalLink
-                        onClick={() => {
-                          window.open(
-                            "https://facebook.com/" + comment.post_id,
-                            "_blank",
-                          );
-                        }}
-                        color="#1A73ED"
-                        style={{cursor: "pointer"}}
-                        type="button"
-                      />
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </CustomTable>
-              )}
+                      </TableCell>
+                      <TableCell>
+                        <Chip
+                          sx={{
+                            px: "4px",
+                            backgroundColor: comment.pbg,
+                            color: "#black",
+                          }}
+                          size="small"
+                          label={comment.confidence}></Chip>
+                      </TableCell>
+                      <TableCell>
+                        <Chip
+                          sx={{
+                            px: "2px",
+                            color: "white",
+                            width: "80px",
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            backgroundColor: getCategoryColor(comment.label),
+                          }}
+                          size="small"
+                          label={comment.label}></Chip>
+                      </TableCell>
+                      <TableCell>
+                        <Typography
+                          variant="h6"
+                          sx={{
+                            fontSize: "14px",
+                          }}>
+                          {moment.unix(comment.created_time).format("MM/DD/YYYY")}
+                        </Typography>
+                      </TableCell>
+                      <TableCell>
+                        {comment?.reply === "No Reply Need" && comment?.reply}
+                      </TableCell>
+                      <TableCell>
+                        <IconExternalLink
+                          onClick={() => {
+                            window.open(
+                              "https://facebook.com/" + comment.post_id,
+                              "_blank",
+                            );
+                          }}
+                          color="#1A73ED"
+                          style={{ cursor: "pointer" }}
+                          type="button"
+                        />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </CustomTable>
+            )}
           <Pagination
             count={pagination?.page_count || 1}
             page={page + 1}

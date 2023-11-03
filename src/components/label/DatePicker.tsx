@@ -12,9 +12,13 @@ function ControlledDatePicker({
   selectedCategory,
   setSelectedCategory,
 }: any) {
-  const { response: confResponse } = useConfig();
-  const categories = confResponse?.categories || [];
 
+  const categories = [
+    { id: '', name: 'Бүгд' },
+    { id: 'positive', name: 'Эерэг' },
+    { id: 'negative', name: 'Сөрөг' },
+    { id: 'neutral', name: 'Ерөнхий' },
+  ];
   return (
     <Box
       sx={{
@@ -54,8 +58,8 @@ function ControlledDatePicker({
         value={selectedCategory}
         onChange={e => setSelectedCategory(e.target.value)}>
         {categories.map((category: any) => (
-          <MenuItem key={category.id} value={category.category_name}>
-            {category.category_name}
+          <MenuItem key={category.id} value={category.id}>
+            {category.name}
           </MenuItem>
         ))}
       </Select>
