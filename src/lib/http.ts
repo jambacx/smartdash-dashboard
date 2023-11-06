@@ -1,5 +1,5 @@
 import axios, { type AxiosInstance, type AxiosRequestConfig } from "axios";
-
+import nookies from 'nookies'
 // eslint-disable-next-line @typescript-eslint/no-namespace
 namespace HTTP {
   export interface RequestConfig
@@ -20,7 +20,8 @@ namespace HTTP {
 
   instance.interceptors.request.use(
     config => {
-      const token = localStorage.getItem("authToken");
+      const cookies = nookies.get();
+      const token = cookies?.authToken;
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }

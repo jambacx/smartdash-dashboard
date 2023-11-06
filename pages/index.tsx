@@ -1,4 +1,5 @@
 import { useState, type ReactElement, useMemo } from "react";
+import nookies from 'nookies'
 import { Grid, Box } from "@mui/material";
 import {
   PageContainer,
@@ -12,7 +13,6 @@ import { useGraph, useDashboard } from "@src/lib/hooks/useDashboard";
 import { statusBar } from "../src/utilities/dummy/dummy";
 import ReactionsOverview from "@src/components/dashboard/ReactionsOverview";
 import Filter from "@src/components/forms/theme-elements/Filter";
-import { useGetPage } from "@src/lib/hooks/useGetPage";
 import { GetServerSideProps } from "next";
 function Home({ page_id }: any) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(
@@ -89,11 +89,22 @@ Home.getLayout = function getLayout(page: ReactElement) {
 export default Home;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { page_id } = context.query;
-
+  const cookies = nookies.get(context);
+  let firstPageId = null;
+  if (cookies.pages) {
+    try {
+      const pagesArray = JSON.parse(cookies.pages);
+      if (Array.isArray(pagesArray) && pagesArray.length > 0) {
+        firstPageId = pagesArray[0].page_id;
+        console.log("First page_id: ", firstPageId);
+      }
+    } catch (error) {
+      console.error("Failed to parse pages cookie: ", error);
+    }
+  }
   return {
     props: {
-      page_id,
+      page_id: firstPageId,
     },
   };
 };

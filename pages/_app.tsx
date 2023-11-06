@@ -10,6 +10,7 @@ import createEmotionCache from "../src/createEmotionCache";
 import { baselightTheme } from "../src/theme/DefaultColors";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useRouter, Router } from "next/router";
+import nookies from 'nookies'
 
 import NProgress from "nprogress";
 
@@ -31,50 +32,30 @@ const MyApp = (props: MyAppProps) => {
   const getLayout = Component.getLayout ?? (page => page);
   const router = useRouter();
 
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const checkAuth = () => {
-      const isAuth = router.pathname?.startsWith("/auth");
-      const token = localStorage.getItem("authToken");
-      const expiration = localStorage.getItem("tokenExpiration");
+    const handleRouteChange = (url: string) => {
+      const cookies = nookies.get();
 
-      let isTokenExpired = false;
-      if (expiration) {
-        const currentTime = new Date();
-        const expirationTime = new Date(expiration);
-        isTokenExpired = currentTime > expirationTime;
-      }
+      const token = cookies?.authToken;
 
-      if (isTokenExpired) {
-        localStorage.removeItem("authToken");
-        localStorage.removeItem("pages");
-        localStorage.removeItem("currentPage");
-        localStorage.removeItem("tokenExpiration");
-      }
+      console.log("token:  ", token);
 
-      if (!isAuth && (!token || isTokenExpired)) {
-        router.push("/authentication/login").finally(() => {
-          setLoading(false);
-        });
-      } else {
-        setLoading(false);
+
+      if (!token && !url.startsWith("/authentication")) {
+        router.push("/authentication/login");
       }
     };
 
-    checkAuth();
-  }, [router.pathname]);
+    handleRouteChange(router.pathname);
+    router.events.on("routeChangeStart", handleRouteChange);
 
+    return () => {
+      router.events.off("routeChangeStart", handleRouteChange);
+    };
+  }, [router]);
 
-  Router.events.on("routeChangeStart", () => {
-    NProgress.start();
-  });
-  Router.events.on("routeChangeError", () => {
-    NProgress.done();
-  });
-  Router.events.on("routeChangeComplete", () => {
-    NProgress.done();
-  });
 
   return (
     <CacheProvider value={emotionCache}>
@@ -84,21 +65,9 @@ const MyApp = (props: MyAppProps) => {
       </Head>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        {loading
-          ? (
-            <div
-              style={{
-                display: "flex",
-                height: "100vh",
-                alignItems: "center",
-                justifyContent: "center",
-              }}>
-              <CircularProgress size={24} color="inherit" />
-            </div>
-          )
-          : (
-            getLayout(<Component {...pageProps} />)
-          )}
+        {
+          getLayout(<Component {...pageProps} />)
+        }
       </ThemeProvider>
     </CacheProvider>
   );

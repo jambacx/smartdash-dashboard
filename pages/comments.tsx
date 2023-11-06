@@ -9,6 +9,7 @@ import {
   Pagination,
 } from "@mui/material";
 import { useComment } from "@src/lib/hooks/useComment";
+import nookies from 'nookies'
 import FullLayout from "@src/layouts/full/FullLayout";
 import moment from "moment";
 import { IconExternalLink } from "@tabler/icons-react";
@@ -19,7 +20,6 @@ import {
   FallbackSpinner,
 } from "@src/components";
 import ControlledDatePicker from "@components/label/DatePicker"
-import { useGetPage } from "@src/lib/hooks/useGetPage";
 import { GetServerSideProps } from "next";
 
 function Comments({ page_id }: any) {
@@ -229,8 +229,11 @@ Comments.getLayout = function getLayout(page: ReactElement) {
 export default Comments;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { page_id } = context.query;
+  const cookies = nookies.get(context);
 
+  console.log(cookies);
+
+  const page_id = cookies.pageId ? cookies.pageId : null;
   return {
     props: {
       page_id,

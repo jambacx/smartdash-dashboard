@@ -8,6 +8,7 @@ import {
   CircularProgress,
   Button,
 } from "@mui/material";
+import nookies from 'nookies'
 import DashboardCard from "@components/shared/DashboardCard";
 import { useConfig } from "@src/lib/hooks/useConfig";
 import PageContainer from "@src/components/container/PageContainer";
@@ -145,8 +146,8 @@ Config.getLayout = function getLayout(page: ReactElement) {
 export default Config;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { page_id } = context.query;
-
+  const cookies = nookies.get(context);
+  const page_id = cookies.pageId ? cookies.pageId : null;
   return {
     props: {
       page_id,

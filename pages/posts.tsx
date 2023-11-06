@@ -8,6 +8,7 @@ import {
   Chip,
   Pagination,
 } from "@mui/material";
+import nookies from 'nookies'
 import {
   DashboardCard,
   PageContainer,
@@ -247,8 +248,8 @@ Posts.getLayout = function getLayout(page: ReactElement) {
 export default Posts;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { page_id } = context.query;
-
+  const cookies = nookies.get(context);
+  const page_id = cookies.pageId ? cookies.pageId : null;
   return {
     props: {
       page_id,

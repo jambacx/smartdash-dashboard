@@ -8,6 +8,7 @@ import {
   Checkbox,
 } from "@mui/material";
 import Link from "next/link";
+import nookies from 'nookies'
 
 import { useForm } from "react-hook-form";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -39,14 +40,26 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
       const loginResponse: any = await login(data);
 
       if (loginResponse.data?.token !== null) {
-        const token = loginResponse.data.token;
+        const token = loginResponse?.data?.token;
+        const pages = loginResponse?.data?.company?.pages;
 
-        const expirationTime = new Date();
-        expirationTime.setDate(expirationTime.getDate() + 1);
+        nookies.set(null, 'authToken', token, {
+          maxAge: 24 * 60 * 60,
+          path: '/',
+        });
 
-        localStorage.setItem("authToken", token);
-        localStorage.setItem("tokenExpiration", expirationTime.toString());
-        localStorage.setItem("pages", JSON.stringify(loginResponse?.data?.company?.pages));
+
+        if (Array.isArray(pages) && pages?.length > 0) {
+          nookies.set(null, 'pages', JSON.stringify(pages), {
+            maxAge: 24 * 60 * 60,
+            path: '/',
+          });
+
+          nookies.set(null, 'pageId', pages[0]?.page_id, {
+            maxAge: 24 * 60 * 60,
+            path: '/',
+          });
+        }
         await router.push("/");
       }
     } catch (err) {
@@ -54,7 +67,6 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
       setError("password", { type: "manual", message: "Нууц үг буруу." });
     }
   };
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       {title !== null
