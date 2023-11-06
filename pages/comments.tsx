@@ -20,8 +20,10 @@ import {
 } from "@src/components";
 import ControlledDatePicker from "@components/label/DatePicker"
 import { useGetPage } from "@src/lib/hooks/useGetPage";
+import { GetServerSideProps } from "next";
 
-function Comments() {
+function Comments({ page_id }: any) {
+
   const [page, setPage] = useState(0);
   const [rowsPerPage] = useState(15);
 
@@ -31,12 +33,11 @@ function Comments() {
   const [endDate, setEndDate] = useState<Date | null>(new Date());
 
   const [selectedCategory, setSelectedCategory] = useState("");
-  const { selectedPage } = useGetPage();
 
   const body: any = useMemo(
     () => ({
       page: page + 1,
-      page_id: selectedPage,
+      page_id: page_id,
       limit: 15,
       label: selectedCategory,
       date_range: [
@@ -44,7 +45,7 @@ function Comments() {
         endDate ? endDate.toISOString().split("T")[0] : undefined,
       ],
     }),
-    [page, rowsPerPage, selectedPage, selectedDate, selectedCategory, endDate],
+    [page, rowsPerPage, selectedDate, selectedCategory, endDate],
   );
 
   const { response, listLoading } = useComment(body);
@@ -226,3 +227,13 @@ Comments.getLayout = function getLayout(page: ReactElement) {
 };
 
 export default Comments;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { page_id } = context.query;
+
+  return {
+    props: {
+      page_id,
+    },
+  };
+};

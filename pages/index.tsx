@@ -13,18 +13,18 @@ import { statusBar } from "../src/utilities/dummy/dummy";
 import ReactionsOverview from "@src/components/dashboard/ReactionsOverview";
 import Filter from "@src/components/forms/theme-elements/Filter";
 import { useGetPage } from "@src/lib/hooks/useGetPage";
-function Home() {
+import { GetServerSideProps } from "next";
+function Home({ page_id }: any) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(
     new Date(new Date().setDate(new Date().getDate() - 14)),
   );
   const [endDate, setEndDate] = useState<Date | null>(new Date());
   const [selectedCategory, setSelectedCategory] = useState("");
   const [filterType, setType] = useState("custom");
-  const { selectedPage } = useGetPage();
 
   const body: any = useMemo(
     () => ({
-      page_id: selectedPage,
+      page_id: page_id,
       type: filterType,
       category: selectedCategory,
       date_range: [
@@ -32,7 +32,7 @@ function Home() {
         endDate ? endDate.toISOString().split("T")[0] : undefined,
       ],
     }),
-    [selectedDate, filterType, endDate, selectedCategory, selectedPage],
+    [selectedDate, filterType, endDate, selectedCategory],
   );
 
   const { response, listLoading } = useDashboard(body);
@@ -87,3 +87,13 @@ Home.getLayout = function getLayout(page: ReactElement) {
 };
 
 export default Home;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { page_id } = context.query;
+
+  return {
+    props: {
+      page_id,
+    },
+  };
+};

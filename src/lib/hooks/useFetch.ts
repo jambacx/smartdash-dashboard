@@ -19,7 +19,6 @@ export const useFetch = (endpoint: string, options: FetchOptions) => {
     const fetchData = async () => {
       try {
         let response;
-
         switch (options.method) {
           case "post":
             response = await HTTP.post(endpoint, { body: options.bodyData });

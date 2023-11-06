@@ -20,7 +20,6 @@ export const useGetPage = () => {
             logOut();
           }
         } else {
-          // On refresh select previously selected page
           setPage(currentPageValue);
         }
       } else {

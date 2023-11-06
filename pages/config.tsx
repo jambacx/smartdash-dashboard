@@ -18,14 +18,14 @@ import { fetchFromAPI } from "@src/lib/hooks/useFetch";
 import AddIcon from '@mui/icons-material/Add';
 import IconButton from '@mui/material/IconButton';
 import AddCategoryDialog from '@components/dilog/index';
+import { GetServerSideProps } from "next";
 
-function Config() {
+function Config({ page_id }: any) {
   const { response, listLoading } = useConfig();
   const categories = response?.categories || [];
 
   const rowsTitles = ["#", "Ангилал", "Үйлдэл"];
   const [addDialogOpen, setAddDialogOpen] = useState(false);
-
 
   const deleteCategory = async (categoryId: any) => {
 
@@ -34,9 +34,7 @@ function Config() {
     });
   }
 
-
   const handleAddCategory = async (categoryName: string) => {
-    // Call the API to add a new category
     const result = await fetchFromAPI('https://de5hzqxd15.execute-api.ap-northeast-1.amazonaws.com/dev/post/category', {
       method: 'post',
       bodyData: { category_name: categoryName },
@@ -145,3 +143,13 @@ Config.getLayout = function getLayout(page: ReactElement) {
 };
 
 export default Config;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { page_id } = context.query;
+
+  return {
+    props: {
+      page_id,
+    },
+  };
+};

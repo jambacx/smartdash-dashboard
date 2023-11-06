@@ -20,10 +20,10 @@ import FullLayout from "@src/layouts/full/FullLayout";
 import moment from "moment";
 import { IconDotsVertical, IconExternalLink } from "@tabler/icons-react";
 import CustomModal from "@components/modal";
-import { useGetPage } from "@src/lib/hooks/useGetPage";
 import { fetchFromAPI } from "@src/lib/hooks/useFetch";
+import { GetServerSideProps } from "next";
 
-function Posts() {
+function Posts({ page_id }: any) {
   const [page, setPage] = useState(0);
   const [rowsPerPage] = useState(15);
   const [selectedPost, setSelectedPost] = useState<any | null>(null);
@@ -32,12 +32,11 @@ function Posts() {
   );
   const [endDate, setEndDate] = useState<Date | null>(new Date());
   const [selectedCategory, setSelectedCategory] = useState("");
-  const { selectedPage } = useGetPage();
 
   const body: any = useMemo(
     () => ({
       page: page + 1,
-      page_id: selectedPage,
+      page_id: page_id,
       limit: rowsPerPage,
       category: selectedCategory,
       date_range: [
@@ -45,7 +44,7 @@ function Posts() {
         endDate ? endDate.toISOString().split("T")[0] : undefined,
       ],
     }),
-    [page, rowsPerPage, selectedPage, selectedDate, endDate, selectedCategory],
+    [page, rowsPerPage, selectedDate, endDate, selectedCategory],
   );
 
   const updatePostCategory = async (postId: string, newCategory: string) => {
@@ -246,3 +245,13 @@ Posts.getLayout = function getLayout(page: ReactElement) {
 };
 
 export default Posts;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { page_id } = context.query;
+
+  return {
+    props: {
+      page_id,
+    },
+  };
+};
