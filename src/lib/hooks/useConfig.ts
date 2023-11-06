@@ -26,24 +26,3 @@ export const useConfig = () => {
     listError,
   };
 };
-
-export const useGraph = (bodyData: DashboardRequestBody) => {
-  const fetchOptions: any = {
-    method: "post",
-    bodyData,
-  };
-
-  const {
-    response: graphResponse,
-    status: graphStatus,
-    isLoading: graphLoading,
-    error: graphError,
-  } = useFetch("/dashboard/graph", fetchOptions);
-
-  return {
-    graphResponse,
-    graphStatus,
-    graphLoading,
-    graphError,
-  };
-};

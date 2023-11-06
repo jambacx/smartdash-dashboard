@@ -1,7 +1,7 @@
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { Box, MenuItem, Select } from "@mui/material";
+import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { useConfig } from "@src/lib/hooks/useConfig";
 
 function ControlledDatePicker({
@@ -47,18 +47,23 @@ function ControlledDatePicker({
           format="yyyy-MM-dd"
         />
       </LocalizationProvider>
+      {/* <FormControl sx={{ flex: 1, minWidth: 120 }}> */}
       <Select
         sx={{ marginLeft: 2 }}
         size="small"
-        labelId="category-label"
         value={selectedCategory}
+        displayEmpty
         onChange={e => setSelectedCategory(e.target.value)}>
+        <MenuItem value="" sx={{ color: "grey" }}>
+          Ангилал
+        </MenuItem>
         {categories.map((category: any) => (
           <MenuItem key={category.id} value={category.category_name}>
             {category.category_name}
           </MenuItem>
         ))}
       </Select>
+      {/* </FormControl> */}
     </Box>
   );
 }

@@ -1,90 +1,115 @@
-import dynamic from "next/dynamic";
-import { Card, CardContent, CardHeader } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-const Chart = dynamic(async () => await import("react-apexcharts"), {
+import dynamic from 'next/dynamic';
+import { Card, CardContent, CardHeader } from '@mui/material';
+import { useTheme, Theme } from '@mui/material/styles';
+import { ApexOptions } from 'apexcharts';
+
+const Chart = dynamic(() => import('react-apexcharts'), {
   ssr: false,
 });
 
-interface SalesOverviewProps {
-  chartData: Record<string, number>;
+interface ReactionCounts {
+  CARE?: number;
+  HAHA?: number;
+  LOVE?: number;
+  LIKE?: number;
+  SAD?: number;
+  ANGRY?: number;
+  WOW?: number;
 }
 
-const ReactionsOverview: React.FC<SalesOverviewProps> = ({ chartData }: any) => {
+interface SalesOverviewProps {
+  chartData: {
+    reactions: ReactionCounts;
+  };
+}
+
+const reactionEmojiMap: Record<keyof ReactionCounts, string> = {
+  CARE: '🤗',
+  HAHA: '😆',
+  LOVE: '❤️',
+  LIKE: '👍',
+  SAD: '😢',
+  ANGRY: '😡',
+  WOW: '😮',
+};
+
+const reactionColorMap: Record<keyof ReactionCounts, string> = {
+  CARE: '#FFD700',
+  HAHA: '#FF6347',
+  LOVE: '#E3002D',
+  LIKE: '#2883FE',
+  SAD: '#1E90FF',
+  ANGRY: '#FF4500',
+  WOW: '#9400D3',
+};
+
+const ReactionsOverview: React.FC<SalesOverviewProps> = ({ chartData }) => {
   const theme = useTheme();
 
-  const reactionEmojiMap: Record<string, string> = {
-    CARE: "🤗",
-    HAHA: "😆",
-    LOVE: "❤️",
-    LIKE: "👍",
-    SAD: "😢",
-    ANGRY: "😡",
-    WOW: "😮",
-  };
+  const seriesData = Object.entries(reactionEmojiMap).map(([key, emoji]) => {
 
-  const reactionColorMap: Record<string, string> = {
-    CARE: "#FFD700",
-    HAHA: "#FF6347",
-    LOVE: "#E3002D",
-    LIKE: "#2883FE",
-    SAD: "#1E90FF",
-    ANGRY: "#FF4500",
-    WOW: "#9400D3",
-  };
+    const reactionCounts: ReactionCounts = chartData?.reactions ?? {};
+    return {
+      name: emoji,
+      data: [reactionCounts[key as keyof ReactionCounts] ?? 0],
+    };
+  });
 
-  const seriescolumnchart: any = chartData?.reactions
-    ? Object.entries(chartData.reactions).map(([reaction, count]) => ({
-      name: reactionEmojiMap[reaction],
-      data: [count],
-    }))
-    : [];
+  const maxYValue = Math.max(...Object.values(chartData.reactions ?? {}).filter(Boolean));
 
-  const optionscolumnchart: any = {
+  const chartColors = Object.keys(reactionEmojiMap).map(
+    (key) => {
+
+      const count = chartData?.reactions?.[key as keyof ReactionCounts];
+      return count ? reactionColorMap[key as keyof ReactionCounts] : '#D3D3D3';
+    }
+  );
+
+
+  const optionscolumnchart: ApexOptions = {
     chart: {
-      type: "bar",
+      type: 'bar',
       fontFamily: "'Plus Jakarta Sans', sans-serif;",
-      foreColor: "#adb0bb",
+      foreColor: '#adb0bb',
       height: 370,
     },
-    colors: Object.values(reactionColorMap),
+    colors: chartColors,
     stroke: {
       show: true,
       width: 5,
-      lineCap: "butt",
-      colors: ["transparent"],
+      lineCap: 'butt',
+      colors: ['transparent'],
     },
     yaxis: {
       tickAmount: 4,
+      max: maxYValue > 0 ? maxYValue * 1.1 : 10,
     },
     grid: {
-      borderColor: "rgba(0,0,0,0.1)",
+      borderColor: 'rgba(0,0,0,0.1)',
       strokeDashArray: 3,
-      xaxis: {
-        lines: {
-          show: false,
-        },
-      },
     },
     plotOptions: {
       bar: {
         horizontal: false,
-        barHeight: "60%",
-        columnWidth: "42%",
-        borderRadius: [6],
+        barHeight: '60%',
+        columnWidth: '42%',
+        borderRadius: 6,
       },
     },
     xaxis: {
-      categories: ["🤗", "😆", "❤️", "👍", "😢", "😡", "😮"],
+      categories: Object.values(reactionEmojiMap),
       axisBorder: {
         show: true,
       },
+      labels: {
+        show: false
+      }
     },
     dataLabels: {
       enabled: false,
     },
     tooltip: {
-      theme: theme.palette.mode === "dark" ? "dark" : "light",
-      fillSeriesColor: false,
+      theme: theme.palette.mode === 'dark' ? 'dark' : 'light',
     },
   };
 
@@ -94,13 +119,13 @@ const ReactionsOverview: React.FC<SalesOverviewProps> = ({ chartData }: any) => 
         title="Нийтлэл дээрх хандалт"
         subheader="Хандалт харьцуулалт"
         subheaderTypographyProps={{
-          sx: { color: theme => `${theme.palette.text.disabled} !important` },
+          sx: { color: (theme: Theme) => `${theme.palette.text.disabled} !important` },
         }}
       />
       <CardContent>
         <Chart
           options={optionscolumnchart}
-          series={seriescolumnchart}
+          series={seriesData}
           type="bar"
           height="370px"
         />

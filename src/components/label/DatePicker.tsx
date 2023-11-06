@@ -14,7 +14,6 @@ function ControlledDatePicker({
 }: any) {
 
   const categories = [
-    { id: '', name: 'Бүгд' },
     { id: 'positive', name: 'Эерэг' },
     { id: 'negative', name: 'Сөрөг' },
     { id: 'neutral', name: 'Ерөнхий' },
@@ -56,7 +55,11 @@ function ControlledDatePicker({
         size="small"
         labelId="category-label"
         value={selectedCategory}
+        displayEmpty
         onChange={e => setSelectedCategory(e.target.value)}>
+        <MenuItem value="" sx={{ color: "grey" }}>
+          Төрөл
+        </MenuItem>
         {categories.map((category: any) => (
           <MenuItem key={category.id} value={category.id}>
             {category.name}

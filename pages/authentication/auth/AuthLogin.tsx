@@ -48,7 +48,6 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
           path: '/',
         });
 
-
         if (Array.isArray(pages) && pages?.length > 0) {
           nookies.set(null, 'pages', JSON.stringify(pages), {
             maxAge: 24 * 60 * 60,
@@ -67,6 +66,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
       setError("password", { type: "manual", message: "Нууц үг буруу." });
     }
   };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       {title !== null

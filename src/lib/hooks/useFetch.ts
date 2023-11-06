@@ -15,13 +15,17 @@ export const useFetch = (endpoint: string, options: FetchOptions) => {
   useEffect(() => {
     setIsLoading(true);
     setStatus("pending");
-
     const fetchData = async () => {
+      console.log(endpoint, options);
+
       try {
         let response;
         switch (options.method) {
           case "post":
             response = await HTTP.post(endpoint, { body: options.bodyData });
+            break;
+          case "put":
+            response = await HTTP.put(endpoint, { body: options.bodyData });
             break;
           case "delete":
             response = await HTTP.remove(endpoint, { body: options.bodyData });
@@ -40,7 +44,6 @@ export const useFetch = (endpoint: string, options: FetchOptions) => {
         setIsLoading(false);
       }
     };
-
     fetchData();
   }, [endpoint, options.method, JSON.stringify(options.bodyData)]);
 
@@ -52,15 +55,16 @@ export const useFetch = (endpoint: string, options: FetchOptions) => {
   };
 };
 
-
-
-// Rename `useFetch` to `fetchFromAPI` or any other suitable name
 export const fetchFromAPI = async (endpoint: any, options: any) => {
   try {
     let response;
+
     switch (options.method) {
       case 'post':
         response = await HTTP.post(endpoint, { body: options.bodyData });
+        break;
+      case "put":
+        response = await HTTP.put(endpoint, { body: options.bodyData });
         break;
       case 'delete':
         response = await HTTP.remove(endpoint);

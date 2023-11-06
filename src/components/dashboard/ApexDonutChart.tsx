@@ -59,13 +59,6 @@ const ApexDonutChart = ({ chartData }: { chartData: any }) => {
               color: theme.palette.text.secondary,
               formatter: (val: string) => `${parseInt(val, 10)}`,
             },
-            total: {
-              show: true,
-              fontSize: "1.2rem",
-              label: "Нийт",
-              formatter: () => "31%",
-              color: theme.palette.text.primary,
-            },
           },
         },
       },

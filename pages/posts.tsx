@@ -7,6 +7,8 @@ import {
   TableRow,
   Chip,
   Pagination,
+  MenuItem,
+  Select,
 } from "@mui/material";
 import nookies from 'nookies'
 import {
@@ -16,13 +18,13 @@ import {
   ControlledDatePicker,
   FallbackSpinner,
 } from "@src/components";
-import { usePost } from "@src/lib/hooks/usePost";
+import { usePost, usePostCategory } from "@src/lib/hooks/usePost";
 import FullLayout from "@src/layouts/full/FullLayout";
 import moment from "moment";
 import { IconDotsVertical, IconExternalLink } from "@tabler/icons-react";
 import CustomModal from "@components/modal";
-import { fetchFromAPI } from "@src/lib/hooks/useFetch";
 import { GetServerSideProps } from "next";
+import { useConfig } from "@src/lib/hooks/useConfig";
 
 function Posts({ page_id }: any) {
   const [page, setPage] = useState(0);
@@ -48,21 +50,10 @@ function Posts({ page_id }: any) {
     [page, rowsPerPage, selectedDate, endDate, selectedCategory],
   );
 
-  const updatePostCategory = async (postId: string, newCategory: string) => {
-    const result = await fetchFromAPI(`/post/${postId}`, {
-      method: 'put',
-      body: JSON.stringify({
-        page_id: "105701022801307",
-        postId: postId,
-        category: newCategory
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-  };
 
   const { response, listLoading } = usePost(body);
+  const { response: confResponse } = useConfig();
+
   const posts = response?.posts || [];
   const pagination = response?.pagination || {};
 
@@ -80,6 +71,18 @@ function Posts({ page_id }: any) {
   };
 
   const rowsTitles = ["#", "Post", "Category", "Date", "Action"];
+  const categories = confResponse?.categories || [];
+
+  const updatePostCategory = async (postId: any, newCategory: any) => {
+    try {
+      const { response, listLoading } = usePostCategory({
+        page_id,
+        postId,
+        category: newCategory,
+      });
+    } catch (error) {
+    }
+  };
 
   return (
     <PageContainer title="Smartdash" description="this is Dashboard">
@@ -136,7 +139,7 @@ function Posts({ page_id }: any) {
                             {index + 1}
                           </Typography>
                         </TableCell>
-                        <TableCell onClick={handleOpen}>
+                        <TableCell onClick={() => handleOpen(post)}>
                           <Box
                             sx={{
                               display: "flex",
@@ -164,14 +167,23 @@ function Posts({ page_id }: any) {
                           </Box>
                         </TableCell>
                         <TableCell>
-                          <Chip
-                            sx={{
-                              px: "4px",
-                              backgroundColor: post.pbg,
-                              color: "#black",
-                            }}
+                          <Select
                             size="small"
-                            label={post.category}></Chip>
+                            value={post.category}
+                            displayEmpty
+                            onChange={(e) => updatePostCategory(post.id, e.target.value)}
+                            sx={{ minWidth: 120 }}
+                          >
+                            <MenuItem value="" disabled>
+                              Ангилалаа сонгоно уу
+                            </MenuItem>
+                            {categories.map((category: any) => (
+                              <MenuItem key={category.id} value={category.category_name}>
+                                {category.category_name}
+                              </MenuItem>
+                            ))}
+                          </Select>
+
                         </TableCell>
                         <TableCell>
                           <Typography

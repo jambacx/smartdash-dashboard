@@ -45,3 +45,20 @@ export const detailBar = [
     count: 42,
   },
 ];
+
+
+
+export const getCategoryColor = (category: any) => {
+  switch (category) {
+    case "neutral":
+      return "#5D87FF";
+    case "question":
+      return "#EBEBEB";
+    case "positive":
+      return "#15D9B1";
+    case "negative":
+      return "#DA6E54";
+    default:
+      return "#000";
+  }
+};

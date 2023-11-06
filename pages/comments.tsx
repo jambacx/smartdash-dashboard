@@ -1,4 +1,5 @@
 import { type ReactElement, useMemo, useState } from "react";
+import { getCategoryColor } from "@src/utilities/dummy/dummy";
 import {
   Typography,
   Box,
@@ -66,20 +67,6 @@ function Comments({ page_id }: any) {
     setPage(newPage - 1);
   };
 
-  const getCategoryColor = (category: any) => {
-    switch (category) {
-      case "neutral":
-        return "#5D87FF";
-      case "question":
-        return "#EBEBEB";
-      case "positive":
-        return "#15D9B1";
-      case "negative":
-        return "#DA6E54";
-      default:
-        return "#000";
-    }
-  };
 
   return (
     <PageContainer title="Smartdash" description="this is Dashboard">

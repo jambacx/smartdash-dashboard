@@ -1,4 +1,4 @@
-import { useState, type ReactElement, useMemo } from "react";
+import { useState, type ReactElement, useMemo, useEffect } from "react";
 import nookies from 'nookies'
 import { Grid, Box } from "@mui/material";
 import {
@@ -14,6 +14,7 @@ import { statusBar } from "../src/utilities/dummy/dummy";
 import ReactionsOverview from "@src/components/dashboard/ReactionsOverview";
 import Filter from "@src/components/forms/theme-elements/Filter";
 import { GetServerSideProps } from "next";
+import { calculateDateRange } from "@src/lib/hooks/useRange";
 function Home({ page_id }: any) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(
     new Date(new Date().setDate(new Date().getDate() - 14)),
@@ -22,18 +23,38 @@ function Home({ page_id }: any) {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [filterType, setType] = useState("custom");
 
-  const body: any = useMemo(
-    () => ({
+  const body: any = useMemo(() => {
+    const dateRange = calculateDateRange(filterType, selectedDate, endDate);
+    const bodyObject: any = {
       page_id: page_id,
       type: filterType,
       category: selectedCategory,
-      date_range: [
-        selectedDate ? selectedDate.toISOString().split("T")[0] : undefined,
-        endDate ? endDate.toISOString().split("T")[0] : undefined,
-      ],
-    }),
-    [selectedDate, filterType, endDate, selectedCategory],
-  );
+      date_range: dateRange
+    };
+
+    return bodyObject;
+  }, [selectedDate, filterType, endDate, selectedCategory]);
+
+  useEffect(() => {
+    if (!selectedDate) return;
+    let newEndDate;
+
+    switch (filterType) {
+      case 'daily':
+        newEndDate = new Date(selectedDate);
+        break;
+      case 'weekly':
+        newEndDate = new Date(selectedDate);
+        newEndDate.setDate(newEndDate.getDate() + 6);
+        break;
+      case 'monthly':
+        newEndDate = new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 0);
+        break;
+      default:
+        return;
+    }
+    setEndDate(newEndDate);
+  }, [selectedDate, filterType]);
 
   const { response, listLoading } = useDashboard(body);
   const { graphResponse, graphLoading } = useGraph(body);

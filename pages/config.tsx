@@ -9,6 +9,7 @@ import {
   Button,
 } from "@mui/material";
 import nookies from 'nookies'
+
 import DashboardCard from "@components/shared/DashboardCard";
 import { useConfig } from "@src/lib/hooks/useConfig";
 import PageContainer from "@src/components/container/PageContainer";
@@ -28,20 +29,9 @@ function Config({ page_id }: any) {
   const rowsTitles = ["#", "Ангилал", "Үйлдэл"];
   const [addDialogOpen, setAddDialogOpen] = useState(false);
 
-  const deleteCategory = async (categoryId: any) => {
+  const handleAddCategory = async (categoryId: any) => {
 
-    const result = await fetchFromAPI(`/post/category/${categoryId}`, {
-      method: 'delete',
-    });
   }
-
-  const handleAddCategory = async (categoryName: string) => {
-    const result = await fetchFromAPI('https://de5hzqxd15.execute-api.ap-northeast-1.amazonaws.com/dev/post/category', {
-      method: 'post',
-      bodyData: { category_name: categoryName },
-    });
-
-  };
 
   if (listLoading) {
     return (
@@ -113,7 +103,7 @@ function Config({ page_id }: any) {
                   </TableCell>
                   <TableCell>
                     <IconTrash
-                      onClick={() => deleteCategory(category.id)}
+                      // onClick={() => deleteCategory(category.id)}
                       color="#E8013F"
                       size={20}
                       style={{
