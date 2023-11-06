@@ -231,11 +231,13 @@ function Posts({ page_id }: any) {
                 </CustomTable>
               </>
             )}
-          <CustomModal
-            open={open}
-            handleClose={handleClose}
-            post={selectedPost}
-          />
+          {selectedPost && (
+            <CustomModal
+              open={open}
+              handleClose={handleClose}
+              post={selectedPost}
+            />
+          )}
           <Pagination
             count={pagination?.page_count || 1}
             page={page + 1}

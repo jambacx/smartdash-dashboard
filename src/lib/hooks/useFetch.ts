@@ -16,7 +16,6 @@ export const useFetch = (endpoint: string, options: FetchOptions) => {
     setIsLoading(true);
     setStatus("pending");
     const fetchData = async () => {
-      console.log(endpoint, options);
 
       try {
         let response;

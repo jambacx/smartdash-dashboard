@@ -11,27 +11,27 @@ import {
 import nookies from 'nookies'
 
 import DashboardCard from "@components/shared/DashboardCard";
-import { useConfig } from "@src/lib/hooks/useConfig";
+import { useConfig, useConfigDelete } from "@src/lib/hooks/useConfig";
 import PageContainer from "@src/components/container/PageContainer";
 import FullLayout from "@src/layouts/full/FullLayout";
 import { IconTrash } from "@tabler/icons-react";
 import { CustomTable } from "@src/components/table/CustomTable";
-import { fetchFromAPI } from "@src/lib/hooks/useFetch";
 import AddIcon from '@mui/icons-material/Add';
-import IconButton from '@mui/material/IconButton';
 import AddCategoryDialog from '@components/dilog/index';
-import { GetServerSideProps } from "next";
+import { type GetServerSideProps } from "next";
 
-function Config({ page_id }: any) {
+function Config() {
   const { response, listLoading } = useConfig();
   const categories = response?.categories || [];
 
   const rowsTitles = ["#", "Ангилал", "Үйлдэл"];
   const [addDialogOpen, setAddDialogOpen] = useState(false);
+  const { onDelete } = useConfigDelete();
 
-  const handleAddCategory = async (categoryId: any) => {
-
-  }
+  const handleAddCategory = async (categoryId: any) => { }
+  const deleteCategory = async (id: string) => {
+    await onDelete(id);
+  };
 
   if (listLoading) {
     return (
@@ -103,7 +103,7 @@ function Config({ page_id }: any) {
                   </TableCell>
                   <TableCell>
                     <IconTrash
-                      // onClick={() => deleteCategory(category.id)}
+                      onClick={() => deleteCategory(category.id)}
                       color="#E8013F"
                       size={20}
                       style={{
@@ -138,6 +138,7 @@ export default Config;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = nookies.get(context);
   const page_id = cookies.pageId ? cookies.pageId : null;
+
   return {
     props: {
       page_id,
