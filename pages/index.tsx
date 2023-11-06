@@ -22,6 +22,9 @@ function Home({ page_id }: any) {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [filterType, setType] = useState("custom");
 
+  console.log("page_id: ", page_id);
+
+
   const body: any = useMemo(
     () => ({
       page_id: page_id,
@@ -90,21 +93,10 @@ export default Home;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = nookies.get(context);
-  let firstPageId = null;
-  if (cookies.pages) {
-    try {
-      const pagesArray = JSON.parse(cookies.pages);
-      if (Array.isArray(pagesArray) && pagesArray.length > 0) {
-        firstPageId = pagesArray[0].page_id;
-        console.log("First page_id: ", firstPageId);
-      }
-    } catch (error) {
-      console.error("Failed to parse pages cookie: ", error);
-    }
-  }
+  const page_id = cookies.pageId ? cookies.pageId : null;
   return {
     props: {
-      page_id: firstPageId,
+      page_id,
     },
   };
 };

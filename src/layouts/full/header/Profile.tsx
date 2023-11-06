@@ -8,6 +8,7 @@ import {
   MenuItem,
   ListItemText,
 } from "@mui/material";
+import nookies from 'nookies'
 
 import { useRouter } from "next/router";
 
@@ -18,16 +19,19 @@ const Profile = () => {
   const [currentPage, setCurrentPage] = useState<any>();
 
   useEffect(() => {
-    if (router.query.page_id) {
-      setCurrentPage(router.query.page_id)
-    }
-  }, [router.query]);
+    const cookies = nookies.get();
+    const pagesFromCookies = cookies.pages;
 
-  useEffect(() => {
-    const value = localStorage.getItem('pages');
+    console.log(pagesFromCookies);
 
-    if (value) {
-      setPages(JSON.parse(value))
+
+    if (pagesFromCookies) {
+      try {
+        const parsedPages = JSON.parse(pagesFromCookies);
+        setPages(parsedPages);
+      } catch (error) {
+        console.error("Failed to parse pages cookie:", error);
+      }
     }
   }, []);
 
@@ -40,9 +44,9 @@ const Profile = () => {
   };
 
   const logout = () => {
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("pages");
-    localStorage.removeItem("currentPage");
+    nookies.destroy(null, 'authToken', { path: '/' });
+    nookies.destroy(null, 'pages', { path: '/' });
+    nookies.destroy(null, 'currentPage', { path: '/' });
     router.push("/authentication/login");
   };
 
@@ -83,10 +87,15 @@ const Profile = () => {
           },
         }}>
         {pages?.map((page: { page_id: string, label: string }) => (
-          // eslint-disable-next-line @typescript-eslint/promise-function-async
-          <MenuItem selected={currentPage === page.page_id} key={page.page_id} href={`/${page.page_id}`} onClick={() => router.push({
-            query: { page_id: page.page_id }
-          })}>
+          <MenuItem
+            selected={currentPage === page.page_id}
+            key={page.page_id}
+            onClick={() => {
+              setCurrentPage(page?.page_id);
+              router.push(`/`);
+              nookies.set(null, 'pageId', page.page_id, { path: '/' });
+            }}
+          >
             <ListItemText>{page.label}</ListItemText>
           </MenuItem>
         ))}
