@@ -42,8 +42,15 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
       if (loginResponse.data?.token !== null) {
         const token = loginResponse?.data?.token;
         const pages = loginResponse?.data?.company?.pages;
+        const companyId = loginResponse?.data?.company?.id;
+        console.log(loginResponse);
 
         nookies.set(null, 'authToken', token, {
+          maxAge: 24 * 60 * 60,
+          path: '/',
+        });
+
+        nookies.set(null, 'companyId', companyId, {
           maxAge: 24 * 60 * 60,
           path: '/',
         });

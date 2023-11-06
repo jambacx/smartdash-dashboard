@@ -1,6 +1,33 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import HTTP from '../http';
 import { useFetch } from './useFetch';
+
+export const useGetConfig = (companyId: string) => {
+  const [loading, setLoading] = useState(false);
+  const [configs, setConfigs] = useState([]);
+  const [shouldRefetch, setShouldRefetch] = useState(false);
+
+  useEffect(() => {
+    if (companyId) {
+      const fetch = async () => {
+        setLoading(true);
+        const response: any = await HTTP.get('/post/category', {
+          params: { company_id: companyId },
+        });
+
+        setLoading(false);
+        setConfigs(response?.categories || []);
+      };
+      fetch();
+    }
+  }, [companyId, shouldRefetch]);
+
+  const refetch = () => {
+    setShouldRefetch(!shouldRefetch);
+  };
+
+  return { loading, configs, refetch };
+};
 
 export const useConfig = () => {
   const fetchOptions: any = {
@@ -29,12 +56,30 @@ export const useConfigDelete = () => {
   const onDelete = async (categoryId: string) => {
     setLoading(true);
 
-    await HTTP.remove(`/post/category/delete/${categoryId}`, {
-      method: 'delete',
-    });
+    await HTTP.remove(`/post/category/${categoryId}`, { method: 'delete' });
 
     setLoading(false);
   };
 
   return { loading, onDelete };
+};
+
+export const useConfigAdd = () => {
+  const [loading, setLoading] = useState(false);
+
+  const onAdd = async (companyId: string, name: string) => {
+    setLoading(true);
+
+    await HTTP.post(`/post/category`, {
+      method: 'post',
+      body: {
+        company_id: companyId,
+        category_name: name,
+      },
+    });
+
+    setLoading(false);
+  };
+
+  return { loading, onAdd };
 };

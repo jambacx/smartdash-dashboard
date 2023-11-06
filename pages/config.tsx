@@ -11,7 +11,7 @@ import {
 import nookies from 'nookies'
 
 import DashboardCard from "@components/shared/DashboardCard";
-import { useConfig, useConfigDelete } from "@src/lib/hooks/useConfig";
+import { useConfigAdd, useConfigDelete, useGetConfig } from "@src/lib/hooks/useConfig";
 import PageContainer from "@src/components/container/PageContainer";
 import FullLayout from "@src/layouts/full/FullLayout";
 import { IconTrash } from "@tabler/icons-react";
@@ -19,21 +19,33 @@ import { CustomTable } from "@src/components/table/CustomTable";
 import AddIcon from '@mui/icons-material/Add';
 import AddCategoryDialog from '@components/dilog/index';
 import { type GetServerSideProps } from "next";
+import { type Category } from "@src/interfaces/category";
 
-function Config() {
-  const { response, listLoading } = useConfig();
-  const categories = response?.categories || [];
 
+type Props = {
+  page_id: string;
+  company_id: string;
+};
+
+const Config: React.FC<Props> = ({ company_id }) => {
   const rowsTitles = ["#", "Ангилал", "Үйлдэл"];
   const [addDialogOpen, setAddDialogOpen] = useState(false);
+  const { configs, loading, refetch } = useGetConfig(company_id);
+  const { onAdd } = useConfigAdd();
   const { onDelete } = useConfigDelete();
 
-  const handleAddCategory = async (categoryId: any) => { }
-  const deleteCategory = async (id: string) => {
-    await onDelete(id);
+  const handleAddCategory = async (name: string) => {
+    await onAdd(company_id, name);
+    refetch();
+  }
+  const deleteCategory = async (category: Category) => {
+    if (confirm(`${category.category_name} устгах уу?`)) {
+      await onDelete(category.id);
+      refetch();
+    }
   };
 
-  if (listLoading) {
+  if (loading) {
     return (
       <Box
         display="flex"
@@ -73,7 +85,7 @@ function Config() {
           </Box>
           <CustomTable headers={rowsTitles}>
             <TableBody>
-              {categories.map((category: any, index: number) => (
+              {configs.map((category: any, index: number) => (
                 <TableRow
                   key={category.id}
                   style={{
@@ -103,7 +115,7 @@ function Config() {
                   </TableCell>
                   <TableCell>
                     <IconTrash
-                      onClick={() => deleteCategory(category.id)}
+                      onClick={() => deleteCategory(category)}
                       color="#E8013F"
                       size={20}
                       style={{
@@ -138,10 +150,12 @@ export default Config;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = nookies.get(context);
   const page_id = cookies.pageId ? cookies.pageId : null;
+  const company_id = cookies.companyId ? cookies.companyId : null;
 
   return {
     props: {
       page_id,
+      company_id
     },
   };
 };

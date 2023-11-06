@@ -18,15 +18,15 @@ import {
   ControlledDatePicker,
   FallbackSpinner,
 } from "@src/components";
-import { usePost, usePostCategory } from "@src/lib/hooks/usePost";
+import { useGetPost, usePost, usePostCategory, useUpdatePost } from "@src/lib/hooks/usePost";
 import FullLayout from "@src/layouts/full/FullLayout";
 import moment from "moment";
 import { IconDotsVertical, IconExternalLink } from "@tabler/icons-react";
 import CustomModal from "@components/modal";
 import { GetServerSideProps } from "next";
-import { useConfig } from "@src/lib/hooks/useConfig";
+import { useConfig, useGetConfig } from "@src/lib/hooks/useConfig";
 
-function Posts({ page_id }: any) {
+function Posts({ page_id, company_id }: any) {
   const [page, setPage] = useState(0);
   const [rowsPerPage] = useState(15);
   const [selectedPost, setSelectedPost] = useState<any | null>(null);
@@ -39,7 +39,7 @@ function Posts({ page_id }: any) {
   const body: any = useMemo(
     () => ({
       page: page + 1,
-      page_id: page_id,
+      page_id,
       limit: rowsPerPage,
       category: selectedCategory,
       date_range: [
@@ -51,8 +51,9 @@ function Posts({ page_id }: any) {
   );
 
 
-  const { response, listLoading } = usePost(body);
-  const { response: confResponse } = useConfig();
+  const { configs } = useGetConfig(company_id);
+  const { onUpdate } = useUpdatePost();
+  const { loading, response, refetch } = useGetPost(body);
 
   const posts = response?.posts || [];
   const pagination = response?.pagination || {};
@@ -71,17 +72,10 @@ function Posts({ page_id }: any) {
   };
 
   const rowsTitles = ["#", "Post", "Category", "Date", "Action"];
-  const categories = confResponse?.categories || [];
 
-  const updatePostCategory = async (postId: any, newCategory: any) => {
-    try {
-      const { response, listLoading } = usePostCategory({
-        page_id,
-        postId,
-        category: newCategory,
-      });
-    } catch (error) {
-    }
+  const updatePostCategory = async (post: { id: string, page_id: string }, newCategory: string) => {
+    await onUpdate(post.page_id, post.id, newCategory)
+    refetch();
   };
 
   return (
@@ -111,7 +105,7 @@ function Posts({ page_id }: any) {
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
           />
-          {listLoading
+          {loading
             ? (
               <FallbackSpinner />
             )
@@ -171,13 +165,13 @@ function Posts({ page_id }: any) {
                             size="small"
                             value={post.category}
                             displayEmpty
-                            onChange={(e) => updatePostCategory(post.id, e.target.value)}
+                            onChange={(e) => updatePostCategory(post, e.target.value)}
                             sx={{ minWidth: 120 }}
                           >
                             <MenuItem value="" disabled>
                               Ангилалаа сонгоно уу
                             </MenuItem>
-                            {categories.map((category: any) => (
+                            {configs.map((category: any) => (
                               <MenuItem key={category.id} value={category.category_name}>
                                 {category.category_name}
                               </MenuItem>
@@ -264,9 +258,11 @@ export default Posts;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = nookies.get(context);
   const page_id = cookies.pageId ? cookies.pageId : null;
+  const company_id = cookies.companyId ? cookies.companyId : null;
   return {
     props: {
       page_id,
+      company_id
     },
   };
 };
