@@ -56,15 +56,15 @@ const Login2 = () => {
                 justifyContent="center"
                 alignItems="center">
                 <Image
-                  src="/images/products/dashboard.png"
+                  src="/images/products/dashboard.svg"
                   alt="logo"
                   height={200}
-                  width={400}
+                  width={380}
                 />
                 <Typography
                   variant="h5"
                   gutterBottom
-                  sx={{ textAlign: "center" }}>
+                  sx={{ textAlign: "center", marginTop: 5 }}>
                   Хэрэглэгчийн удирдах самбар
                 </Typography>
                 <Typography
