@@ -22,9 +22,6 @@ const Profile = () => {
     const cookies = nookies.get();
     const pagesFromCookies = cookies.pages;
 
-    console.log(pagesFromCookies);
-
-
     if (pagesFromCookies) {
       try {
         const parsedPages = JSON.parse(pagesFromCookies);

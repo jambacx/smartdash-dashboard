@@ -22,9 +22,6 @@ function Home({ page_id }: any) {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [filterType, setType] = useState("custom");
 
-  console.log("page_id: ", page_id);
-
-
   const body: any = useMemo(
     () => ({
       page_id: page_id,

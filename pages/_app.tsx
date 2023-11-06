@@ -37,11 +37,7 @@ const MyApp = (props: MyAppProps) => {
   useEffect(() => {
     const handleRouteChange = (url: string) => {
       const cookies = nookies.get();
-
       const token = cookies?.authToken;
-
-      console.log("token:  ", token);
-
 
       if (!token && !url.startsWith("/authentication")) {
         router.push("/authentication/login");

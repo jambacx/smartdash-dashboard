@@ -231,8 +231,6 @@ export default Comments;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = nookies.get(context);
 
-  console.log(cookies);
-
   const page_id = cookies.pageId ? cookies.pageId : null;
   return {
     props: {
