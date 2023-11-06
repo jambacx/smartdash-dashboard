@@ -43,7 +43,6 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
         const token = loginResponse?.data?.token;
         const pages = loginResponse?.data?.company?.pages;
         const companyId = loginResponse?.data?.company?.id;
-        console.log(loginResponse);
 
         nookies.set(null, 'authToken', token, {
           maxAge: 24 * 60 * 60,

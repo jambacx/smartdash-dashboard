@@ -100,7 +100,6 @@ export const useUpdatePost = () => {
     postId: string,
     categoryId: string,
   ) => {
-    console.log(pageId, postId);
     setLoading(true);
 
     await HTTP.put(`/post`, {

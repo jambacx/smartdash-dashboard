@@ -25,7 +25,6 @@ function Component({
   post: any;
 }) {
   const cookies = parseCookies()
-  console.log(post,'--');
 
   const { response, listLoading, listError } = usePostDetail({ page_id: cookies?.pageId, post_id: post?.id });
 
