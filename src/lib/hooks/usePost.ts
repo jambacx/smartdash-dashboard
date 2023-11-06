@@ -118,7 +118,7 @@ export const useUpdatePost = () => {
 
 export const useGetPost = (body: any) => {
   const [loading, setLoading] = useState(false);
-  const [response, setResponse] = useState([]);
+  const [response, setResponse] = useState<any>([]);
   const [shouldRefetch, setShouldRefetch] = useState(false);
 
   useEffect(() => {

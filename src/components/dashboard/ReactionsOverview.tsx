@@ -1,9 +1,9 @@
 import dynamic from 'next/dynamic';
 import { Card, CardContent, CardHeader } from '@mui/material';
-import { useTheme, Theme } from '@mui/material/styles';
-import { ApexOptions } from 'apexcharts';
+import { useTheme, type Theme } from '@mui/material/styles';
+import { type ApexOptions } from 'apexcharts';
 
-const Chart = dynamic(() => import('react-apexcharts'), {
+const Chart = dynamic(async () => await import('react-apexcharts'), {
   ssr: false,
 });
 
@@ -47,7 +47,6 @@ const ReactionsOverview: React.FC<SalesOverviewProps> = ({ chartData }) => {
   const theme = useTheme();
 
   const seriesData = Object.entries(reactionEmojiMap).map(([key, emoji]) => {
-
     const reactionCounts: ReactionCounts = chartData?.reactions ?? {};
     return {
       name: emoji,
@@ -59,7 +58,6 @@ const ReactionsOverview: React.FC<SalesOverviewProps> = ({ chartData }) => {
 
   const chartColors = Object.keys(reactionEmojiMap).map(
     (key) => {
-
       const count = chartData?.reactions?.[key as keyof ReactionCounts];
       return count ? reactionColorMap[key as keyof ReactionCounts] : '#D3D3D3';
     }

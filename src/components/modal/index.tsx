@@ -1,5 +1,5 @@
 import { Typography, Box, Modal, Avatar, Grid, Stack } from "@mui/material";
-import nookies from 'nookies'
+import nookies, { parseCookies } from 'nookies'
 import { DashboardCard, FallbackSpinner } from "@src/components";
 import { usePostDetail } from "@src/lib/hooks/usePost";
 import { detailBar } from "@src/utilities/dummy/dummy";
@@ -10,7 +10,6 @@ import {
   IconShare,
   IconExternalLink,
 } from "@tabler/icons-react";
-import { parseCookies } from 'nookies';
 import React from "react";
 
 const ICONS = [IconMessage2, IconFileLike, IconShare];
@@ -46,8 +45,8 @@ function Component({
           response?.message && response?.message !== 'success' &&
           <Typography variant="h6">There is no details yet on this post.</Typography>
         }
-        {listLoading ? <FallbackSpinner /> :
-          <>
+        {listLoading ? <FallbackSpinner />
+          : <>
             {post && (
               <>
                 <IconExternalLink

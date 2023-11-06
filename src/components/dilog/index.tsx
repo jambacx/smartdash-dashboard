@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import type React from 'react';
+import { useState } from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -35,7 +36,7 @@ const AddCategoryDialog: React.FC<AddCategoryDialogProps> = ({ open, onClose, on
           fullWidth
           variant="outlined"
           value={categoryName}
-          onChange={(e) => setCategoryName(e.target.value)}
+          onChange={(e) => { setCategoryName(e.target.value); }}
         />
       </DialogContent>
       <DialogActions>

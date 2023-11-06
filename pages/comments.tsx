@@ -21,10 +21,9 @@ import {
   FallbackSpinner,
 } from "@src/components";
 import ControlledDatePicker from "@components/label/DatePicker"
-import { GetServerSideProps } from "next";
+import { type GetServerSideProps } from "next";
 
 function Comments({ page_id }: any) {
-
   const [page, setPage] = useState(0);
   const [rowsPerPage] = useState(15);
 
@@ -38,7 +37,7 @@ function Comments({ page_id }: any) {
   const body: any = useMemo(
     () => ({
       page: page + 1,
-      page_id: page_id,
+      page_id,
       limit: 15,
       label: selectedCategory,
       date_range: [

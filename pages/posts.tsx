@@ -23,7 +23,7 @@ import FullLayout from "@src/layouts/full/FullLayout";
 import moment from "moment";
 import { IconDotsVertical, IconExternalLink } from "@tabler/icons-react";
 import CustomModal from "@components/modal";
-import { GetServerSideProps } from "next";
+import { type GetServerSideProps } from "next";
 import { useConfig, useGetConfig } from "@src/lib/hooks/useConfig";
 
 function Posts({ page_id, company_id }: any) {
@@ -133,7 +133,7 @@ function Posts({ page_id, company_id }: any) {
                             {index + 1}
                           </Typography>
                         </TableCell>
-                        <TableCell onClick={() => handleOpen(post)}>
+                        <TableCell onClick={() => { handleOpen(post); }}>
                           <Box
                             sx={{
                               display: "flex",
@@ -165,7 +165,7 @@ function Posts({ page_id, company_id }: any) {
                             size="small"
                             value={post.category}
                             displayEmpty
-                            onChange={(e) => updatePostCategory(post, e.target.value)}
+                            onChange={async (e) => { await updatePostCategory(post, e.target.value); }}
                             sx={{ minWidth: 120 }}
                           >
                             <MenuItem value="" disabled>

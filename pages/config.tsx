@@ -69,7 +69,7 @@ function Config({ company_id }: Props) {
             <Button
               variant="outlined"
               startIcon={<AddIcon />}
-              onClick={() => setAddDialogOpen(true)}
+              onClick={() => { setAddDialogOpen(true); }}
               sx={{
                 borderColor: 'success.main',
                 color: 'success.main',
@@ -115,7 +115,7 @@ function Config({ company_id }: Props) {
                   </TableCell>
                   <TableCell>
                     <IconTrash
-                      onClick={() => deleteCategory(category)}
+                      onClick={async () => { await deleteCategory(category); }}
                       color="#E8013F"
                       size={20}
                       style={{
@@ -134,7 +134,7 @@ function Config({ company_id }: Props) {
       </DashboardCard>
       <AddCategoryDialog
         open={addDialogOpen}
-        onClose={() => setAddDialogOpen(false)}
+        onClose={() => { setAddDialogOpen(false); }}
         onAdd={handleAddCategory}
       />
     </PageContainer>

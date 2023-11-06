@@ -13,7 +13,7 @@ import { useGraph, useDashboard } from "@src/lib/hooks/useDashboard";
 import { statusBar } from "../src/utilities/dummy/dummy";
 import ReactionsOverview from "@src/components/dashboard/ReactionsOverview";
 import Filter from "@src/components/forms/theme-elements/Filter";
-import { GetServerSideProps } from "next";
+import { type GetServerSideProps } from "next";
 import { calculateDateRange } from "@src/lib/hooks/useRange";
 function Home({ page_id }: any) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(
@@ -26,7 +26,7 @@ function Home({ page_id }: any) {
   const body: any = useMemo(() => {
     const dateRange = calculateDateRange(filterType, selectedDate, endDate);
     const bodyObject: any = {
-      page_id: page_id,
+      page_id,
       type: filterType,
       category: selectedCategory,
       date_range: dateRange

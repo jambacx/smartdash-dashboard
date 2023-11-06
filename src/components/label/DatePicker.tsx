@@ -12,7 +12,6 @@ function ControlledDatePicker({
   selectedCategory,
   setSelectedCategory,
 }: any) {
-
   const categories = [
     { id: 'positive', name: 'Эерэг' },
     { id: 'negative', name: 'Сөрөг' },
