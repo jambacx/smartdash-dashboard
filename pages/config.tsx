@@ -27,7 +27,7 @@ type Props = {
   company_id: string;
 };
 
-const Config: React.FC<Props> = ({ company_id }) => {
+function Config({ company_id }: Props) {
   const rowsTitles = ["#", "Ангилал", "Үйлдэл"];
   const [addDialogOpen, setAddDialogOpen] = useState(false);
   const { configs, loading, refetch } = useGetConfig(company_id);
