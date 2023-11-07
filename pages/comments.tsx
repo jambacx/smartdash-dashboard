@@ -9,7 +9,7 @@ import {
   Chip,
   Pagination,
 } from "@mui/material";
-import { useComment } from "@src/lib/hooks/useComment";
+import { useComment, useGetComment } from "@src/lib/hooks/useComment";
 import nookies from 'nookies'
 import FullLayout from "@src/layouts/full/FullLayout";
 import moment from "moment";
@@ -22,10 +22,22 @@ import {
 } from "@src/components";
 import ControlledDatePicker from "@components/label/DatePicker"
 import { type GetServerSideProps } from "next";
+import PostSelector from "@src/components/posts";
+
+const rowsTitles = [
+  "#",
+  "Сэтгэгдэл",
+  "Үр дүн",
+  "Label",
+  "Огноо",
+  "Үйлдэл",
+];
 
 function Comments({ page_id }: any) {
   const [page, setPage] = useState(0);
   const [rowsPerPage] = useState(15);
+
+  const [selectedPost, setSelectedPost] = useState('');
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(
     new Date(new Date().setMonth(new Date().getMonth() - 1)),
@@ -49,22 +61,16 @@ function Comments({ page_id }: any) {
     [page, rowsPerPage, selectedDate, selectedCategory, endDate],
   );
 
-  const { response, listLoading } = useComment(body);
-  const rowsTitles = [
-    "#",
-    "Сэтгэгдэл",
-    "Үр дүн",
-    "Label",
-    "Огноо",
-    "Үйлдэл",
-  ];
+  const { response, loading, filterByPostId } = useGetComment(body);
 
   const comments = response?.comments || [];
-
   const pagination = response?.pagination || {};
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage - 1);
-  };
+
+  const handleChangePage = (_: unknown, newPage: number) => setPage(newPage - 1);
+  const handleSelectPost = (postId: string) => {
+    filterByPostId(postId);
+    setSelectedPost(postId);
+  }
 
   return (
     <PageContainer title="Smartdash" description="this is Dashboard">
@@ -93,7 +99,8 @@ function Comments({ page_id }: any) {
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
           />
-          {listLoading
+          <PostSelector bodyParams={{ ...body, label: selectedCategory }} onSelect={handleSelectPost} />
+          {loading
             ? (
               <FallbackSpinner />
             )

@@ -2,7 +2,14 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Box, MenuItem, Select } from "@mui/material";
-import { useConfig } from "@src/lib/hooks/useConfig";
+import { ACCEPTABLE_MONTH_LIMIT } from "@src/utilities/constants";
+import { getMonthDifference, toast } from "@src/utilities";
+
+const categories = [
+  { id: 'positive', name: 'Эерэг' },
+  { id: 'negative', name: 'Сөрөг' },
+  { id: 'neutral', name: 'Ерөнхий' },
+];
 
 function ControlledDatePicker({
   selectedDate,
@@ -12,11 +19,29 @@ function ControlledDatePicker({
   selectedCategory,
   setSelectedCategory,
 }: any) {
-  const categories = [
-    { id: 'positive', name: 'Эерэг' },
-    { id: 'negative', name: 'Сөрөг' },
-    { id: 'neutral', name: 'Ерөнхий' },
-  ];
+  const onChangeSelectedDate = (value: Date | null) => {
+    if (!value) return;
+
+    if (ACCEPTABLE_MONTH_LIMIT < getMonthDifference(value, endDate)) {
+      setSelectedDate(new Date())
+      return toast('error', '3 сараас хэтэрч болохгүй');
+    }
+
+
+    setSelectedDate(value);
+  };
+
+  const onChangeEndDate = (value: Date | null) => {
+    if (!value) return;
+
+    if (ACCEPTABLE_MONTH_LIMIT < getMonthDifference(value, selectedDate)) {
+      setEndDate(new Date())
+      return toast('error', '3 сараас хэтэрч болохгүй');
+    }
+
+    setEndDate(value);
+  };
+
   return (
     <Box
       sx={{
@@ -38,15 +63,16 @@ function ControlledDatePicker({
           }}
           label="Эхлэх хугацаа"
           value={selectedDate}
-          onChange={(newValue: any) => setSelectedDate(newValue)}
+          onChange={onChangeSelectedDate}
           format="yyyy-MM-dd"
         />
         <DatePicker
           slotProps={{ textField: { size: "small", error: false } }}
           label="Дуусах хугацаа"
           value={endDate}
-          onChange={(newValue: any) => setEndDate(newValue)}
+          onChange={onChangeEndDate}
           format="yyyy-MM-dd"
+          disableFuture={true}
         />
       </LocalizationProvider>
       <Select
