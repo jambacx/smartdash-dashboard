@@ -25,6 +25,7 @@ import { IconDotsVertical, IconExternalLink } from "@tabler/icons-react";
 import CustomModal from "@components/modal";
 import { type GetServerSideProps } from "next";
 import { useConfig, useGetConfig } from "@src/lib/hooks/useConfig";
+import { toast } from "@src/utilities";
 
 function Posts({ page_id, company_id }: any) {
   const [page, setPage] = useState(0);
@@ -75,6 +76,7 @@ function Posts({ page_id, company_id }: any) {
 
   const updatePostCategory = async (post: { id: string, page_id: string }, newCategory: string) => {
     await onUpdate(post.page_id, post.id, newCategory)
+    toast('success', 'Ангилал амжилттэй нэмэгдлээ')
     refetch();
   };
 
