@@ -1,4 +1,4 @@
-import { Box, MenuItem, Select } from "@mui/material";
+import { MenuItem, Select } from "@mui/material";
 import { LABELS } from "@src/utilities/constants";
 import { type SelectChangeEvent } from '@mui/material/Select';
 

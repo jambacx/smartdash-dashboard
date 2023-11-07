@@ -110,7 +110,7 @@ function Comments({ page_id }: any) {
               setSelectedLabel={setSelectedCategory}
             />
           </Box>
-          <PostSelector bodyParams={{ ...body, label: selectedCategory }} onSelect={handleSelectPost} />
+          {/* <PostSelector bodyParams={{ ...body, label: selectedCategory }} onSelect={handleSelectPost} /> */}
           {loading
             ? (
               <FallbackSpinner />
