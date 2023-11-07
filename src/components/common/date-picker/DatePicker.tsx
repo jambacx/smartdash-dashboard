@@ -3,6 +3,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { ACCEPTABLE_MONTH_LIMIT } from "@src/utilities/constants";
 import { getMonthDifference, toast } from "@src/utilities";
+import { Box } from "@mui/material";
 
 type Props = {
   startDate: Date | null;
@@ -53,14 +54,12 @@ function ControlledDatePicker({
             error: false,
           },
         }}
-        sx={{
-          marginRight: 2,
-        }}
         label="Эхлэх хугацаа"
         value={startDate}
         onChange={onChangeStartDate}
         format="yyyy-MM-dd"
       />
+      <Box width={12} />
       <DatePicker
         slotProps={{ textField: { size: "small", error: false } }}
         label="Дуусах хугацаа"

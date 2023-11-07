@@ -1,5 +1,6 @@
 import { MenuItem, Select } from "@mui/material";
 import { type SelectChangeEvent } from '@mui/material/Select';
+import { type Config } from "@src/interfaces/category";
 import { useGetConfig } from "@src/lib/hooks/useConfig";
 
 type Props = {
@@ -17,7 +18,6 @@ function CategoryPicker({ companyId, selectedCategory, setSelectedCategory }: Pr
 
   return (
     <Select
-      sx={{ marginLeft: 2 }}
       size="small"
       labelId="category-label"
       value={selectedCategory}
@@ -26,7 +26,7 @@ function CategoryPicker({ companyId, selectedCategory, setSelectedCategory }: Pr
       <MenuItem value="" sx={{ color: "grey" }}>
         Ангилал
       </MenuItem>
-      {configs.map((config: any) => (
+      {configs.map((config: Config) => (
         <MenuItem key={config.id} value={config.category_name}>
           {config.category_name}
         </MenuItem>

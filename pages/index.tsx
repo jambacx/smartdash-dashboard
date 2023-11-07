@@ -12,10 +12,16 @@ import FullLayout from "@src/layouts/full/FullLayout";
 import { useGraph, useDashboard } from "@src/lib/hooks/useDashboard";
 import { statusBar } from "../src/utilities/dummy/dummy";
 import ReactionsOverview from "@src/components/dashboard/ReactionsOverview";
-import Filter from "@src/components/forms/theme-elements/Filter";
 import { type GetServerSideProps } from "next";
 import { calculateDateRange } from "@src/lib/hooks/useRange";
-function Home({ page_id }: any) {
+import Filter from "@src/modules/home/filter.view";
+
+type Props = {
+  page_id: string;
+  company_id: string;
+};
+
+function Home({ page_id, company_id }: Props) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(
     new Date(new Date().setDate(new Date().getDate() - 14)),
   );
@@ -66,6 +72,7 @@ function Home({ page_id }: any) {
     <PageContainer title="Smartdash" description="this is Dashboard">
       <Box>
         <Filter
+          companyId={company_id}
           selectedDate={selectedDate}
           endDate={endDate}
           setSelectedDate={setSelectedDate}
@@ -115,9 +122,7 @@ export default Home;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = nookies.get(context);
   const page_id = cookies.pageId ? cookies.pageId : null;
-  return {
-    props: {
-      page_id,
-    },
-  };
+  const company_id = cookies.companyId ? cookies.companyId : null;
+
+  return { props: { page_id, company_id } };
 };

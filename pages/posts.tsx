@@ -112,6 +112,7 @@ function Posts({ page_id, company_id }: any) {
               setStartDate={setSelectedDate}
               setEndDate={setEndDate}
             />
+            <Box width={12} />
             <CategoryPicker
               companyId={company_id}
               selectedCategory={selectedCategory}
