@@ -6,6 +6,7 @@ import CardContent from "@mui/material/CardContent";
 
 import { type ApexOptions } from "apexcharts";
 import ReactApexcharts from "../charts/react-apexcharts";
+import { sumPercentages } from '@lib/util';
 
 const donutColors = {
   series1: "#4F78F8",
@@ -15,8 +16,7 @@ const donutColors = {
 
 const ApexDonutChart = ({ chartData }: { chartData: any }) => {
   const theme = useTheme();
-
-  let percentages = []; // Assigning a default value
+  let percentages: any = [];
 
   if (chartData[0]?.items?.[0] != null) {
     percentages = chartData[0].percentages;
@@ -24,6 +24,8 @@ const ApexDonutChart = ({ chartData }: { chartData: any }) => {
     if (percentages?.length > 0) {
       percentages.pop();
     }
+    percentages = sumPercentages(chartData);
+
   }
 
   const options: ApexOptions = {
