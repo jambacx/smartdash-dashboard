@@ -5,7 +5,6 @@ import {
   TableBody,
   TableCell,
   TableRow,
-  Chip,
   Pagination,
   MenuItem,
   Select,
@@ -15,7 +14,6 @@ import {
   DashboardCard,
   PageContainer,
   CustomTable,
-  ControlledDatePicker,
   FallbackSpinner,
 } from "@src/components";
 import { useGetPost, usePost, usePostCategory, useUpdatePost } from "@src/lib/hooks/usePost";
@@ -26,6 +24,8 @@ import CustomModal from "@components/modal";
 import { type GetServerSideProps } from "next";
 import { useConfig, useGetConfig } from "@src/lib/hooks/useConfig";
 import { toast } from "@src/utilities";
+import DatePicker from "@src/components/common/date-picker";
+import CategoryPicker from "@src/components/common/category-picker";
 
 function Posts({ page_id, company_id }: any) {
   const [page, setPage] = useState(0);
@@ -99,14 +99,25 @@ function Posts({ page_id, company_id }: any) {
       </Typography>
       <DashboardCard>
         <Box sx={{ overflow: "auto", width: { xs: "280px", sm: "auto" } }}>
-          <ControlledDatePicker
-            selectedDate={selectedDate}
-            endDate={endDate}
-            setSelectedDate={setSelectedDate}
-            setEndDate={setEndDate}
-            selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
-          />
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: 1,
+              marginBottom: 4,
+            }}>
+            <DatePicker
+              startDate={selectedDate}
+              endDate={endDate}
+              setStartDate={setSelectedDate}
+              setEndDate={setEndDate}
+            />
+            <CategoryPicker
+              companyId={company_id}
+              selectedCategory={selectedCategory}
+              setSelectedCategory={setSelectedCategory}
+            />
+          </Box>
           {loading
             ? (
               <FallbackSpinner />

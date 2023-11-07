@@ -23,8 +23,8 @@ export const toast = (
  * @returns number Month difference
  */
 export const getMonthDifference = (
-  firstDate: Date,
-  secondDate: Date,
+  firstDate?: Date,
+  secondDate?: Date,
 ): number => {
   let diff = (secondDate.getFullYear() - firstDate.getFullYear()) * 12;
   diff += secondDate.getMonth() - firstDate.getMonth();

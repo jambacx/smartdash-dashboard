@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import HTTP from '../http';
 import { useFetch } from './useFetch';
+import { type Configs } from '@src/interfaces/category';
 
 export const useGetConfig = (companyId: string) => {
   const [loading, setLoading] = useState(false);
-  const [configs, setConfigs] = useState([]);
+  const [configs, setConfigs] = useState<Configs[]>([]);
   const [shouldRefetch, setShouldRefetch] = useState(false);
 
   useEffect(() => {

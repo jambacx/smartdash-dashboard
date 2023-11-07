@@ -20,9 +20,10 @@ import {
   CustomTable,
   FallbackSpinner,
 } from "@src/components";
-import ControlledDatePicker from "@components/label/DatePicker"
 import { type GetServerSideProps } from "next";
 import PostSelector from "@src/components/posts";
+import DatePicker from "@src/components/common/date-picker";
+import LabelPicker from "@src/components/common/label-picker";
 
 const rowsTitles = [
   "#",
@@ -91,14 +92,24 @@ function Comments({ page_id }: any) {
       </Typography>
       <DashboardCard>
         <Box sx={{ overflow: "auto", width: { xs: "280px", sm: "auto" } }}>
-          <ControlledDatePicker
-            selectedDate={selectedDate}
-            endDate={endDate}
-            setSelectedDate={setSelectedDate}
-            setEndDate={setEndDate}
-            selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
-          />
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: 1,
+              marginBottom: 4,
+            }}>
+            <DatePicker
+              startDate={selectedDate}
+              endDate={endDate}
+              setStartDate={setSelectedDate}
+              setEndDate={setEndDate}
+            />
+            <LabelPicker
+              selectedLabel={selectedCategory}
+              setSelectedLabel={setSelectedCategory}
+            />
+          </Box>
           <PostSelector bodyParams={{ ...body, label: selectedCategory }} onSelect={handleSelectPost} />
           {loading
             ? (
