@@ -56,15 +56,11 @@ function Home({ page_id }: any) {
     setEndDate(newEndDate);
   }, [selectedDate, filterType]);
 
-  const { response, listLoading } = useDashboard(body);
+  const { response, listLoading, listError } = useDashboard(body);
   const { graphResponse, graphLoading, graphError } = useGraph(body);
-
-  console.log("graphError: ", graphError);
-
 
   const data = response?.data || {};
   const chartData = graphResponse?.data || [];
-
 
   return (
     <PageContainer title="Smartdash" description="this is Dashboard">
@@ -94,9 +90,8 @@ function Home({ page_id }: any) {
               <Grid item xs={12} lg={6}>
                 <SalesOverview chartData={chartData} />
               </Grid>
-
               {
-                response?.message && response?.message !== 'success' &&
+                !listError &&
                 <Grid item xs={12} lg={6}>
                   <ApexDonutChart chartData={chartData} />
                 </Grid>

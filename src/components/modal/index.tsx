@@ -74,7 +74,7 @@ function Component({
             )}
             <Grid container spacing={3} sx={{ marginTop: 1 }}>
               <Grid item xs={4}>
-                <DashboardCard title="Хуваалцах">
+                <DashboardCard title="Реакшион">
                   <Grid container spacing={3}>
                     <Grid item xs={7} sm={7}>
                       <Stack
@@ -90,7 +90,7 @@ function Component({
                           })}
                         </Avatar>
                         <Typography variant="h3" fontWeight="700">
-                          {response?.data?.total_reactions}
+                          {response?.data?.total_reactions ? response?.data?.total_reactions : 'N/A'}
                         </Typography>
                       </Stack>
                     </Grid>
@@ -115,7 +115,7 @@ function Component({
                           })}
                         </Avatar>
                         <Typography variant="h3" fontWeight="700">
-                          {post?.share_count}
+                          {post?.share_count ? post?.share_count : 'N/A'}
                         </Typography>
                       </Stack>
                     </Grid>
@@ -139,7 +139,7 @@ function Component({
                           })}
                         </Avatar>
                         <Typography variant="h3" fontWeight="700">
-                          {response?.data?.total_comments}
+                          {response?.data?.total_comments ? response?.data?.total_comments : 'N/A'}
                         </Typography>
                       </Stack>
                     </Grid>

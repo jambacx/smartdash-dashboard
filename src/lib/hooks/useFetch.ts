@@ -37,7 +37,11 @@ export const useFetch = (endpoint: string, options: FetchOptions) => {
         setStatus("completed");
         setIsLoading(false);
       } catch (err: any) {
+
+
+
         setError(err);
+        console.log("err: ", err);
         setStatus("error");
         setIsLoading(false);
       }

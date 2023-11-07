@@ -71,7 +71,7 @@ function Posts({ page_id, company_id }: any) {
     setOpen(false);
   };
 
-  const rowsTitles = ["#", "Post", "Category", "Date", "Action"];
+  const rowsTitles = ["#", "Нийтлэл", "Ангилал", "Огноо", "Үйлдэл"];
 
   const updatePostCategory = async (post: { id: string, page_id: string }, newCategory: string) => {
     await onUpdate(post.page_id, post.id, newCategory)

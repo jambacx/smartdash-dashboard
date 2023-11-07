@@ -52,12 +52,11 @@ function Comments({ page_id }: any) {
   const { response, listLoading } = useComment(body);
   const rowsTitles = [
     "#",
-    "Comment",
-    "Confidence",
+    "Сэтгэгдэл",
+    "Үр дүн",
     "Label",
-    "Date",
-    "Replied",
-    "Action",
+    "Огноо",
+    "Үйлдэл",
   ];
 
   const comments = response?.comments || [];
@@ -66,7 +65,6 @@ function Comments({ page_id }: any) {
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage - 1);
   };
-
 
   return (
     <PageContainer title="Smartdash" description="this is Dashboard">
@@ -171,9 +169,9 @@ function Comments({ page_id }: any) {
                           {moment.unix(comment.created_time).format("MM/DD/YYYY")}
                         </Typography>
                       </TableCell>
-                      <TableCell>
+                      {/* <TableCell>
                         {comment?.reply === "No Reply Need" && comment?.reply}
-                      </TableCell>
+                      </TableCell> */}
                       <TableCell>
                         <IconExternalLink
                           onClick={() => {

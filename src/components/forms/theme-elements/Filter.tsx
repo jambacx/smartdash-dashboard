@@ -62,10 +62,8 @@ function Filter({
           <MenuItem value="monthly">Сараар</MenuItem>
         </Select>
       </FormControl>
-
       {
         filterType === "custom" ?
-
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
               slotProps={{
@@ -78,7 +76,7 @@ function Filter({
                 marginRight: 2,
                 flex: 1,
               }}
-              label="Дуусах хугацаа"
+              label="Эхлэх хугацаа"
               value={selectedDate}
               onChange={(newValue: any) => setSelectedDate(newValue)}
               format="yyyy-MM-dd"
@@ -88,7 +86,7 @@ function Filter({
               sx={{
                 flex: 1,
               }}
-              label="Эхлэх хугацаа"
+              label="Дуусах хугацаа"
               value={endDate}
               onChange={(newValue: any) => setEndDate(newValue)}
               format="yyyy-MM-dd"

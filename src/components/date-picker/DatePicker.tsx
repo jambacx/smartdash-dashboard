@@ -34,14 +34,14 @@ function ControlledDatePicker({
           sx={{
             marginRight: 2,
           }}
-          label="Дуусах хугацаа"
+          label="Эхлэх хугацаа"
           value={selectedDate}
           onChange={(newValue: any) => setSelectedDate(newValue)}
           format="yyyy-MM-dd"
         />
         <DatePicker
           slotProps={{ textField: { size: "small", error: false } }}
-          label="Эхлэх хугацаа"
+          label="Дуусах хугацаа"
           value={endDate}
           onChange={(newValue: any) => setEndDate(newValue)}
           format="yyyy-MM-dd"
