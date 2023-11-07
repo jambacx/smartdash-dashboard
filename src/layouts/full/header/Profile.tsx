@@ -89,8 +89,8 @@ const Profile = () => {
             key={page.page_id}
             onClick={() => {
               setCurrentPage(page?.page_id);
-              router.push(`/`);
               nookies.set(null, 'pageId', page.page_id, { path: '/' });
+              router.reload();
             }}
           >
             <ListItemText>{page.label}</ListItemText>

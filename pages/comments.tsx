@@ -36,6 +36,7 @@ function Comments({ page_id }: any) {
 
   const body: any = useMemo(
     () => ({
+      sort: 'created_time',
       page: page + 1,
       page_id,
       limit: 15,

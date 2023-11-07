@@ -62,36 +62,47 @@ function Filter({
           <MenuItem value="monthly">Сараар</MenuItem>
         </Select>
       </FormControl>
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <DatePicker
-          slotProps={{
-            textField: {
-              size: "small",
-              error: false,
-            },
-          }}
-          sx={{
-            marginRight: 2,
+
+      {
+        filterType === "custom" ?
+
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              slotProps={{
+                textField: {
+                  size: "small",
+                  error: false,
+                },
+              }}
+              sx={{
+                marginRight: 2,
+                flex: 1,
+              }}
+              label="Дуусах хугацаа"
+              value={selectedDate}
+              onChange={(newValue: any) => setSelectedDate(newValue)}
+              format="yyyy-MM-dd"
+            />
+            <DatePicker
+              slotProps={{ textField: { size: "small", error: false } }}
+              sx={{
+                flex: 1,
+              }}
+              label="Эхлэх хугацаа"
+              value={endDate}
+              onChange={(newValue: any) => setEndDate(newValue)}
+              format="yyyy-MM-dd"
+            />
+          </LocalizationProvider>
+          : <> <Box sx={{
             flex: 1,
-          }}
-          label="Дуусах хугацаа"
-          value={selectedDate}
-          onChange={(newValue: any) => setSelectedDate(newValue)}
-          format="yyyy-MM-dd"
-        />
-        <DatePicker
-          slotProps={{ textField: { size: "small", error: false } }}
-          sx={{
-            // marginRight: 2,
-            flex: 1,
-          }}
-          label="Эхлэх хугацаа"
-          value={endDate}
-          onChange={(newValue: any) => setEndDate(newValue)}
-          format="yyyy-MM-dd"
-        />
-      </LocalizationProvider>
-    </Box>
+          }} />
+            <Box sx={{
+              flex: 1,
+            }} />
+          </>
+      }
+    </Box >
   );
 }
 
