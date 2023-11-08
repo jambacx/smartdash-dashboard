@@ -9,11 +9,12 @@ import {
   Chip,
   Pagination,
 } from "@mui/material";
-import { useComment, useGetComment } from "@src/lib/hooks/useComment";
+import { useGetComment } from "@src/lib/hooks/useComment";
 import nookies from 'nookies'
 import FullLayout from "@src/layouts/full/FullLayout";
 import moment from "moment";
 import { IconExternalLink } from "@tabler/icons-react";
+
 import {
   PageContainer,
   DashboardCard,
@@ -21,9 +22,9 @@ import {
   FallbackSpinner,
 } from "@src/components";
 import { type GetServerSideProps } from "next";
-import PostSelector from "@src/components/posts";
 import DatePicker from "@src/components/common/date-picker";
 import LabelPicker from "@src/components/common/label-picker";
+import CsvDownload from "@src/components/export/ExportDownload";
 
 const rowsTitles = [
   "#",
@@ -43,23 +44,24 @@ function Comments({ page_id }: any) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(
     new Date(new Date().setMonth(new Date().getMonth() - 1)),
   );
-  const [endDate, setEndDate] = useState<Date | null>(new Date());
 
+  const [endDate, setEndDate] = useState<Date | null>(new Date());
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedLimit, setSelectedLimit] = useState(25);
 
   const body: any = useMemo(
     () => ({
       sort: 'created_time',
       page: page + 1,
       page_id,
-      limit: 15,
+      limit: selectedLimit,
       label: selectedCategory,
       date_range: [
         selectedDate ? selectedDate.toISOString().split("T")[0] : undefined,
         endDate ? endDate.toISOString().split("T")[0] : undefined,
       ],
     }),
-    [page, rowsPerPage, selectedDate, selectedCategory, endDate],
+    [page, rowsPerPage, selectedDate, selectedCategory, selectedLimit, endDate],
   );
 
   const { response, loading, filterByPostId } = useGetComment(body);
@@ -96,21 +98,25 @@ function Comments({ page_id }: any) {
             sx={{
               display: "flex",
               alignItems: "center",
+              justifyContent: "space-between",
               marginTop: 1,
               marginBottom: 4,
-            }}>
-            <DatePicker
-              startDate={selectedDate}
-              endDate={endDate}
-              setStartDate={setSelectedDate}
-              setEndDate={setEndDate}
-            />
-            <LabelPicker
-              selectedLabel={selectedCategory}
-              setSelectedLabel={setSelectedCategory}
-            />
+            }}
+          >
+            <Box sx={{ display: 'flex', gap: '4px' }}>
+              <DatePicker
+                startDate={selectedDate}
+                endDate={endDate}
+                setStartDate={setSelectedDate}
+                setEndDate={setEndDate}
+              />
+              <LabelPicker
+                selectedLabel={selectedCategory}
+                setSelectedLabel={setSelectedCategory}
+              />
+            </Box>
+            <CsvDownload title={"Сэтгэгдэл"} data={comments} loading={loading} />
           </Box>
-          {/* <PostSelector bodyParams={{ ...body, label: selectedCategory }} onSelect={handleSelectPost} /> */}
           {loading
             ? (
               <FallbackSpinner />
@@ -187,9 +193,6 @@ function Comments({ page_id }: any) {
                           {moment.unix(comment.created_time).format("MM/DD/YYYY")}
                         </Typography>
                       </TableCell>
-                      {/* <TableCell>
-                        {comment?.reply === "No Reply Need" && comment?.reply}
-                      </TableCell> */}
                       <TableCell>
                         <IconExternalLink
                           onClick={() => {
@@ -221,7 +224,7 @@ function Comments({ page_id }: any) {
           />
         </Box>
       </DashboardCard>
-    </PageContainer>
+    </PageContainer >
   );
 }
 

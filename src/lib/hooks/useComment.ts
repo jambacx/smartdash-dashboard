@@ -29,6 +29,24 @@ export const useComment = (bodyData: DashboardRequestBody) => {
   };
 };
 
+export const useCommentExport = () => {
+  const [loading, setLoading] = useState(false);
+
+  const onExport = async (bodyData: any) => {
+
+    const { page, limit, ...data } = bodyData;
+
+    setLoading(true);
+    const response = await HTTP.post(`/comment`, {
+      method: 'post',
+      body: bodyData
+    });
+    setLoading(false);
+  };
+
+  return { loading, onExport };
+};
+
 export const useGetComment = (body: DashboardRequestBody) => {
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState<any>();

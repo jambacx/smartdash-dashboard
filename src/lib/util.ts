@@ -17,3 +17,5 @@ export function sumPercentages(array: any) {
 
   return [sumFirst, sumSecond, sumThird];
 }
+
+

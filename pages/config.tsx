@@ -64,7 +64,6 @@ function Config({ company_id }: Props) {
     <PageContainer title="Smartdash" description="this is Dashboard">
       <DashboardCard>
         <Box sx={{ position: 'relative', display: "flex", flexDirection: "column", overflow: "auto", width: { xs: "280px", sm: "auto" } }}>
-
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 5 }}>
             <Typography variant="h5" component="div">
               Тохиргоо
