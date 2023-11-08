@@ -67,7 +67,7 @@ const ReactionsOverview: React.FC<SalesOverviewProps> = ({ chartData }: any) => 
     };
   });
 
-  const maxYValue = Math.max(...Object.values(chartData.reactions ?? {}).filter(Boolean));
+  const maxYValue = Math.max(...Object.values(chartData.reactions ?? {}).filter(Boolean) as any);
   const reactionsMapWithDate: Partial<Record<keyof ReactionCounts, string>> = {};
 
   const chartColors = Object.keys(reactionEmojiMap).map(
