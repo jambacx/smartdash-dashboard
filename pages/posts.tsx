@@ -109,7 +109,6 @@ function Posts({ page_id, company_id }: any) {
             }}
           >
             <Box sx={{ display: 'flex', gap: '4px' }}>
-
               <DatePicker
                 startDate={selectedDate}
                 endDate={endDate}

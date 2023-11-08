@@ -20,7 +20,12 @@ const Profile = () => {
 
   useEffect(() => {
     const cookies = nookies.get();
-    const pagesFromCookies = cookies.pages;
+    const pagesFromCookies = cookies?.pages;
+    const pageId = cookies?.pageId;
+
+    setCurrentPage(pageId)
+
+    console.log(currentPage);
 
     if (pagesFromCookies) {
       try {
