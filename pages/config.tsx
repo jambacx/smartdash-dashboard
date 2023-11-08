@@ -20,6 +20,7 @@ import AddIcon from '@mui/icons-material/Add';
 import AddCategoryDialog from '@components/dilog/index';
 import { type GetServerSideProps } from "next";
 import { type Category } from "@src/interfaces/category";
+import { toast } from "@src/utilities";
 
 
 type Props = {
@@ -36,11 +37,13 @@ function Config({ company_id }: Props) {
 
   const handleAddCategory = async (name: string) => {
     await onAdd(company_id, name);
+    toast('success', 'Ангилал амжилттэй нэмэгдлээ')
     refetch();
   }
   const deleteCategory = async (category: Category) => {
     if (confirm(`${category.category_name} устгах уу?`)) {
       await onDelete(category.id);
+      toast('success', 'Ангилал амжилттэй устгагдлаа')
       refetch();
     }
   };

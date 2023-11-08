@@ -1,5 +1,6 @@
 import { useEffect, type ReactElement, type ReactNode, useState } from "react";
 
+import toast, { Toaster } from 'react-hot-toast';
 import type { NextPage } from "next";
 import Head from "next/head";
 import { type AppProps } from "next/app";
@@ -60,6 +61,7 @@ const MyApp = (props: MyAppProps) => {
         <title>Smartdash</title>
       </Head>
       <ThemeProvider theme={theme}>
+        <Toaster />
         <CssBaseline />
         {
           getLayout(<Component {...pageProps} />)
