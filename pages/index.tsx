@@ -1,6 +1,6 @@
 import { useState, type ReactElement, useMemo, useEffect } from "react";
 import nookies from 'nookies'
-import { Grid, Box } from "@mui/material";
+import { Grid, Box, Alert, AlertTitle } from "@mui/material";
 import {
   PageContainer,
   SalesOverview,
@@ -63,14 +63,28 @@ function Home({ page_id, company_id }: Props) {
   }, [selectedDate, filterType]);
 
   const { response, listLoading, listError } = useDashboard(body);
-  const { graphResponse, graphLoading, graphError } = useGraph(body);
+  const { graphResponse, graphLoading } = useGraph(body);
 
   const data = response?.data || {};
   const chartData = graphResponse?.data || [];
+  const noResult = useMemo(() => {
+    if (chartData.length > 0) {
+      const emptyDashboardData = Object.keys(data).length === 0;
+      const hasGraphData = chartData[0].items.some((i: number) => i > 0);
+      return emptyDashboardData && !hasGraphData;
+    }
+  }, [data, chartData]);
+
 
   return (
     <PageContainer title="Smartdash" description="this is Dashboard">
       <Box>
+        {noResult && !listLoading && !graphLoading && (
+          <Alert severity="error">
+            <AlertTitle>Мэдээлэл олдсонгүй</AlertTitle>
+            Та хайлтаа өөрчлөөд дахин оролдоод үзнэ үү
+          </Alert>
+        )}
         <Filter
           companyId={company_id}
           selectedDate={selectedDate}

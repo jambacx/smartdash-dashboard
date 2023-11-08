@@ -43,9 +43,22 @@ const reactionColorMap: Record<keyof ReactionCounts, string> = {
   WOW: '#9400D3',
 };
 
-const ReactionsOverview: React.FC<SalesOverviewProps> = ({ chartData }) => {
-  const theme = useTheme();
+function extractDates(dateRangeString: string) {
+  if (!dateRangeString) return;
 
+  const [startDate, endDate] = dateRangeString.split("~");
+
+  const startMonth = new Date(startDate).getMonth() + 1; // Adding 1 because getMonth() returns 0-indexed months
+  const startDay = new Date(startDate).getDate();
+  const endMonth = new Date(endDate).getMonth() + 1;
+  const endDay = new Date(endDate).getDate();
+
+  return `${startMonth.toString().padStart(2, '0')}-${startDay.toString().padStart(2, '0')} ${endMonth.toString().padStart(2, '0')}-${endDay.toString().padStart(2, '0')}`;
+}
+
+const ReactionsOverview: React.FC<SalesOverviewProps> = ({ chartData }: any) => {
+  const theme = useTheme();
+  const date = extractDates(chartData?.date)
   const seriesData = Object.entries(reactionEmojiMap).map(([key, emoji]) => {
     const reactionCounts: ReactionCounts = chartData?.reactions ?? {};
     return {
@@ -55,14 +68,15 @@ const ReactionsOverview: React.FC<SalesOverviewProps> = ({ chartData }) => {
   });
 
   const maxYValue = Math.max(...Object.values(chartData.reactions ?? {}).filter(Boolean));
+  const reactionsMapWithDate: Partial<Record<keyof ReactionCounts, string>> = {};
 
   const chartColors = Object.keys(reactionEmojiMap).map(
     (key) => {
+      reactionsMapWithDate[key as keyof ReactionCounts] = `${reactionEmojiMap[key as keyof ReactionCounts]} ${date}`;
       const count = chartData?.reactions?.[key as keyof ReactionCounts];
       return count ? reactionColorMap[key as keyof ReactionCounts] : '#D3D3D3';
     }
   );
-
 
   const optionscolumnchart: ApexOptions = {
     chart: {
@@ -95,7 +109,7 @@ const ReactionsOverview: React.FC<SalesOverviewProps> = ({ chartData }) => {
       },
     },
     xaxis: {
-      categories: Object.values(reactionEmojiMap),
+      categories: Object.values(reactionsMapWithDate),
       axisBorder: {
         show: true,
       },
