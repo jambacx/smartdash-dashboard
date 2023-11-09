@@ -119,7 +119,10 @@ export const useUpdatePost = () => {
 
 export const useGetPost = (body: any) => {
   const [loading, setLoading] = useState(false);
-  const [response, setResponse] = useState<{ posts: Post[] }>({ posts: [] });
+  const [response, setResponse] = useState<{ posts: Post[]; pagination: any }>({
+    posts: [],
+    pagination: {},
+  });
   const [shouldRefetch, setShouldRefetch] = useState(false);
 
   useEffect(() => {
