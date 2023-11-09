@@ -19,7 +19,7 @@ import { CustomTable } from "@src/components/table/CustomTable";
 import AddIcon from '@mui/icons-material/Add';
 import AddCategoryDialog from '@components/dilog/index';
 import { type GetServerSideProps } from "next";
-import { type Category } from "@src/interfaces/category";
+import { type Category } from "@src/interfaces/category.interface";
 import { toast } from "@src/utilities";
 
 

@@ -1,23 +1,22 @@
 import { MenuItem, Select } from "@mui/material";
 import { type SelectChangeEvent } from "@mui/material";
+import { type Post } from "@src/interfaces/post.interface";
 
-import { useGetPost } from "@src/lib/hooks/usePost";
+import { useGetPostByCategory } from "@src/lib/hooks/usePost";
 import { useState } from "react";
+import { truncateTextByWord } from '@src/utilities';
 
 type Props = {
-  bodyParams: {
-    page: number;
-    page_id: number;
-    limit: number;
-    date_range?: string
-    label: string;
-  },
+  params: {
+    page_id: string;
+    ids: string[];
+  };
   onSelect: (postId: string) => void;
 };
 
-const PostSelector: React.FC<Props> = ({ bodyParams, onSelect }: Props) => {
+const PostSelector: React.FC<Props> = ({ params, onSelect }: Props) => {
   const [selectedPost, setSeletedPost] = useState('');
-  const { response, loading } = useGetPost(bodyParams);
+  const { response, loading } = useGetPostByCategory(params);
 
   const posts = response.posts || [];
 
@@ -28,19 +27,29 @@ const PostSelector: React.FC<Props> = ({ bodyParams, onSelect }: Props) => {
 
   return (
     <Select
-      sx={{ marginLeft: 2 }}
       disabled={loading}
       size="small"
       labelId="category-label"
-      value={selectedPost}
+      value={truncateTextByWord(selectedPost, 12)}
       displayEmpty={true}
-      onChange={handleChange}>
+      onChange={handleChange}
+      MenuProps={{
+        anchorOrigin: {
+          vertical: "bottom",
+          horizontal: "left"
+        },
+        transformOrigin: {
+          vertical: "top",
+          horizontal: "left"
+        },
+      }}
+    >
       <MenuItem value="" sx={{ color: "grey" }}>
-        Пост
+        Нийтлэл
       </MenuItem>
-      {posts.map((post: any) => (
+      {posts.map((post: Post) => (
         <MenuItem key={post.id} value={post.id}>
-          {post.message}
+          {truncateTextByWord(post.message, 12)}
         </MenuItem>
       ))}
     </Select>

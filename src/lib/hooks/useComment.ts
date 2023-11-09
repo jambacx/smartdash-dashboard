@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useFetch } from './useFetch';
 import HTTP from '../http';
+import { type Comment } from '@src/interfaces/comment.interface';
 
 interface DashboardRequestBody {
   type?: string;
@@ -33,14 +34,15 @@ export const useCommentExport = () => {
   const [loading, setLoading] = useState(false);
 
   const onExport = async (bodyData: any) => {
-
     const { page, limit, ...data } = bodyData;
 
     setLoading(true);
+
     const response = await HTTP.post(`/comment`, {
       method: 'post',
-      body: bodyData
+      body: bodyData,
     });
+
     setLoading(false);
   };
 
@@ -50,17 +52,18 @@ export const useCommentExport = () => {
 export const useGetComment = (body: DashboardRequestBody) => {
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState<any>();
+  const [comments, setComments] = useState<Comment[]>([]);
   const [shouldRefetch, setShouldRefetch] = useState(false);
 
   useEffect(() => {
     if (body) {
       const fetch = async () => {
         setLoading(true);
-        const response: any = await HTTP.post('/comment', {
-          body,
-        });
+
+        const response: any = await HTTP.post('/comment', { body });
 
         setLoading(false);
+        setComments(response?.comments);
         setResponse(response);
       };
       fetch();
@@ -73,15 +76,17 @@ export const useGetComment = (body: DashboardRequestBody) => {
 
   const filterByPostId = (postId: string) => {
     const comments = response?.comments || [];
+
+    if (!postId) {
+      return setComments([...response.comments]);
+    }
+
     const filteredComments = comments.filter(
-      (comment: any) => comment.post_id === postId,
+      (comment: Comment) => comment.post_id === postId,
     );
 
-    setResponse((currentValue: any) => ({
-      ...currentValue,
-      comments: filteredComments,
-    }));
+    return setComments([...filteredComments]);
   };
 
-  return { loading, response, refetch, filterByPostId };
+  return { loading, comments, response, refetch, filterByPostId };
 };

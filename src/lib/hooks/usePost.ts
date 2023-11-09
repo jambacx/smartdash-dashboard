@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useFetch } from './useFetch';
 import HTTP from '../http';
+import { type Post } from '@src/interfaces/post.interface';
 
 interface DashboardRequestBody {
   type: string;
@@ -118,7 +119,7 @@ export const useUpdatePost = () => {
 
 export const useGetPost = (body: any) => {
   const [loading, setLoading] = useState(false);
-  const [response, setResponse] = useState<any>([]);
+  const [response, setResponse] = useState<{ posts: Post[] }>({ posts: [] });
   const [shouldRefetch, setShouldRefetch] = useState(false);
 
   useEffect(() => {
@@ -133,6 +134,41 @@ export const useGetPost = (body: any) => {
       fetch();
     }
   }, [body, shouldRefetch]);
+
+  const refetch = () => {
+    setShouldRefetch(!shouldRefetch);
+  };
+
+  return { loading, response, refetch };
+};
+
+export const useGetPostByCategory = (params: {
+  page_id: string;
+  ids: string[];
+}) => {
+  const [loading, setLoading] = useState(false);
+  const [response, setResponse] = useState<{ posts: Post[] }>({ posts: [] });
+  const [shouldRefetch, setShouldRefetch] = useState(false);
+
+  useEffect(() => {
+    if (params?.page_id && params?.ids.length > 0) {
+      const fetch = async () => {
+        setLoading(true);
+
+        const uniqueIdsSet = new Set(params.ids);
+        const uniqueIds = Array.from(uniqueIdsSet);
+        const ids = uniqueIds.join(',');
+
+        const response: any = await HTTP.get(
+          `/post?page_id=${params.page_id}&ids=${ids}`,
+        );
+
+        setLoading(false);
+        setResponse(response);
+      };
+      fetch();
+    }
+  }, [params.page_id, params.ids, shouldRefetch]);
 
   const refetch = () => {
     setShouldRefetch(!shouldRefetch);

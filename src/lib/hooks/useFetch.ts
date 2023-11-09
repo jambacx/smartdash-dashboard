@@ -1,48 +1,45 @@
-import { useState, useEffect } from "react";
-import HTTP from "../http";
+import { useState, useEffect } from 'react';
+import HTTP from '../http';
 
 interface FetchOptions {
-  method: "get" | "post" | "put" | "delete";
+  method: 'get' | 'post' | 'put' | 'delete';
   bodyData?: Record<string, any>;
 }
 
 export const useFetch = (endpoint: string, options: FetchOptions) => {
   const [response, setResponse] = useState<any>(null);
-  const [status, setStatus] = useState("idle");
+  const [status, setStatus] = useState('idle');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     setIsLoading(true);
-    setStatus("pending");
+    setStatus('pending');
     const fetchData = async () => {
       try {
         let response;
         switch (options.method) {
-          case "post":
+          case 'post':
             response = await HTTP.post(endpoint, { body: options.bodyData });
             break;
-          case "put":
+          case 'put':
             response = await HTTP.put(endpoint, { body: options.bodyData });
             break;
-          case "delete":
+          case 'delete':
             response = await HTTP.remove(endpoint, { body: options.bodyData });
             break;
-          case "get":
+          case 'get':
             response = await HTTP.get(endpoint);
             break;
         }
 
         setResponse(response);
-        setStatus("completed");
+        setStatus('completed');
         setIsLoading(false);
       } catch (err: any) {
-
-
-
         setError(err);
-        console.log("err: ", err);
-        setStatus("error");
+        console.log('err: ', err);
+        setStatus('error');
         setIsLoading(false);
       }
     };
@@ -65,7 +62,7 @@ export const fetchFromAPI = async (endpoint: any, options: any) => {
       case 'post':
         response = await HTTP.post(endpoint, { body: options.bodyData });
         break;
-      case "put":
+      case 'put':
         response = await HTTP.put(endpoint, { body: options.bodyData });
         break;
       case 'delete':

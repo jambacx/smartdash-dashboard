@@ -25,8 +25,6 @@ const Profile = () => {
 
     setCurrentPage(pageId)
 
-    console.log(currentPage);
-
     if (pagesFromCookies) {
       try {
         const parsedPages = JSON.parse(pagesFromCookies);

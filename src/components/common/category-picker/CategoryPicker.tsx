@@ -1,6 +1,6 @@
 import { MenuItem, Select } from "@mui/material";
 import { type SelectChangeEvent } from '@mui/material/Select';
-import { type Config } from "@src/interfaces/category";
+import { type Config } from "@src/interfaces/category.interface";
 import { useGetConfig } from "@src/lib/hooks/useConfig";
 
 type Props = {

@@ -25,6 +25,7 @@ import { type GetServerSideProps } from "next";
 import DatePicker from "@src/components/common/date-picker";
 import LabelPicker from "@src/components/common/label-picker";
 import CsvDownload from "@src/components/export/ExportDownload";
+import PostSelector from "@src/components/posts/post-selector.view";
 
 const rowsTitles = [
   "#",
@@ -38,9 +39,6 @@ const rowsTitles = [
 function Comments({ page_id }: any) {
   const [page, setPage] = useState(0);
   const [rowsPerPage] = useState(15);
-
-  const [selectedPost, setSelectedPost] = useState('');
-
   const [selectedDate, setSelectedDate] = useState<Date | null>(
     new Date(new Date().setMonth(new Date().getMonth() - 1)),
   );
@@ -64,15 +62,23 @@ function Comments({ page_id }: any) {
     [page, rowsPerPage, selectedDate, selectedCategory, selectedLimit, endDate],
   );
 
-  const { response, loading, filterByPostId } = useGetComment(body);
+  const { response, comments, loading, filterByPostId } = useGetComment(body);
 
-  const comments = response?.comments || [];
   const pagination = response?.pagination || {};
 
-  const handleChangePage = (_: unknown, newPage: number) => setPage(newPage - 1);
+  const retrievedCommentsIds: string[] = useMemo(() => {
+    if (!loading) {
+      return comments.map(comment => comment.post_id);
+    } else {
+      return [];
+    }
+  }, [page_id, selectedCategory, selectedDate, endDate, page, loading]);
+
+  const handleChangePage = (_: unknown, newPage: number) => {
+    setPage(newPage - 1);
+  }
   const handleSelectPost = (postId: string) => {
     filterByPostId(postId);
-    setSelectedPost(postId);
   }
 
   return (
@@ -94,28 +100,31 @@ function Comments({ page_id }: any) {
       </Typography>
       <DashboardCard>
         <Box sx={{ overflow: "auto", width: { xs: "280px", sm: "auto" } }}>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              marginTop: 1,
-              marginBottom: 4,
-            }}
-          >
-            <Box sx={{ display: 'flex', gap: '4px' }}>
-              <DatePicker
-                startDate={selectedDate}
-                endDate={endDate}
-                setStartDate={setSelectedDate}
-                setEndDate={setEndDate}
-              />
-              <LabelPicker
-                selectedLabel={selectedCategory}
-                setSelectedLabel={setSelectedCategory}
-              />
+          <Box>
+            <Box height={12} />
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <Box sx={{ display: 'flex', gap: '4px' }}>
+                <DatePicker
+                  startDate={selectedDate}
+                  endDate={endDate}
+                  setStartDate={setSelectedDate}
+                  setEndDate={setEndDate}
+                />
+                <LabelPicker
+                  selectedLabel={selectedCategory}
+                  setSelectedLabel={setSelectedCategory}
+                />
+              </Box>
+              <CsvDownload title={"Сэтгэгдэл"} data={comments} loading={loading} />
             </Box>
-            <CsvDownload title={"Сэтгэгдэл"} data={comments} loading={loading} />
+            <Box height={12} />
+            <PostSelector params={{ page_id, ids: retrievedCommentsIds }} onSelect={handleSelectPost} />
           </Box>
           {loading
             ? (
