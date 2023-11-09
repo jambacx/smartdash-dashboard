@@ -1,6 +1,6 @@
 export const statusBar = [
   {
-    title: "Post / нийтлэл",
+    title: "Post / Нийтлэл",
     bgColor: "#EFE4FF",
     color: "#8C7AC5",
     count: 10,
