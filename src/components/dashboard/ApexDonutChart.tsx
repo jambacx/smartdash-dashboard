@@ -25,7 +25,6 @@ const ApexDonutChart = ({ chartData }: { chartData: any }) => {
       percentages.pop();
     }
     percentages = sumPercentages(chartData);
-
   }
 
   const options: ApexOptions = {

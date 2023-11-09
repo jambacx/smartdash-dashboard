@@ -1,8 +1,7 @@
 import { Typography, Box, Modal, Avatar, Grid, Stack } from "@mui/material";
-import nookies, { parseCookies } from 'nookies'
+import { parseCookies } from 'nookies'
 import { DashboardCard, FallbackSpinner } from "@src/components";
 import { usePostDetail } from "@src/lib/hooks/usePost";
-import { detailBar } from "@src/utilities/dummy/dummy";
 
 import {
   IconMessage2,
@@ -45,7 +44,8 @@ function Component({
           response?.message && response?.message !== 'success' &&
           <Typography variant="h6">There is no details yet on this post.</Typography>
         }
-        {listLoading ? <FallbackSpinner />
+        {listLoading
+          ? <FallbackSpinner />
           : <>
             {post && (
               <>

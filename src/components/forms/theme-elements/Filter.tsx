@@ -63,8 +63,8 @@ function Filter({
         </Select>
       </FormControl>
       {
-        filterType === "custom" ?
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
+        filterType === "custom"
+          ? <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
               slotProps={{
                 textField: {
