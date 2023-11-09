@@ -10,7 +10,7 @@ import { uniqueId } from "lodash";
 const Menuitems = [
   {
     navlabel: true,
-    subheader: "Цэс",
+    subheader: () => <div/>
   },
   {
     id: uniqueId(),
