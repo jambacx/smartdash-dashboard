@@ -1,24 +1,24 @@
 export const statusBar = [
   {
-    title: "Нийтлэл",
+    title: "Post / нийтлэл",
     bgColor: "#EFE4FF",
     color: "#8C7AC5",
     count: 10,
   },
   {
-    title: "Сэтгэгдэл",
+    title: "Comment /  Сэтгэгдэл",
     bgColor: "#CFF3F9",
     color: "#6EC4C8",
     count: 22,
   },
   {
-    title: "Реакшион",
+    title: "Reaction / Хандлага",
     bgColor: "#D9E7FF",
     color: "#5E66BB",
     count: 42,
   },
   {
-    title: "Хуваалцах",
+    title: "Share / Хуваалцах",
     bgColor: "#FFF2E2",
     color: "#E3C98A",
     count: 22,

@@ -57,23 +57,10 @@ const CsvDownload = ({ title, data, loading }: { title: string, data: any, loadi
     <Button
       variant="contained"
       disabled={loading}
-      startIcon={!loading && <CloudDownloadRounded />}
+      startIcon={<CloudDownloadRounded />}
       onClick={() => handleDownload()}
     >
-      {loading
-        ? (
-          <>
-            <CircularProgress
-              size={24}
-              color="inherit"
-              style={{ marginRight: 10 }}
-            />
-            Export хийх
-          </>
-        )
-        : (
-          "Export хийх"
-        )}
+      Татаж авах
     </Button>
   );
 };

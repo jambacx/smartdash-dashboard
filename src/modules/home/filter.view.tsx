@@ -37,7 +37,7 @@ function Filter({
         labelId="option1-label"
         value={filterType}
         onChange={handleChange}>
-        <MenuItem value="custom">Custom</MenuItem>
+        <MenuItem value="custom">Хугацаа сонгох</MenuItem>
         <MenuItem value="daily">Өдрөөр</MenuItem>
         <MenuItem value="weekly">Долоо хоног</MenuItem>
         <MenuItem value="monthly">Сараар</MenuItem>

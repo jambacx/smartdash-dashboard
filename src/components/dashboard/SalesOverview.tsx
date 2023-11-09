@@ -89,7 +89,7 @@ const SalesOverview = ({ chartData }: { chartData: any }) => {
   };
 
   return (
-    <DashboardCard title="Сэтгэгдэл ангилал">
+    <DashboardCard title="Сэтгэгдэл ангилал" subtitle="Тоогоор">
       <Chart
         options={optionscolumnchart}
         series={seriescolumnchart}

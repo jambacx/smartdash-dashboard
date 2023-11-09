@@ -74,7 +74,7 @@ function Component({
             )}
             <Grid container spacing={3} sx={{ marginTop: 1 }}>
               <Grid item xs={4}>
-                <DashboardCard title="Реакшион">
+                <DashboardCard title="Reaction">
                   <Grid container spacing={3}>
                     <Grid item xs={7} sm={7}>
                       <Stack
@@ -98,7 +98,7 @@ function Component({
                 </DashboardCard>
               </Grid>
               <Grid item xs={4}>
-                <DashboardCard title="Хуваалцах">
+                <DashboardCard title="Share">
                   <Grid container spacing={3}>
                     <Grid item xs={7} sm={7}>
                       <Stack
@@ -123,7 +123,7 @@ function Component({
                 </DashboardCard>
               </Grid>
               <Grid item xs={4}>
-                <DashboardCard title="Сэтгэгдэл">
+                <DashboardCard title="Comment">
                   <Grid container spacing={3}>
                     <Grid item xs={7} sm={7}>
                       <Stack

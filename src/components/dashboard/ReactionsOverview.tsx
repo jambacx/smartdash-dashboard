@@ -129,7 +129,7 @@ const ReactionsOverview: React.FC<SalesOverviewProps> = ({ chartData }: any) => 
     <Card>
       <CardHeader
         title="Нийтлэл дээрх хандалт"
-        subheader="Хандалт харьцуулалт"
+        subheader="Тоогоор"
         subheaderTypographyProps={{
           sx: { color: (theme: Theme) => `${theme.palette.text.disabled} !important` },
         }}

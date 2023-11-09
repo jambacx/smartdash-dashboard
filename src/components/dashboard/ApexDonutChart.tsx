@@ -110,7 +110,7 @@ const ApexDonutChart = ({ chartData }: { chartData: any }) => {
     <Card>
       <CardHeader
         title="Сэтгэгдлийн харьцаа"
-        subheader="Сэтгэгдлийн харьцуулалт"
+        subheader="Хувиар"
         subheaderTypographyProps={{
           sx: { color: theme => `${theme.palette.text.disabled} !important` },
         }}
