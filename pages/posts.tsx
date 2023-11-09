@@ -88,7 +88,7 @@ function Posts({ page_id, company_id }: any) {
         gutterBottom
         component="div"
         sx={{ fontSize: "13px" }}>
-        Нийтэлсэн нийтлэлийн жагсаалт
+        Нийтлэлийн жагсаалт
       </Typography>
       <Typography
         variant="h4"

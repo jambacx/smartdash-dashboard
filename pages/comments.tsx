@@ -89,7 +89,7 @@ function Comments({ page_id }: any) {
         gutterBottom
         component="div"
         sx={{ fontSize: "13px" }}>
-        Нийтлэл дээрх сэтгэгдлийн жагсаалт
+        Сэтгэгдлийн жагсаалт
       </Typography>
       <Typography
         variant="h4"

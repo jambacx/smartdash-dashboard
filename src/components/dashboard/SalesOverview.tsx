@@ -43,6 +43,9 @@ const SalesOverview = ({ chartData }: { chartData: any }) => {
     colors: ["#15D9B1", "#4F78F8", "#DA6E54"],
     plotOptions: {
       bar: {
+        dataLabels: {
+          position: 'top'
+        },
         horizontal: false,
         barHeight: "60%",
         columnWidth: "42%",
@@ -59,7 +62,16 @@ const SalesOverview = ({ chartData }: { chartData: any }) => {
       colors: ["transparent"],
     },
     dataLabels: {
-      enabled: false,
+      enabled: true,
+      formatter: function (val: number) {
+        return val.toString();
+      },
+      offsetY: -20,
+      style: {
+        fontSize: '12px',
+        colors: ["#CCCCCC"]
+      },
+      position: 'top'
     },
     legend: {
       show: false,
