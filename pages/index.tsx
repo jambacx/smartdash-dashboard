@@ -15,6 +15,7 @@ import ReactionsOverview from "@src/components/dashboard/ReactionsOverview";
 import { type GetServerSideProps } from "next";
 import { calculateDateRange } from "@src/lib/hooks/useRange";
 import Filter from "@src/modules/home/filter.view";
+import NoResult from "@src/components/common/no-result/NoResult";
 
 type Props = {
   page_id: string;
@@ -79,12 +80,7 @@ function Home({ page_id, company_id }: Props) {
   return (
     <PageContainer title="Smartdash" description="this is Dashboard">
       <Box>
-        {noResult && !listLoading && !graphLoading && (
-          <Alert severity="error">
-            <AlertTitle>Мэдээлэл олдсонгүй</AlertTitle>
-            Та хайлтаа өөрчлөөд дахин оролдоод үзнэ үү
-          </Alert>
-        )}
+        {noResult && !listLoading && !graphLoading && <NoResult />}
         <Filter
           companyId={company_id}
           selectedDate={selectedDate}
