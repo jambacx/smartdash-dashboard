@@ -45,7 +45,7 @@ function Comments({ page_id }: any) {
 
   const [endDate, setEndDate] = useState<Date | null>(new Date());
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedLimit, setSelectedLimit] = useState(25);
+  const [selectedLimit, setSelectedLimit] = useState(15);
 
   const body: any = useMemo(
     () => ({
@@ -146,7 +146,7 @@ function Comments({ page_id }: any) {
                           }}
                           color="#5D87FF"
                           style={{ cursor: "pointer" }}>
-                          {index + 1}
+                          {rowsPerPage * page + index + 1}
                         </Typography>
                       </TableCell>
                       <TableCell>

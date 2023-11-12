@@ -149,7 +149,7 @@ function Posts({ page_id, company_id }: any) {
                           }}
                           color="#5D87FF"
                           style={{ cursor: "pointer" }}>
-                          {index + 1}
+                          {page * rowsPerPage + index + 1}
                         </Typography>
                       </TableCell>
                       <TableCell onClick={() => { handleOpen(post); }} sx={{ cursor: 'pointer' }}>
