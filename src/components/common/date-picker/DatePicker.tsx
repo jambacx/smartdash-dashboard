@@ -58,6 +58,7 @@ function ControlledDatePicker({
         value={startDate}
         onChange={onChangeStartDate}
         format="yyyy-MM-dd"
+        disableFuture={true}
       />
       <Box width={12} />
       <DatePicker

@@ -17,7 +17,7 @@ export const useDashboard = (bodyData: DashboardRequestBody) => {
     status: listStatus,
     isLoading: listLoading,
     error: listError,
-  } = useFetch("/dashboard", fetchOptions);
+  } = useFetch("/v1/dashboard", fetchOptions);
   return {
     response,
     listStatus,
