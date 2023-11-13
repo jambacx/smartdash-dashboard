@@ -1,5 +1,5 @@
-import { type ReactElement, useMemo, useState, useRef } from "react";
-import { getCategoryColor } from "@src/utilities/dummy/dummy";
+import { type ReactElement, useMemo, useState, useRef } from 'react';
+import { getCategoryColor } from '@src/utilities/dummy/dummy';
 import {
   Typography,
   Box,
@@ -8,33 +8,26 @@ import {
   TableRow,
   Chip,
   Pagination,
-} from "@mui/material";
-import { useGetComment } from "@src/lib/hooks/useComment";
-import nookies from 'nookies'
-import FullLayout from "@src/layouts/full/FullLayout";
-import moment from "moment";
-import { IconExternalLink } from "@tabler/icons-react";
+} from '@mui/material';
+import { useGetComment } from '@src/lib/hooks/useComment';
+import nookies from 'nookies';
+import FullLayout from '@src/layouts/full/FullLayout';
+import moment from 'moment';
+import { IconExternalLink } from '@tabler/icons-react';
 
 import {
   PageContainer,
   DashboardCard,
   CustomTable,
   FallbackSpinner,
-} from "@src/components";
-import { type GetServerSideProps } from "next";
-import DatePicker from "@src/components/common/date-picker";
-import LabelPicker from "@src/components/common/label-picker";
-import CsvDownload from "@src/components/export/ExportDownload";
-import PostSelector from "@src/components/posts/post-selector.view";
+} from '@src/components';
+import { type GetServerSideProps } from 'next';
+import DatePicker from '@src/components/common/date-picker';
+import LabelPicker from '@src/components/common/label-picker';
+import CsvDownload from '@src/components/export/ExportDownload';
+import PostSelector from '@src/components/posts/post-selector.view';
 
-const rowsTitles = [
-  "#",
-  "Сэтгэгдэл",
-  "Үр дүн",
-  "Label",
-  "Огноо",
-  "Үйлдэл",
-];
+const rowsTitles = ['#', 'Сэтгэгдэл', 'Үр дүн', 'Label', 'Огноо', 'Үйлдэл'];
 
 function Comments({ page_id }: any) {
   const [page, setPage] = useState(0);
@@ -45,41 +38,45 @@ function Comments({ page_id }: any) {
   const prevLabelRef = useRef<string | undefined>();
   const prevPageRef = useRef<number | undefined>();
   const [endDate, setEndDate] = useState<Date | null>(new Date());
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedLimit, setSelectedLimit] = useState(15);
 
-  const body: any = useMemo(
-    () => {
-      const data = {
-        sort: 'created_time',
-        page_id,
-        limit: selectedLimit,
-        label: selectedCategory,
-        date_range: [
-          selectedDate ? selectedDate.toISOString().split("T")[0] : undefined,
-          endDate ? endDate.toISOString().split("T")[0] : undefined,
-        ],
-      };
+  const body: any = useMemo(() => {
+    const data = {
+      sort: 'created_time',
+      page_id,
+      limit: selectedLimit,
+      label: selectedCategory,
+      date_range: [
+        selectedDate ? selectedDate.toISOString().split('T')[0] : undefined,
+        endDate ? endDate.toISOString().split('T')[0] : undefined,
+      ],
+    };
 
-      const prevLabel = prevLabelRef?.current;
-      const prevPage = prevPageRef?.current;
+    const prevLabel = prevLabelRef?.current;
+    const prevPage = prevPageRef?.current;
 
-      // First time selecting the label reset page to 1
-      if (!prevLabel) {
-        prevPageRef.current = page;
-        prevLabelRef.current = selectedCategory;
-        return { ...data, page: 1 }
-      }
+    // First time selecting the label reset page to 1
+    if (!prevLabel) {
+      prevPageRef.current = page;
+      prevLabelRef.current = selectedCategory;
+      return { ...data, page: 1 };
+    }
 
-      // When selecting only label reset page to 1
-      if (selectedCategory !== prevLabel && page === prevPage) {
-        return { ...data, page: 1 }
-      }
+    // When selecting only label reset page to 1
+    if (selectedCategory !== prevLabel && page === prevPage) {
+      return { ...data, page: 1 };
+    }
 
-      return { ...data, page: page + 1 }
-    },
-    [page, rowsPerPage, selectedDate, selectedCategory, selectedLimit, endDate],
-  );
+    return { ...data, page: page + 1 };
+  }, [
+    page,
+    rowsPerPage,
+    selectedDate,
+    selectedCategory,
+    selectedLimit,
+    endDate,
+  ]);
 
   const { response, comments, loading, filterByPostId } = useGetComment(body);
 
@@ -95,10 +92,10 @@ function Comments({ page_id }: any) {
 
   const handleChangePage = (_: unknown, newPage: number) => {
     setPage(newPage - 1);
-  }
+  };
   const handleSelectPost = (postId: string) => {
     filterByPostId(postId);
-  }
+  };
 
   return (
     <PageContainer title="Smartdash" description="this is Dashboard">
@@ -107,7 +104,7 @@ function Comments({ page_id }: any) {
         color="textSecondary"
         gutterBottom
         component="div"
-        sx={{ fontSize: "13px" }}>
+        sx={{ fontSize: '13px' }}>
         Сэтгэгдлийн жагсаалт
       </Typography>
       <Typography
@@ -118,16 +115,15 @@ function Comments({ page_id }: any) {
         Сэтгэгдэл
       </Typography>
       <DashboardCard>
-        <Box sx={{ overflow: "auto", width: { xs: "280px", sm: "auto" } }}>
+        <Box sx={{ overflow: 'auto', width: { xs: '280px', sm: 'auto' } }}>
           <Box>
             <Box height={12} />
             <Box
               sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}>
               <Box sx={{ display: 'flex', gap: '4px' }}>
                 <DatePicker
                   startDate={selectedDate}
@@ -140,10 +136,20 @@ function Comments({ page_id }: any) {
                   setSelectedLabel={setSelectedCategory}
                 />
               </Box>
-              <CsvDownload title={"Сэтгэгдэл"} data={comments} loading={loading} />
+              <CsvDownload
+                title={'Сэтгэгдэл'}
+                path="/comment"
+                body={body}
+                type="comments"
+                loading={loading}
+                disabled={comments?.length === 0}
+              />
             </Box>
             <Box height={12} />
-            <PostSelector params={{ page_id, ids: retrievedCommentsIds }} onSelect={handleSelectPost} />
+            <PostSelector
+              params={{ page_id, ids: retrievedCommentsIds }}
+              onSelect={handleSelectPost}
+            />
           </Box>
           {loading
             ? (
@@ -156,33 +162,33 @@ function Comments({ page_id }: any) {
                     <TableRow key={comment.id}>
                       <TableCell>
                         <Typography
-                          sx={{ fontSize: "15px", fontWeight: "500" }}
+                          sx={{ fontSize: '15px', fontWeight: '500' }}
                           onClick={() => {
                             window.open(
-                              "https://facebook.com/" + comment.post_id,
-                              "_blank",
+                              'https://facebook.com/' + comment.post_id,
+                              '_blank',
                             );
                           }}
                           color="#5D87FF"
-                          style={{ cursor: "pointer" }}>
+                          style={{ cursor: 'pointer' }}>
                           {rowsPerPage * page + index + 1}
                         </Typography>
                       </TableCell>
                       <TableCell>
                         <Box
                           sx={{
-                            display: "flex",
-                            alignItems: "center",
+                            display: 'flex',
+                            alignItems: 'center',
                           }}>
                           <Box>
                             <Typography
                               variant="subtitle2"
                               fontWeight={400}
                               sx={{
-                                fontSize: "14px",
+                                fontSize: '14px',
                               }}>
                               {comment?.comment?.length > 60
-                                ? comment?.comment?.slice(0, 80) + "..."
+                                ? comment?.comment?.slice(0, 80) + '...'
                                 : comment?.comment}
                             </Typography>
                           </Box>
@@ -191,9 +197,9 @@ function Comments({ page_id }: any) {
                       <TableCell>
                         <Chip
                           sx={{
-                            px: "4px",
+                            px: '4px',
                             backgroundColor: comment.pbg,
-                            color: "#black",
+                            color: '#black',
                           }}
                           size="small"
                           label={comment.confidence}></Chip>
@@ -201,12 +207,12 @@ function Comments({ page_id }: any) {
                       <TableCell>
                         <Chip
                           sx={{
-                            px: "2px",
-                            color: "white",
-                            width: "80px",
-                            whiteSpace: "nowrap",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
+                            px: '2px',
+                            color: 'white',
+                            width: '80px',
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
                             backgroundColor: getCategoryColor(comment.label),
                           }}
                           size="small"
@@ -216,21 +222,21 @@ function Comments({ page_id }: any) {
                         <Typography
                           variant="h6"
                           sx={{
-                            fontSize: "14px",
+                            fontSize: '14px',
                           }}>
-                          {moment.unix(comment.created_time).format("MM/DD/YYYY")}
+                          {moment.unix(comment.created_time).format('MM/DD/YYYY')}
                         </Typography>
                       </TableCell>
                       <TableCell>
                         <IconExternalLink
                           onClick={() => {
                             window.open(
-                              "https://facebook.com/" + comment.post_id,
-                              "_blank",
+                              'https://facebook.com/' + comment.post_id,
+                              '_blank',
                             );
                           }}
                           color="#1A73ED"
-                          style={{ cursor: "pointer" }}
+                          style={{ cursor: 'pointer' }}
                           type="button"
                         />
                       </TableCell>
@@ -246,13 +252,13 @@ function Comments({ page_id }: any) {
             shape="rounded"
             sx={{
               marginTop: 3,
-              display: "flex",
-              justifyContent: "center",
+              display: 'flex',
+              justifyContent: 'center',
             }}
           />
         </Box>
       </DashboardCard>
-    </PageContainer >
+    </PageContainer>
   );
 }
 
@@ -262,7 +268,7 @@ Comments.getLayout = function getLayout(page: ReactElement) {
 
 export default Comments;
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async context => {
   const cookies = nookies.get(context);
 
   const page_id = cookies.pageId ? cookies.pageId : null;

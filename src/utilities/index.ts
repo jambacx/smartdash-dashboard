@@ -8,10 +8,10 @@ import notify from 'react-hot-toast';
  * @returns void
  */
 export const toast = (
-  type: 'success' | 'error' | 'loading',
-  message = '',
-): void => {
-  notify[type](message, {
+  type: 'success' | 'error' | 'loading' | 'custom',
+  message: string
+): string => {
+  return notify[type](message, {
     position: 'top-center',
   });
 };
