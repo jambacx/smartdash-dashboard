@@ -12,6 +12,10 @@ type Props = {
   setEndDate: (value: Date) => void;
 };
 
+const isLessThanStartDate = (startDate: Date, endDate: Date): boolean => {
+  return new Date(startDate) > new Date(endDate);
+};
+
 function ControlledDatePicker({
   startDate,
   endDate,
@@ -36,6 +40,11 @@ function ControlledDatePicker({
 
   const onChangeEndDate = (value: Date | null) => {
     if (!value || !startDate) return;
+
+    if (isLessThanStartDate(startDate, value)) {
+      setEndDate(new Date())
+      return toast('error', 'Дуусах хугацаа эхлэх хугацаанаас бага байж болохгүй');
+    }
 
     if (ACCEPTABLE_MONTH_LIMIT < getMonthDifference(value, startDate)) {
       setEndDate(new Date())

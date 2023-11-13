@@ -1,4 +1,4 @@
-import { type ReactElement, useMemo, useState } from "react";
+import { type ReactElement, useMemo, useState, useRef } from "react";
 import { getCategoryColor } from "@src/utilities/dummy/dummy";
 import {
   Typography,
@@ -42,23 +42,42 @@ function Comments({ page_id }: any) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(
     new Date(new Date().setMonth(new Date().getMonth() - 1)),
   );
-
+  const prevLabelRef = useRef<string | undefined>();
+  const prevPageRef = useRef<number | undefined>();
   const [endDate, setEndDate] = useState<Date | null>(new Date());
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedLimit, setSelectedLimit] = useState(15);
 
   const body: any = useMemo(
-    () => ({
-      sort: 'created_time',
-      page: page + 1,
-      page_id,
-      limit: selectedLimit,
-      label: selectedCategory,
-      date_range: [
-        selectedDate ? selectedDate.toISOString().split("T")[0] : undefined,
-        endDate ? endDate.toISOString().split("T")[0] : undefined,
-      ],
-    }),
+    () => {
+      const data = {
+        sort: 'created_time',
+        page_id,
+        limit: selectedLimit,
+        label: selectedCategory,
+        date_range: [
+          selectedDate ? selectedDate.toISOString().split("T")[0] : undefined,
+          endDate ? endDate.toISOString().split("T")[0] : undefined,
+        ],
+      };
+
+      const prevLabel = prevLabelRef?.current;
+      const prevPage = prevPageRef?.current;
+
+      // First time selecting the label reset page to 1
+      if (!prevLabel) {
+        prevPageRef.current = page;
+        prevLabelRef.current = selectedCategory;
+        return { ...data, page: 1 }
+      }
+
+      // When selecting only label reset page to 1
+      if (selectedCategory !== prevLabel && page === prevPage) {
+        return { ...data, page: 1 }
+      }
+
+      return { ...data, page: page + 1 }
+    },
     [page, rowsPerPage, selectedDate, selectedCategory, selectedLimit, endDate],
   );
 
