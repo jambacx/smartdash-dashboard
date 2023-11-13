@@ -113,7 +113,7 @@ function Home({ page_id, company_id }: Props) {
                   <ApexDonutChart chartData={chartData} />
                 </Grid>
               }
-              <Grid item xs={12} lg={6}>
+              <Grid item xs={12} lg={12}>
                 <ReactionsOverview chartData={data} />
               </Grid>
             </Grid>
