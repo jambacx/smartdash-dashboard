@@ -19,17 +19,6 @@ const ApexDonutChart = ({ chartData }: { chartData: any }) => {
 
   const lastDataPercentages = chartData[chartData.length - 1]?.percentages || [];
 
-  let percentages: any = [];
-
-  if (chartData[0]?.items?.[0] != null) {
-    percentages = chartData[0].percentages;
-
-    if (percentages?.length > 0) {
-      percentages.pop();
-    }
-    percentages = sumPercentages(chartData);
-  }
-
   const options: ApexOptions = {
     stroke: { width: 0 },
     labels: ["Эерэг", "Ерөнхий", "Сөрөг"],
