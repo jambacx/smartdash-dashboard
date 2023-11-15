@@ -16,6 +16,9 @@ const donutColors = {
 
 const ApexDonutChart = ({ chartData }: { chartData: any }) => {
   const theme = useTheme();
+
+  const lastDataPercentages = chartData[chartData.length - 1]?.percentages || [];
+
   let percentages: any = [];
 
   if (chartData[0]?.items?.[0] != null) {
@@ -119,7 +122,7 @@ const ApexDonutChart = ({ chartData }: { chartData: any }) => {
           type="donut"
           height={400}
           options={options}
-          series={percentages}
+          series={lastDataPercentages}
         />
       </CardContent>
     </Card>
