@@ -36,6 +36,10 @@ function Config({ company_id }: Props) {
   const { onDelete } = useConfigDelete();
 
   const handleAddCategory = async (name: string) => {
+    if (!name) {
+      return toast('error', 'Ангилал оруулна уу');
+    }
+
     await onAdd(company_id, name);
     toast('success', 'Ангилал амжилттэй нэмэгдлээ')
     refetch();
