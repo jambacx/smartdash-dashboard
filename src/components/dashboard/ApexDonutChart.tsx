@@ -1,4 +1,3 @@
-// ** MUI Imports
 import Card from "@mui/material/Card";
 import { useTheme } from "@mui/material/styles";
 import CardHeader from "@mui/material/CardHeader";
@@ -6,7 +5,6 @@ import CardContent from "@mui/material/CardContent";
 
 import { type ApexOptions } from "apexcharts";
 import ReactApexcharts from "../charts/react-apexcharts";
-import { sumPercentages } from '@lib/util';
 
 const donutColors = {
   series1: "#4F78F8",
@@ -18,6 +16,12 @@ const ApexDonutChart = ({ chartData }: { chartData: any }) => {
   const theme = useTheme();
 
   const lastDataPercentages = chartData[chartData.length - 1]?.percentages || [];
+
+  // TODO: Duplicate graph API endpoint and
+  // remove "question" from API response
+  if (lastDataPercentages.length > 0) {
+    lastDataPercentages.pop();
+  }
 
   const options: ApexOptions = {
     stroke: { width: 0 },
