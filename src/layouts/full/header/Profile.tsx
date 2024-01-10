@@ -31,6 +31,7 @@ const Profile = () => {
     nookies.destroy(null, 'authToken', { path: '/' });
     nookies.destroy(null, 'email', { path: '/' });
     nookies.destroy(null, 'currentPage', { path: '/' });
+    nookies.destroy(null, 'pageId', { path: '/' });
     router.push('/authentication/login');
   };
 
