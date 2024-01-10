@@ -41,10 +41,14 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
 
       if (loginResponse.data?.token !== null) {
         const token = loginResponse?.data?.token;
-        const pages = loginResponse?.data?.company?.pages;
         const companyId = loginResponse?.data?.company?.id;
 
         nookies.set(null, 'authToken', token, {
+          maxAge: 24 * 60 * 60,
+          path: '/',
+        });
+
+        nookies.set(null, 'email', data?.email, {
           maxAge: 24 * 60 * 60,
           path: '/',
         });
@@ -54,17 +58,6 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
           path: '/',
         });
 
-        if (Array.isArray(pages) && pages?.length > 0) {
-          nookies.set(null, 'pages', JSON.stringify(pages), {
-            maxAge: 24 * 60 * 60,
-            path: '/',
-          });
-
-          nookies.set(null, 'pageId', pages[0]?.page_id, {
-            maxAge: 24 * 60 * 60,
-            path: '/',
-          });
-        }
         await router.push("/");
       }
     } catch (err) {
