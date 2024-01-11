@@ -26,12 +26,12 @@ import FullLayout from '@src/layouts/full/FullLayout';
 import moment from 'moment';
 import { IconDotsVertical, IconExternalLink } from '@tabler/icons-react';
 import CustomModal from '@components/modal';
-import { type GetServerSideProps } from 'next';
 import { useConfig, useGetConfig } from '@src/lib/hooks/useConfig';
 import { toast } from '@src/utilities';
 import DatePicker from '@src/components/common/date-picker';
 import CategoryPicker from '@src/components/common/category-picker';
 import CsvDownload from '@src/components/export/ExportDownload';
+import { getServerSideProps } from '@lib/fetch-page';
 
 function Posts({ page_id, company_id }: any) {
   const [page, setPage] = useState(0);
@@ -290,16 +290,5 @@ Posts.getLayout = function getLayout(page: ReactElement) {
   return <FullLayout>{page}</FullLayout>;
 };
 
+export { getServerSideProps };
 export default Posts;
-
-export const getServerSideProps: GetServerSideProps = async context => {
-  const cookies = nookies.get(context);
-  const page_id = cookies.pageId ? cookies.pageId : null;
-  const company_id = cookies.companyId ? cookies.companyId : null;
-  return {
-    props: {
-      page_id,
-      company_id,
-    },
-  };
-};

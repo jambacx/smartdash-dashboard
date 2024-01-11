@@ -12,6 +12,7 @@ const useLogin = () => {
       const data = await HTTP.post("/customer/auth/login", {
         body: credentials,
       });
+
       setResponse(data);
       return data;
     } catch (err) {

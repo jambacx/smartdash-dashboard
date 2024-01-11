@@ -21,6 +21,6 @@ export const calculateDateRange = (type: string, selectedDate: Date | null, endD
         endDate?.toISOString().split("T")[0] ?? ''
       ];
     default:
-      return []; // Or return a default range if needed
+      return [];
   }
 };

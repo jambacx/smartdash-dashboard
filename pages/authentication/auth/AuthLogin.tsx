@@ -13,7 +13,6 @@ import nookies from 'nookies'
 import { useForm } from "react-hook-form";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useRouter } from "next/router";
-
 import CustomTextField from "@components/forms/theme-elements/CustomTextField";
 import useLogin from "@src/lib/hooks/useLogin";
 
@@ -42,6 +41,12 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
       if (loginResponse.data?.token !== null) {
         const token = loginResponse?.data?.token;
         const companyId = loginResponse?.data?.company?.id;
+        const expireStatus = loginResponse.data.company.status;
+
+        nookies.set(null, 'expire', expireStatus, {
+          maxAge: 24 * 60 * 60,
+          path: '/',
+        });
 
         nookies.set(null, 'authToken', token, {
           maxAge: 24 * 60 * 60,

@@ -10,10 +10,10 @@ import {
   Pagination,
 } from '@mui/material';
 import { useGetComment } from '@src/lib/hooks/useComment';
-import nookies from 'nookies';
 import FullLayout from '@src/layouts/full/FullLayout';
 import moment from 'moment';
 import { IconExternalLink } from '@tabler/icons-react';
+import CustomModal from '@components/comment-modal';
 
 import {
   PageContainer,
@@ -21,17 +21,18 @@ import {
   CustomTable,
   FallbackSpinner,
 } from '@src/components';
-import { type GetServerSideProps } from 'next';
 import DatePicker from '@src/components/common/date-picker';
 import LabelPicker from '@src/components/common/label-picker';
 import CsvDownload from '@src/components/export/ExportDownload';
 import PostSelector from '@src/components/posts/post-selector.view';
+import { getServerSideProps } from '@src/lib/fetch-page';
 
 const rowsTitles = ['#', 'Сэтгэгдэл', 'Үр дүн', 'Label', 'Огноо', 'Үйлдэл'];
 
 function Comments({ page_id }: any) {
   const [page, setPage] = useState(0);
   const [rowsPerPage] = useState(15);
+  const [selectedComment, setSelectedComment] = useState<any | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | null>(
     new Date(new Date().setMonth(new Date().getMonth() - 1)),
   );
@@ -56,14 +57,12 @@ function Comments({ page_id }: any) {
     const prevLabel = prevLabelRef?.current;
     const prevPage = prevPageRef?.current;
 
-    // First time selecting the label reset page to 1
     if (!prevLabel) {
       prevPageRef.current = page;
       prevLabelRef.current = selectedCategory;
       return { ...data, page: 1 };
     }
 
-    // When selecting only label reset page to 1
     if (selectedCategory !== prevLabel && page === prevPage) {
       return { ...data, page: 1 };
     }
@@ -95,6 +94,15 @@ function Comments({ page_id }: any) {
   };
   const handleSelectPost = (postId: string) => {
     filterByPostId(postId);
+  };
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = (comment: any) => {
+    setSelectedComment(comment);
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -174,8 +182,11 @@ function Comments({ page_id }: any) {
                           {rowsPerPage * page + index + 1}
                         </Typography>
                       </TableCell>
-                      <TableCell>
+                      <TableCell onClick={() => {
+                        handleOpen(comment);
+                      }}>
                         <Box
+
                           sx={{
                             display: 'flex',
                             alignItems: 'center',
@@ -245,6 +256,13 @@ function Comments({ page_id }: any) {
                 </TableBody>
               </CustomTable>
             )}
+          {selectedComment && (
+            <CustomModal
+              open={open}
+              handleClose={handleClose}
+              comment={selectedComment}
+            />
+          )}
           <Pagination
             count={pagination?.page_count || 1}
             page={page + 1}
@@ -266,15 +284,5 @@ Comments.getLayout = function getLayout(page: ReactElement) {
   return <FullLayout>{page}</FullLayout>;
 };
 
+export { getServerSideProps };
 export default Comments;
-
-export const getServerSideProps: GetServerSideProps = async context => {
-  const cookies = nookies.get(context);
-
-  const page_id = cookies.pageId ? cookies.pageId : null;
-  return {
-    props: {
-      page_id,
-    },
-  };
-};

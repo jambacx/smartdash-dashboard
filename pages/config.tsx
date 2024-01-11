@@ -8,7 +8,6 @@ import {
   CircularProgress,
   Button,
 } from "@mui/material";
-import nookies from 'nookies'
 
 import DashboardCard from "@components/shared/DashboardCard";
 import { useConfigAdd, useConfigDelete, useGetConfig } from "@src/lib/hooks/useConfig";
@@ -18,9 +17,9 @@ import { IconTrash } from "@tabler/icons-react";
 import { CustomTable } from "@src/components/table/CustomTable";
 import AddIcon from '@mui/icons-material/Add';
 import AddCategoryDialog from '@components/dilog/index';
-import { type GetServerSideProps } from "next";
 import { type Category } from "@src/interfaces/category.interface";
 import { toast } from "@src/utilities";
+import { getServerSideProps } from "@src/lib/fetch-page";
 
 
 type Props = {
@@ -151,17 +150,5 @@ Config.getLayout = function getLayout(page: ReactElement) {
   return <FullLayout>{page}</FullLayout>;
 };
 
+export { getServerSideProps };
 export default Config;
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const cookies = nookies.get(context);
-  const page_id = cookies.pageId ? cookies.pageId : null;
-  const company_id = cookies.companyId ? cookies.companyId : null;
-
-  return {
-    props: {
-      page_id,
-      company_id
-    },
-  };
-};

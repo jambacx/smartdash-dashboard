@@ -1,6 +1,5 @@
 import { useState, type ReactElement, useMemo, useEffect } from "react";
-import nookies from 'nookies'
-import { Grid, Box, Alert, AlertTitle } from "@mui/material";
+import { Grid, Box } from "@mui/material";
 import {
   PageContainer,
   SalesOverview,
@@ -12,10 +11,10 @@ import FullLayout from "@src/layouts/full/FullLayout";
 import { useGraph, useDashboard } from "@src/lib/hooks/useDashboard";
 import { statusBar } from "../src/utilities/dummy/dummy";
 import ReactionsOverview from "@src/components/dashboard/ReactionsOverview";
-import { type GetServerSideProps } from "next";
 import { calculateDateRange } from "@src/lib/hooks/useRange";
 import Filter from "@src/modules/home/filter.view";
 import NoResult from "@src/components/common/no-result/NoResult";
+import { getServerSideProps } from '@lib/fetch-page';
 
 type Props = {
   page_id: string;
@@ -76,7 +75,6 @@ function Home({ page_id, company_id }: Props) {
     }
   }, [data, chartData]);
 
-
   return (
     <PageContainer title="Smartdash" description="this is Dashboard">
       <Box>
@@ -127,12 +125,6 @@ Home.getLayout = function getLayout(page: ReactElement) {
   return <FullLayout>{page}</FullLayout>;
 };
 
+export { getServerSideProps };
 export default Home;
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const cookies = nookies.get(context);
-  const page_id = cookies.pageId ? cookies.pageId : null;
-  const company_id = cookies.companyId ? cookies.companyId : null;
-
-  return { props: { page_id, company_id } };
-};

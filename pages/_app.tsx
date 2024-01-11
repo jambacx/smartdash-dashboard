@@ -15,6 +15,7 @@ import nookies from 'nookies';
 
 import NProgress from 'nprogress';
 import { PageProvider } from '@src/contexts/user.context';
+import { log } from 'console';
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -32,9 +33,9 @@ const MyApp = (props: MyAppProps) => {
   const theme = baselightTheme;
 
   const getLayout = Component.getLayout ?? (page => page);
+
   const router = useRouter();
 
-  // const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const handleRouteChange = (url: string) => {

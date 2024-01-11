@@ -1,5 +1,5 @@
-import type {ReactElement} from "react";
-import {Box, Container, Typography, Button} from "@mui/material";
+import type { ReactElement } from "react";
+import { Box, Container, Typography, Button } from "@mui/material";
 import Link from "next/link";
 import BlankLayout from "@src/layouts/blank/BlankLayout";
 
@@ -14,7 +14,7 @@ const Error = () => (
       <img
         src={"/images/backgrounds/errorimg.svg"}
         alt="404"
-        style={{width: "100%", maxWidth: "500px"}}
+        style={{ width: "100%", maxWidth: "500px" }}
       />
       <Typography align="center" variant="h1" mb={4}>
         Opps!!!
