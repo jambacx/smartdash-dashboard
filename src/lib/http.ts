@@ -1,5 +1,5 @@
-import axios, { type AxiosInstance, type AxiosRequestConfig } from "axios";
-import nookies from 'nookies'
+import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios';
+import nookies from 'nookies';
 // eslint-disable-next-line @typescript-eslint/no-namespace
 namespace HTTP {
   export interface RequestConfig
@@ -10,9 +10,8 @@ namespace HTTP {
 
   const instance: AxiosInstance = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_ENDPOINT,
-    proxy: false,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   });
 
@@ -36,6 +35,7 @@ namespace HTTP {
       return response.data;
     },
     error => {
+      console.log(error?.response, error?.message);
       if (error.response?.data?.code && error.response.data.code !== 102) {
         return error.response.data;
       }
@@ -58,7 +58,7 @@ namespace HTTP {
       } else if (error) {
         throw error;
       }
-      throw new Error("Unhandled error");
+      throw new Error('Unhandled error');
     }
   };
 
@@ -67,7 +67,7 @@ namespace HTTP {
     options?: RequestConfig,
   ): Promise<T> => {
     return await request<T>({
-      method: "GET",
+      method: 'GET',
       url,
       params: options?.params,
       ...options,
@@ -79,7 +79,7 @@ namespace HTTP {
     options?: RequestConfig,
   ): Promise<T> => {
     return await request<T>({
-      method: "POST",
+      method: 'POST',
       url,
       ...options,
       data: options?.body,
@@ -91,7 +91,7 @@ namespace HTTP {
     options?: RequestConfig,
   ): Promise<T> => {
     return await request<T>({
-      method: "DELETE",
+      method: 'DELETE',
       url,
       ...options,
       data: options?.body,
@@ -103,7 +103,7 @@ namespace HTTP {
     options?: RequestConfig,
   ): Promise<T> => {
     return await request<T>({
-      method: "PUT",
+      method: 'PUT',
       url,
       ...options,
       data: options?.body,
