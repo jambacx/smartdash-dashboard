@@ -32,6 +32,7 @@ const Profile = () => {
     nookies.destroy(null, 'email', { path: '/' });
     nookies.destroy(null, 'currentPage', { path: '/' });
     nookies.destroy(null, 'pageId', { path: '/' });
+    nookies.destroy(null, 'expire', { path: '/' });
     router.push('/authentication/login');
   };
 
