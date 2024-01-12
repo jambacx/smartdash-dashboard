@@ -7,6 +7,7 @@ import {
   IconButton,
   MenuItem,
   ListItemText,
+  CircularProgress,
 } from '@mui/material';
 import nookies from 'nookies';
 
@@ -23,12 +24,17 @@ const Profile = () => {
   useEffect(() => {
     const cookies = nookies.get();
     const email = cookies?.email;
+    const pageId = cookies?.pageId;
     const isExpired = cookies?.expire === 'expired';
 
     if (email && !isExpired) {
       const fetch = async () => {
         const pages = await onFetch(email);
         setPages(pages);
+
+        if (pageId) {
+          setCurrentPage(pageId);
+        }
       };
 
       fetch();
@@ -87,18 +93,22 @@ const Profile = () => {
             width: '200px',
           },
         }}>
-        {pages?.map((page: { page_id: string; label: string }) => (
-          <MenuItem
-            selected={currentPage === page.page_id}
-            key={page.page_id}
-            onClick={() => {
-              setCurrentPage(page?.page_id);
-              nookies.set(null, 'pageId', page.page_id, { path: '/' });
-              router.reload();
-            }}>
-            <ListItemText>{page.label}</ListItemText>
-          </MenuItem>
-        ))}
+        {loading ? (
+          <CircularProgress size="small" />
+        ) : (
+          pages?.map((page: { page_id: string; label: string }) => (
+            <MenuItem
+              selected={currentPage === page.page_id}
+              key={page.page_id}
+              onClick={() => {
+                setCurrentPage(page?.page_id);
+                nookies.set(null, 'pageId', page.page_id, { path: '/' });
+                router.reload();
+              }}>
+              <ListItemText>{page.label}</ListItemText>
+            </MenuItem>
+          ))
+        )}
         <Box mt={1} py={1} px={2}>
           <Button variant="outlined" color="primary" fullWidth onClick={logout}>
             Гарах

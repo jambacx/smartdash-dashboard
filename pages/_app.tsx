@@ -1,6 +1,6 @@
-import { useEffect, type ReactElement, type ReactNode, useState } from 'react';
+import { useEffect, type ReactElement, type ReactNode } from 'react';
 
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { type AppProps } from 'next/app';
@@ -9,13 +9,10 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider, type EmotionCache } from '@emotion/react';
 import createEmotionCache from '../src/createEmotionCache';
 import { baselightTheme } from '../src/theme/DefaultColors';
-import CircularProgress from '@mui/material/CircularProgress';
-import { useRouter, Router } from 'next/router';
+import { useRouter } from 'next/router';
 import nookies from 'nookies';
 
-import NProgress from 'nprogress';
-import { PageProvider } from '@src/contexts/user.context';
-import { log } from 'console';
+import { WrapperProvider } from '@src/contexts/wrapper.context';
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -35,7 +32,6 @@ const MyApp = (props: MyAppProps) => {
   const getLayout = Component.getLayout ?? (page => page);
 
   const router = useRouter();
-
 
   useEffect(() => {
     const handleRouteChange = (url: string) => {
@@ -64,7 +60,9 @@ const MyApp = (props: MyAppProps) => {
       <ThemeProvider theme={theme}>
         <Toaster />
         <CssBaseline />
-        <PageProvider>{getLayout(<Component {...pageProps} />)}</PageProvider>
+        <WrapperProvider>
+          {getLayout(<Component {...pageProps} />)}
+        </WrapperProvider>
       </ThemeProvider>
     </CacheProvider>
   );

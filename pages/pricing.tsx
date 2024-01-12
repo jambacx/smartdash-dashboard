@@ -1,11 +1,23 @@
-import { useState, type ReactElement } from "react";
-import { Box, Container, Typography, Button, makeStyles, Grid, Paper, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
-import Link from "next/link";
-import BlankLayout from "@src/layouts/blank/BlankLayout";
+import { useState, type ReactElement } from 'react';
+import nookies from 'nookies';
+import {
+  Box,
+  Container,
+  Typography,
+  Button,
+  Grid,
+  Paper,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from '@mui/material';
 import { styled } from '@mui/system';
-import FullLayout from "@src/layouts/full/FullLayout";
+import FullLayout from '@src/layouts/full/FullLayout';
 import { IconCircleCheck } from '@tabler/icons-react';
 import { green } from '@material-ui/core/colors';
+import { type GetServerSideProps } from 'next/types';
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3),
@@ -15,7 +27,6 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
   flexDirection: 'column',
   justifyContent: 'space-between',
 }));
-
 
 const Pricing = () => {
   const [openDialog, setOpenDialog] = useState(false);
@@ -43,7 +54,6 @@ const Pricing = () => {
     },
   ];
 
-
   const handleContactManager = () => {
     setOpenDialog(true);
   };
@@ -59,7 +69,8 @@ const Pricing = () => {
           Эрх сунгалт
         </Typography>
         <Typography variant="h6" color="error" mb={6}>
-          Хэрэглэгч таны хугацаа дууссан тул та эрх сунгалтаа хийнэ үү.</Typography>
+          Хэрэглэгч таны хугацаа дууссан тул та эрх сунгалтаа хийнэ үү.
+        </Typography>
       </Box>
       <Grid container spacing={3}>
         {pricingTiers.map((tier, index) => (
@@ -80,15 +91,19 @@ const Pricing = () => {
                       display: 'flex',
                       alignItems: 'center',
                       mt: 1,
-                      mb: 1
-                    }}
-                  >
-                    <IconCircleCheck style={{ color: green[500], marginRight: 8 }} />
+                      mb: 1,
+                    }}>
+                    <IconCircleCheck
+                      style={{ color: green[500], marginRight: 8 }}
+                    />
                     {feature}
                   </Box>
                 ))}
               </Box>
-              <Button variant="contained" color="primary" onClick={() => setOpenDialog(true)}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => setOpenDialog(true)}>
                 Холбогдох
               </Button>
             </StyledPaper>
@@ -97,13 +112,17 @@ const Pricing = () => {
       </Grid>
 
       <Dialog open={openDialog} onClose={handleCloseDialog}>
-        <DialogTitle mb={4} mt={2}>Харилцагчийн менежертэй холбогдох</DialogTitle>
+        <DialogTitle mb={4} mt={2}>
+          Харилцагчийн менежертэй холбогдох
+        </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Харилцагч таны үйлчилгээний хугацаа дууссан тул гишүүнчлэлийн эрхээ сунгахын тулд тулд манай харилцагч харуицсан менежертэй холбогдоно уу          <br />
-
+            Харилцагч таны үйлчилгээний хугацаа дууссан тул гишүүнчлэлийн эрхээ
+            сунгахын тулд тулд манай харилцагч харуицсан менежертэй холбогдоно
+            уу <br />
             <Box mt={3} />
-            Мэйл хаяг: <a href="mailto:manager@example.com">accountmanagers@mobicom.mn</a>
+            Мэйл хаяг:{' '}
+            <a href="mailto:manager@example.com">accountmanagers@mobicom.mn</a>
             <br />
             Холбоо барих утас: 1800-2222, 1900-2222
           </DialogContentText>
@@ -116,15 +135,26 @@ const Pricing = () => {
       </Dialog>
     </Container>
   );
-}
+};
 
 Pricing.getLayout = function getLayout(page: ReactElement) {
   return <FullLayout>{page}</FullLayout>;
 };
 
-// export { getServerSideProps };
 export default Pricing;
 
-// Pricing.getLayout = function getLayout(page: ReactElement) {
-//   return <BlankLayout>{page}</BlankLayout>;
-// };
+export const getServerSideProps: GetServerSideProps = async context => {
+  const cookies = nookies.get(context);
+  const isExpired = cookies.expire === 'expired';
+
+  if (!isExpired) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: true,
+      },
+    };
+  }
+
+  return { props: {} };
+};
