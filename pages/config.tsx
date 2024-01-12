@@ -149,5 +149,4 @@ Config.getLayout = function getLayout(page: ReactElement) {
   return <FullLayout>{page}</FullLayout>;
 };
 
-export { getServerSideProps };
 export default Config;

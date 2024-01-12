@@ -1,12 +1,12 @@
-import { GetServerSideProps } from "next/types";
-import nookies from 'nookies'
+import { type GetServerSideProps } from 'next/types';
+import nookies from 'nookies';
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async context => {
   const cookies = nookies.get(context);
   const page_id = cookies.pageId ? cookies.pageId : null;
   const expire = cookies.expire ? cookies.expire : 'expired';
 
-  console.log(expire)
+  console.log(expire);
 
   const company_id = cookies.companyId ? cookies.companyId : null;
 

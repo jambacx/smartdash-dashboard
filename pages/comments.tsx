@@ -1,3 +1,5 @@
+/* eslint multiline-ternary: ["error", "never"] */
+
 import { type ReactElement, useMemo, useState, useRef } from 'react';
 import { getCategoryColor } from '@src/utilities/dummy/dummy';
 import {
@@ -158,103 +160,99 @@ function Comments({ page_id }: any) {
               onSelect={handleSelectPost}
             />
           </Box>
-          {loading
-            ? (
-              <FallbackSpinner />
-            )
-            : (
-              <CustomTable headers={rowsTitles}>
-                <TableBody>
-                  {comments.map((comment: any, index: number) => (
-                    <TableRow key={comment.id}>
-                      <TableCell>
-                        <Typography
-                          sx={{ fontSize: '15px', fontWeight: '500' }}
-                          onClick={() => {
-                            window.open(
-                              'https://facebook.com/' + comment.post_id,
-                              '_blank',
-                            );
-                          }}
-                          color="#5D87FF"
-                          style={{ cursor: 'pointer' }}>
-                          {rowsPerPage * page + index + 1}
-                        </Typography>
-                      </TableCell>
-                      <TableCell onClick={() => {
+          {loading ? (
+            <FallbackSpinner />
+          ) : (
+            <CustomTable headers={rowsTitles}>
+              <TableBody>
+                {comments.map((comment: any, index: number) => (
+                  <TableRow key={comment.id}>
+                    <TableCell>
+                      <Typography
+                        sx={{ fontSize: '15px', fontWeight: '500' }}
+                        onClick={() => {
+                          window.open(
+                            'https://facebook.com/' + comment.post_id,
+                            '_blank',
+                          );
+                        }}
+                        color="#5D87FF"
+                        style={{ cursor: 'pointer' }}>
+                        {rowsPerPage * page + index + 1}
+                      </Typography>
+                    </TableCell>
+                    <TableCell
+                      onClick={() => {
                         handleOpen(comment);
                       }}>
-                        <Box
-
-                          sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                          }}>
-                          <Box>
-                            <Typography
-                              variant="subtitle2"
-                              fontWeight={400}
-                              sx={{
-                                fontSize: '14px',
-                              }}>
-                              {comment?.comment?.length > 60
-                                ? comment?.comment?.slice(0, 80) + '...'
-                                : comment?.comment}
-                            </Typography>
-                          </Box>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                        }}>
+                        <Box>
+                          <Typography
+                            variant="subtitle2"
+                            fontWeight={400}
+                            sx={{
+                              fontSize: '14px',
+                            }}>
+                            {comment?.comment?.length > 60 ? comment?.comment?.slice(0, 80) + '...' : comment?.comment}
+                          </Typography>
                         </Box>
-                      </TableCell>
-                      <TableCell>
-                        <Chip
-                          sx={{
-                            px: '4px',
-                            backgroundColor: comment.pbg,
-                            color: '#black',
-                          }}
-                          size="small"
-                          label={comment.confidence}></Chip>
-                      </TableCell>
-                      <TableCell>
-                        <Chip
-                          sx={{
-                            px: '2px',
-                            color: 'white',
-                            width: '80px',
-                            whiteSpace: 'nowrap',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            backgroundColor: getCategoryColor(comment.label),
-                          }}
-                          size="small"
-                          label={comment.label}></Chip>
-                      </TableCell>
-                      <TableCell>
-                        <Typography
-                          variant="h6"
-                          sx={{
-                            fontSize: '14px',
-                          }}>
-                          {moment.unix(comment.created_time).format('MM/DD/YYYY')}
-                        </Typography>
-                      </TableCell>
-                      <TableCell>
-                        <IconExternalLink
-                          onClick={() => {
-                            window.open(
-                              'https://facebook.com/' + comment.post_id,
-                              '_blank',
-                            );
-                          }}
-                          color="#1A73ED"
-                          style={{ cursor: 'pointer' }}
-                          type="button"
-                        />
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </CustomTable>
-            )}
+                      </Box>
+                    </TableCell>
+                    <TableCell>
+                      <Chip
+                        sx={{
+                          px: '4px',
+                          backgroundColor: comment.pbg,
+                          color: '#black',
+                        }}
+                        size="small"
+                        label={comment.confidence}></Chip>
+                    </TableCell>
+                    <TableCell>
+                      <Chip
+                        sx={{
+                          px: '2px',
+                          color: 'white',
+                          width: '80px',
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          backgroundColor: getCategoryColor(comment.label),
+                        }}
+                        size="small"
+                        label={comment.label}></Chip>
+                    </TableCell>
+                    <TableCell>
+                      <Typography
+                        variant="h6"
+                        sx={{
+                          fontSize: '14px',
+                        }}>
+                        {moment.unix(comment.created_time).format('MM/DD/YYYY')}
+                      </Typography>
+                    </TableCell>
+                    <TableCell>
+                      <IconExternalLink
+                        onClick={() => {
+                          window.open(
+                            'https://facebook.com/' + comment.post_id,
+                            '_blank',
+                          );
+                        }}
+                        color="#1A73ED"
+                        style={{ cursor: 'pointer' }}
+                        type="button"
+                      />
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </CustomTable>
+          )}
           {selectedComment && (
             <CustomModal
               open={open}
@@ -283,5 +281,4 @@ Comments.getLayout = function getLayout(page: ReactElement) {
   return <FullLayout>{page}</FullLayout>;
 };
 
-export { getServerSideProps };
 export default Comments;

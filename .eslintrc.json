@@ -35,6 +35,7 @@
     "@typescript-eslint/no-unused-vars": "off",
     "@typescript-eslint/indent": "off",
     "@typescript-eslint/no-confusing-void-expression": "off",
-    "@typescript-eslint/naming-convention": "off"
+    "@typescript-eslint/naming-convention": "off",
+    "eslintmultiline-ternary": "off"
   }
 }
