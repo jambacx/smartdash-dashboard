@@ -9,11 +9,9 @@ namespace HTTP {
   }
 
   const instance: AxiosInstance = axios.create({
-    baseURL: "/api",
-    withCredentials: false,
+    baseURL: process.env.NEXT_PUBLIC_API_ENDPOINT,
     proxy: false,
     headers: {
-      "Access-Control-Allow-Origin": "*",
       "Content-Type": "application/json",
     },
   });
