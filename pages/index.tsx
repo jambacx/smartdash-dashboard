@@ -14,7 +14,6 @@ import ReactionsOverview from "@src/components/dashboard/ReactionsOverview";
 import { calculateDateRange } from "@src/lib/hooks/useRange";
 import Filter from "@src/modules/home/filter.view";
 import NoResult from "@src/components/common/no-result/NoResult";
-import { getServerSideProps } from '@lib/fetch-page';
 
 type Props = {
   page_id: string;

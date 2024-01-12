@@ -6,6 +6,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const page_id = cookies.pageId ? cookies.pageId : null;
   const expire = cookies.expire ? cookies.expire : 'expired';
 
+  console.log(expire)
+
   const company_id = cookies.companyId ? cookies.companyId : null;
 
   if (expire) {

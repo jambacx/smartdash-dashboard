@@ -19,7 +19,6 @@ import AddIcon from '@mui/icons-material/Add';
 import AddCategoryDialog from '@components/dilog/index';
 import { type Category } from "@src/interfaces/category.interface";
 import { toast } from "@src/utilities";
-import { getServerSideProps } from "@src/lib/fetch-page";
 
 
 type Props = {
