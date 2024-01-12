@@ -36,6 +36,7 @@
     "@typescript-eslint/indent": "off",
     "@typescript-eslint/no-confusing-void-expression": "off",
     "@typescript-eslint/naming-convention": "off",
-    "eslintmultiline-ternary": "off"
+    "eslintmultiline-ternary": "off",
+    "multiline-ternary": "off"
   }
 }

@@ -3,14 +3,9 @@ import nookies from 'nookies';
 
 export const getServerSideProps: GetServerSideProps = async context => {
   const cookies = nookies.get(context);
-  const page_id = cookies.pageId ? cookies.pageId : null;
-  const expire = cookies.expire ? cookies.expire : 'expired';
+  const isExpired = cookies.expire === 'expired';
 
-  console.log(expire);
-
-  const company_id = cookies.companyId ? cookies.companyId : null;
-
-  if (expire) {
+  if (isExpired) {
     return {
       redirect: {
         destination: '/pricing',
@@ -18,6 +13,9 @@ export const getServerSideProps: GetServerSideProps = async context => {
       },
     };
   }
+
+  const page_id = cookies.pageId ? cookies.pageId : null;
+  const company_id = cookies.companyId ? cookies.companyId : null;
 
   return { props: { page_id, company_id } };
 };

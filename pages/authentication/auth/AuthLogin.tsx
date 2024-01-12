@@ -6,15 +6,15 @@ import {
   Button,
   Stack,
   Checkbox,
-} from "@mui/material";
-import Link from "next/link";
-import nookies from 'nookies'
+} from '@mui/material';
+import Link from 'next/link';
+import nookies from 'nookies';
 
-import { useForm } from "react-hook-form";
-import CircularProgress from "@mui/material/CircularProgress";
-import { useRouter } from "next/router";
-import CustomTextField from "@components/forms/theme-elements/CustomTextField";
-import useLogin from "@src/lib/hooks/useLogin";
+import { useForm } from 'react-hook-form';
+import CircularProgress from '@mui/material/CircularProgress';
+import { useRouter } from 'next/router';
+import CustomTextField from '@components/forms/theme-elements/CustomTextField';
+import useLogin from '@src/lib/hooks/useLogin';
 
 interface loginType {
   title?: string;
@@ -28,8 +28,7 @@ interface FormInput {
 }
 
 const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
-  const { register, handleSubmit, setError, formState } =
-    useForm<FormInput>();
+  const { register, handleSubmit, setError, formState } = useForm<FormInput>();
   const { errors } = formState;
   const { login, loading } = useLogin();
   const router = useRouter();
@@ -42,6 +41,12 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
         const token = loginResponse?.data?.token;
         const companyId = loginResponse?.data?.company?.id;
         const expireStatus = loginResponse.data.company.status;
+        const pages = loginResponse.data.company.pages;
+
+        nookies.set(null, 'pageId', pages[0]?.page_id, {
+          maxAge: 24 * 60 * 60,
+          path: '/',
+        });
 
         nookies.set(null, 'expire', expireStatus, {
           maxAge: 24 * 60 * 60,
@@ -63,23 +68,21 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
           path: '/',
         });
 
-        await router.push("/");
+        await router.push('/');
       }
     } catch (err) {
-      setError("email", { type: "manual", message: "Нэвтрэх нэр буруу." });
-      setError("password", { type: "manual", message: "Нууц үг буруу." });
+      setError('email', { type: 'manual', message: 'Нэвтрэх нэр буруу.' });
+      setError('password', { type: 'manual', message: 'Нууц үг буруу.' });
     }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {title !== null
-        ? (
-          <Typography fontWeight="700" variant="h2" mb={1}>
-            {title}
-          </Typography>
-        )
-        : null}
+      {title !== null ? (
+        <Typography fontWeight="700" variant="h2" mb={1}>
+          {title}
+        </Typography>
+      ) : null}
       {subtext}
       <Stack>
         <Box>
@@ -92,7 +95,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
             Нэвтрэх нэр
           </Typography>
           <CustomTextField
-            {...register("email", { required: "Email is required" })}
+            {...register('email', { required: 'Email is required' })}
             placeholder="Мэйл хаяг"
             variant="outlined"
             fullWidth
@@ -110,7 +113,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
             Нууц үг
           </Typography>
           <CustomTextField
-            {...register("password", { required: "Password is required" })}
+            {...register('password', { required: 'Password is required' })}
             placeholder="Нууц үг"
             type="password"
             variant="outlined"
@@ -135,8 +138,8 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
             href="/"
             fontWeight="500"
             sx={{
-              textDecoration: "none",
-              color: "primary.main",
+              textDecoration: 'none',
+              color: 'primary.main',
             }}>
             Нууц үг мартсан?
           </Typography>
@@ -150,20 +153,18 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
           fullWidth
           type="submit"
           disabled={loading}>
-          {loading
-            ? (
-              <>
-                <CircularProgress
-                  size={24}
-                  color="inherit"
-                  style={{ marginRight: 10 }}
-                />
-                Нэвтрэх
-              </>
-            )
-            : (
-              "Нэвтрэх"
-            )}
+          {loading ? (
+            <>
+              <CircularProgress
+                size={24}
+                color="inherit"
+                style={{ marginRight: 10 }}
+              />
+              Нэвтрэх
+            </>
+          ) : (
+            'Нэвтрэх'
+          )}
         </Button>
       </Box>
     </form>

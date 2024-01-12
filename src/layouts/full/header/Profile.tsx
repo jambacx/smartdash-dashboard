@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Avatar,
   Box,
@@ -11,13 +11,29 @@ import {
 import nookies from 'nookies';
 
 import { useRouter } from 'next/router';
-import { usePageContext } from '@src/contexts/user.context';
+import { useGetPages } from '@src/lib/hooks/useGetPages';
 
 const Profile = () => {
   const router = useRouter();
   const [anchorEl2, setAnchorEl2] = useState(null);
   const [currentPage, setCurrentPage] = useState<any>();
-  const { pages } = usePageContext();
+  const [pages, setPages] = useState([]);
+  const { loading, onFetch } = useGetPages();
+
+  useEffect(() => {
+    const cookies = nookies.get();
+    const email = cookies?.email;
+    const isExpired = cookies?.expire === 'expired';
+
+    if (email && !isExpired) {
+      const fetch = async () => {
+        const pages = await onFetch(email);
+        setPages(pages);
+      };
+
+      fetch();
+    }
+  }, []);
 
   const handleClick2 = (event: any) => {
     setAnchorEl2(event.currentTarget);
@@ -30,7 +46,6 @@ const Profile = () => {
   const logout = () => {
     nookies.destroy(null, 'authToken', { path: '/' });
     nookies.destroy(null, 'email', { path: '/' });
-    nookies.destroy(null, 'currentPage', { path: '/' });
     nookies.destroy(null, 'pageId', { path: '/' });
     nookies.destroy(null, 'expire', { path: '/' });
     router.push('/authentication/login');

@@ -29,6 +29,7 @@ export const PageProvider = ({ children }: PropsWithChildren) => {
     if (email) {
       const fetch = async () => {
         const pages = await onFetch(email);
+        console.log(pages, ' =======');
         setPages(pages);
       };
 

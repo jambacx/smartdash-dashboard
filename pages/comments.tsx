@@ -27,6 +27,7 @@ import DatePicker from '@src/components/common/date-picker';
 import LabelPicker from '@src/components/common/label-picker';
 import CsvDownload from '@src/components/export/ExportDownload';
 import PostSelector from '@src/components/posts/post-selector.view';
+import { getServerSideProps } from '@src/lib/fetch-page';
 
 const rowsTitles = ['#', 'Сэтгэгдэл', 'Үр дүн', 'Label', 'Огноо', 'Үйлдэл'];
 
@@ -197,8 +198,7 @@ function Comments({ page_id }: any) {
                             sx={{
                               fontSize: '14px',
                             }}>
-                            {comment?.comment?.length > 60 ? comment?.comment?.slice(0, 80) + '...' : comment?.comment}
-                          </Typography>
+                            {comment?.comment?.length > 60 ? comment?.comment?.slice(0, 80) + '...' : comment?.comment} </Typography>
                         </Box>
                       </Box>
                     </TableCell>
@@ -282,3 +282,5 @@ Comments.getLayout = function getLayout(page: ReactElement) {
 };
 
 export default Comments;
+
+export { getServerSideProps };

@@ -31,6 +31,7 @@ import { toast } from '@src/utilities';
 import DatePicker from '@src/components/common/date-picker';
 import CategoryPicker from '@src/components/common/category-picker';
 import CsvDownload from '@src/components/export/ExportDownload';
+import { getServerSideProps } from '@src/lib/fetch-page';
 
 function Posts({ page_id, company_id }: any) {
   const [page, setPage] = useState(0);
@@ -288,3 +289,5 @@ Posts.getLayout = function getLayout(page: ReactElement) {
 };
 
 export default Posts;
+
+export { getServerSideProps };
